@@ -1,19 +1,26 @@
 {
-  "headline": "Decades of Uncertainty",
-  "deck": "A visual history of the linguistics major",
-  "date": "October 16, 2019",
-  "byline": "By Seyla Phan and Jason Kao",
-  "top": {},
+  "headline": "The U.S. and Ivy League schools were late to respond to COVID-19. Data shows international universities did better.",
+  "date": "April 10, 2020",
+  "byline": "<a href=\"https://www.columbiaspectator.com/contributors/Kelly-Pu/\">Kelly Pu</a>, <a href=\"https://www.columbiaspectator.com/contributors/Jun-Yi-Zhang/\">Jun Yi Zhang</a>, <a href=\"https://www.columbiaspectator.com/contributors/Stephanie-Lai/\">Stephanie Lai</a>, <a href=\"https://www.columbiaspectator.com/contributors/Raeedah-Wahid/\">Raeedah Wahid</a>\nProduced by <a href=\"https://www.columbiaspectator.com/contributors/Hong-Sen-Du/\">Hong Sen Du</a> and <a href=\"https://www.columbiaspectator.com/contributors/Jason-Kao/\">Jason Kao</a>.\nEdited by <a href=\"https://www.columbiaspectator.com/contributors/Karen-Xia\">Karen Xia</a>.",
+  "footer": "<a href=\"https://www.columbiaspectator.com/contributors/Griffin-Jones\">Griffin Jones</a> contributed to reporting. Produced with <a href=\"https://github.com/spec-journalism/spectate/\">Spectate</a>.",
   "body": [
     {
       "type": "text",
-      "value": "Lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead lead. Here’s what happened."
+      "value": "Leadin. Something to draw the reader in. Graphics is the only visuals and words desk at the Spectator."
+    },
+    {
+      "type": "text",
+      "value": "Nutgraf. What is the meat of the story? Why does this matter?"
     },
     {
       "type": "graphic",
       "value": {
-        "asset": "linguistics.html"
+        "asset": ""
       }
+    },
+    {
+      "type": "text",
+      "value": "<i>Staff graphics reporter TK TK can be contacted at </i><a href=\"mailto:email@columbiaspectator.com\"><i>email@columbiaspectator.com</i></a><i>.</i>"
     }
   ]
 }
