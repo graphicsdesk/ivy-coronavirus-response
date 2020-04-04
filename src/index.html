@@ -19,8 +19,8 @@
       <switch expression="item.type">
         <case n="'graphic'">
           <div class="graphic">
-            <if condition="item.value.asset === 'graphic-name.html'">
-              <include src="graphic-name.html"></include>
+            <if condition="item.value.asset === 'lede.html'">
+              <include src="lede.html"></include>
             </if>
           </div>
         </case>
@@ -56,10 +56,6 @@
         </case>
       </switch>
     </each>
-  </div>
-
-  <div class="spectate-dev-footer">
-    <a href="{{ DOC_URL }}" target="_blank">Doc</a>
   </div>
   
   <include src="partials/footer.html"></include>

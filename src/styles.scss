@@ -9,3 +9,11 @@ body {
   // Arc's overflow hidden on <body> messes up position sticky
   overflow-x: visible !important;
 }
+
+/**
+ * Styles for interactive lede-in
+ */
+
+#lede {
+  background: red;
+}
