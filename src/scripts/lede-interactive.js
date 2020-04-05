@@ -9,6 +9,8 @@ import { f } from 'd3-jetpack/essentials';
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
+import { fadeIn, fadeOut, INTERPOLATION_TIME, didDomainChange } from './utils';
+
 import covidData from '../../data/covid.json';
 
 /**
@@ -31,35 +33,43 @@ class Graph {
   gWidth = this.width - margin.left - margin.right;
   gHeight = this.height - margin.top - margin.bottom;
 
-  // Create scales on dimensions
+  // Create scales; we only know range right now
   xScale = scaleLinear().range([ 0, this.gWidth ]);
   yScale = scaleLinear().range([ this.gHeight, 0 ]);
 
   // Create line generator
   lineGenerator = d3Line();
 
+  // Create SVG and the main group for margins
   svg = select('#chart-container')
     .append('svg')
     .at({ width: this.width, height: this.height })
     .append('g')
     .translate([ margin.left, margin.top ]);
 
+  // Create axis elements, lines container
   xAxis = this.svg.append('g.x-axis').translate([ 0, this.gHeight ]);
   yAxis = this.svg.append('g.y-axis');
   linesContainer = this.svg.append('g.lines-container');
 
+  // Rescales mappings (scales, line generator) based on new data
   rescaleDataRange(data) {
     const { xScale, yScale, lineGenerator } = this;
+    const newXDomain = extent(data, d => d.dayNumber);
+    const newYDomain = extent(data, d => d.cases);
 
-    // Scale the range of the data and the line generator
-    xScale.domain([ 0, data.length - 1 ].map(i => data[i].dayNumber));
-    yScale.domain([ 0, data.length - 1 ].map(i => data[i].cases));
+    // Compare domains while setting the new ones (sorta hacky)
+    const didDomainsChange =
+      didDomainChange(xScale.domain(), xScale.domain(newXDomain).domain()) +
+      didDomainChange(yScale.domain(), yScale.domain(newYDomain).domain());
     lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+
+    return didDomainsChange;
   }
 
   update(countries) {
     const data = covidData.filter(d => countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
-    this.rescaleDataRange(data);
+    const domainsChanged = this.rescaleDataRange(data);
 
     const {
       xAxis, yAxis,
@@ -69,7 +79,6 @@ class Graph {
       svg,
     } = this;
 
-
     // Each <path> should be joined to one country's time-series COVID data (an array)
     const theJoinData = countries.map(country => data.filter(d => d.country === country));
 
@@ -78,22 +87,41 @@ class Graph {
       .selectAll('path')
       .data(theJoinData, array => array[0].country);
 
-    xAxis.transition().duration(1000).call(axisBottom(xScale));
-    yAxis.transition().duration(1000).call(axisLeft(yScale));
+    // Always interpolate existing elements to match the new data range.
+    // But if the lines exit selection is nonempty, fade out and remove that first.
+    const linesExit = linesUpdate.exit()
+    if (linesExit.empty())
+      updateExistingElements();
+    else
+      // Cannot use selection.call if chaining. See d3/d3-selection#102.
+      fadeOut(linesExit).on('end', updateExistingElements);
 
-    linesUpdate
-      .join(
-        // On enter, lines fade in
-        enter => enter.append('path')
-          .at({ opacity: 0, d: lineGenerator })
-          .call(enter => enter.transition().duration(1000).attr('opacity', 1)),
-        // On update, interpolate paths
-        update => update.call(update => update.transition()
-          .duration(1000)
-          .attr('d', lineGenerator)),
-        // On exit, remove lines
-        exit => exit.remove(),
-      );
+    // Interpolates existing elements (axes and existing paths), and schedules
+    // enterPaths(). If no domains changed, immediately enter paths.
+    function updateExistingElements() {
+      if (domainsChanged) {
+        linesUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .attr('d', lineGenerator)
+        xAxis.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(axisBottom(xScale));
+        yAxis.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(axisLeft(yScale))
+          .on('end', enterPaths);
+      } else {
+        enterPaths();
+      }
+    }
+
+    // Fade in enter selection for paths
+    function enterPaths() {
+      linesUpdate.enter()
+        .append('path')
+        .attr('d', lineGenerator)
+        .call(fadeIn);
+    }
   }
 }
 
