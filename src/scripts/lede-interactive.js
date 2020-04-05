@@ -52,8 +52,8 @@ class Graph {
     const { xScale, yScale, lineGenerator } = this;
 
     // Scale the range of the data and the line generator
-    xScale.domain(extent(data, d => d.dayNumber));
-    yScale.domain(extent(data, d => d.cases));
+    xScale.domain([ 0, data.length - 1 ].map(i => data[i].dayNumber));
+    yScale.domain([ 0, data.length - 1 ].map(i => data[i].cases));
     lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
   }
 
@@ -66,28 +66,34 @@ class Graph {
       xScale, yScale,
       linesContainer,
       lineGenerator,
+      svg,
     } = this;
 
-    // Generate axes
-    console.log(xAxis);
-    xAxis.transition().call(axisBottom(xScale));
-    yAxis.transition().call(axisLeft(yScale));
 
     // Each <path> should be joined to one country's time-series COVID data (an array)
     const theJoinData = countries.map(country => data.filter(d => d.country === country));
 
-    // Join the data
-    const lines = linesContainer
+    // Join data, store update selection
+    const linesUpdate = linesContainer
       .selectAll('path')
       .data(theJoinData, array => array[0].country);
 
-    lines.enter()
-      .append('path') // Append the entering elements
-      .merge(lines) // Merge current enter selection with existing path selection
-      .transition()
-      .attr('d', lineGenerator); // Generate line for all paths
+    xAxis.transition().duration(1000).call(axisBottom(xScale));
+    yAxis.transition().duration(1000).call(axisLeft(yScale));
 
-    lines.exit().remove(); // Remove the exiting elements
+    linesUpdate
+      .join(
+        // On enter, lines fade in
+        enter => enter.append('path')
+          .at({ opacity: 0, d: lineGenerator })
+          .call(enter => enter.transition().duration(1000).attr('opacity', 1)),
+        // On update, interpolate paths
+        update => update.call(update => update.transition()
+          .duration(1000)
+          .attr('d', lineGenerator)),
+        // On exit, remove lines
+        exit => exit.remove(),
+      );
   }
 }
 
