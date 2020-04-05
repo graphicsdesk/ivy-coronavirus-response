@@ -1,8 +1,9 @@
 import { scaleTime, scaleLinear } from 'd3-scale';
 import { extent } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
-import { select } from 'd3-selection';
 import { line as d3Line } from 'd3-shape';
+import { select } from 'd3-selection';
+import 'd3-transition';
 import { f } from 'd3-jetpack/essentials';
 
 import 'intersection-observer';
@@ -92,7 +93,6 @@ class Graph {
 
 const graph = new Graph();
 graph.update([ 'China' ]);
-setTimeout(() => graph.update([ 'US', 'China' ]), 1000);
 
 /**
  * Scroll step triggers
@@ -112,6 +112,10 @@ scroller
 
 function onStepEnter({ element, index }) {
   console.log('Entered', index);
+  if (index === 1)
+    graph.update([ 'US', 'China' ]);
+  else
+    graph.update([ 'China' ]);
 }
 
 function onStepExit({ element, index }) {
