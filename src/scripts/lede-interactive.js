@@ -22,10 +22,8 @@ for (let i = 0; i < covidData.length; i++)
   covidData[i].date = new Date(covidData[i].date);
 
 /**
- * Make charts
+ * The Store class provides an interface for storing visualization state
  */
-
-const margin = { top: 20, right: 20, bottom: 50, left: 50 };
 
 class Store {
   // Stores what countries are shown
@@ -54,6 +52,11 @@ class Store {
   }
 }
 
+/**
+ * The Graph class draws and udpates the visualization's DOM elements
+ */
+
+const margin = { top: 20, right: 20, bottom: 50, left: 50 };
 class Graph extends Store {
   width = document.body.clientWidth;
   height = document.body.clientHeight;
