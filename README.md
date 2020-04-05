@@ -6,6 +6,6 @@ For setup and usage instructions, see the [Spectate documentation](https://githu
 
 ## Data Diary
 
-`/process/download-data.js` downloads COVID data aggregated by countries (`countries-aggregated.csv`) directly from JHU's [datahub](https://github.com/datasets/covid-19). It filters out the countries the lede doesn't visualize and makes the keys lowercase. It writes the data to `/data/covid.json`.
+`/process/download-data.js` downloads COVID data aggregated by countries (`countries-aggregated.csv`) directly from JHU's [datahub](https://github.com/datasets/covid-19). It filters out the countries the lede doesn't visualize and makes the keys lowercase. It writes the data to `/data/covid.json`. It can be run directly with Node or with `spectate download-data`.
 
 `/src/scripts/lede-interactive.js` does minimal preprocessing, turning date strings into `Date` objects.
