@@ -1,2 +1,11 @@
 <div id="lede">
+  <div id="chart-container">
+  </div>
+  <div id="steps-container">
+    <each loop="item, index in item.value.steps">
+      <div class="step" data-index="{{ index }}">
+        <p>{{{ item }}}</p>
+      </div>
+    </each>
+  </div>
 </div>

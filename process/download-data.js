@@ -7,7 +7,13 @@ const COUNTRIES = [ 'US', 'Italy', 'China', 'Korea, South' ];
 async function main() {
   // Get data and filter by countries of interest
   const response = await axios.get(DATA_URL);
-  const data = response.data.filter(d => COUNTRIES.includes(d.Country));
+  const data = response.data
+    .filter(d => COUNTRIES.includes(d.Country))
+    .map(d => ({
+      cases: d.Confirmed,
+      country: d.Country,
+      date: d.Date,
+    }));
 
   // Write to /data/covid.json
   await fs.writeFile(process.cwd() + '/data/covid.json', JSON.stringify(data));
