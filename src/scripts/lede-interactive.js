@@ -1,5 +1,5 @@
 import { scaleTime, scaleLinear } from 'd3-scale';
-import { axisBottom, axisLeft } from 'd3-axis';
+import { axisBottom, axisRight } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
@@ -27,7 +27,34 @@ for (let i = 0; i < covidData.length; i++)
 
 const margin = { top: 20, right: 20, bottom: 50, left: 50 };
 
-class Graph {
+class Store {
+  // Stores what countries are shown
+  countriesShown = {};
+
+  // Adds a country
+  addCountry(country) {
+    this.countriesShown[country] = true;
+    this.update(this.rescaleDataRange());
+  }
+
+  // Removes a country
+  removeCountry(country) {
+    this.countriesShown[country] = undefined;
+    this.update(this.rescaleDataRange());
+  }
+
+  // Returns countries as an array
+  get countries() {
+    return Object.keys(this.countriesShown).filter(c => this.countriesShown[c]);
+  }
+
+  // Returns data necessary to display the current state
+  get data() {
+    return covidData.filter(d => this.countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
+  }
+}
+
+class Graph extends Store {
   width = document.body.clientWidth;
   height = document.body.clientHeight;
   gWidth = this.width - margin.left - margin.right;
@@ -37,9 +64,6 @@ class Graph {
   xScale = scaleLinear().range([ 0, this.gWidth ]);
   yScale = scaleLinear().range([ this.gHeight, 0 ]);
 
-  // Create line generator
-  lineGenerator = d3Line();
-
   // Create SVG and the main group for margins
   svg = select('#chart-container')
     .append('svg')
@@ -47,41 +71,27 @@ class Graph {
     .append('g')
     .translate([ margin.left, margin.top ]);
 
-  // Create axis elements, lines container
-  xAxis = this.svg.append('g.x-axis').translate([ 0, this.gHeight ]);
-  yAxis = this.svg.append('g.y-axis');
+  // Create axis container, lines container
+  xAxis = this.svg.append('g.axis.x-axis').translate([ 0, this.gHeight ]);
+  yAxis = this.svg.append('g.axis.y-axis');
   linesContainer = this.svg.append('g.lines-container');
 
-  // Rescales mappings (scales, line generator) based on new data
-  rescaleDataRange(data) {
-    const { xScale, yScale, lineGenerator } = this;
+  // Create axis generators
+  xAxisGenerator = axisBottom(this.xScale);
+  yAxisGenerator = axisRight(this.yScale);
 
-    const newXDomain = extent(data, d => d.dayNumber);
-    const newYDomain = extent(data, d => d.cases);
+  // Create line generator
+  lineGenerator = d3Line();
 
-    // Update scale domains. Returns whether domains had changed.
-    // Plus sign is an eager (non-short-circuiting) OR
-    const didDomainsChange =
-      areDomainsUnequal(xScale.domain(), xScale.domain(newXDomain).domain()) +
-      areDomainsUnequal(yScale.domain(), yScale.domain(newYDomain).domain());
-
-    // Updates line generator based on new scales
-    if (didDomainsChange)
-      lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
-
-    return didDomainsChange;
-  }
-
-  update(countries) {
-    const data = covidData.filter(d => countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
-    const domainsChanged = this.rescaleDataRange(data);
-
+  update(domainsChanged) {
     const {
-      xAxis, yAxis,
       xScale, yScale,
+      xAxis, yAxis,
+      xAxisGenerator, yAxisGenerator,
       linesContainer,
       lineGenerator,
       svg,
+      countries, data
     } = this;
 
     // Each <path> should be joined to one country's time-series COVID data (an array)
@@ -110,10 +120,10 @@ class Graph {
           .attr('d', lineGenerator)
         xAxis.transition()
           .duration(INTERPOLATION_TIME)
-          .call(axisBottom(xScale));
+          .call(xAxisGenerator);
         yAxis.transition()
           .duration(INTERPOLATION_TIME)
-          .call(axisLeft(yScale))
+          .call(yAxisGenerator)
           .on('end', enterPaths);
       } else {
         enterPaths();
@@ -128,10 +138,30 @@ class Graph {
         .call(fadeIn);
     }
   }
+
+  // Rescales mappings (scales, line generator) based on new data
+  rescaleDataRange() {
+    const { xScale, yScale, lineGenerator } = this;
+
+    const newXDomain = extent(this.data, d => d.dayNumber);
+    const newYDomain = extent(this.data, d => d.cases);
+
+    // Update scale domains. Returns whether domains had changed.
+    // Plus sign is an eager (non-short-circuiting) OR
+    const didDomainsChange =
+      areDomainsUnequal(xScale.domain(), xScale.domain(newXDomain).domain()) +
+      areDomainsUnequal(yScale.domain(), yScale.domain(newYDomain).domain());
+
+    // Updates line generator based on new scales
+    if (didDomainsChange)
+      lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+
+    return didDomainsChange;
+  }
 }
 
 const graph = new Graph();
-graph.update([ 'US' ]);
+graph.addCountry('US');
 
 /**
  * Scroll step triggers
@@ -150,6 +180,10 @@ scroller
   .onStepExit(onStepExit);
 
 function onStepEnter({ index }) {
+  if (index === 1)
+    graph.addCountry('China');
+  else
+    graph.removeCountry('China');
 }
 
 function onStepExit({ index }) {

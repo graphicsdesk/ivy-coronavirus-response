@@ -31,6 +31,14 @@ g.lines-container > path {
   stroke-width: 2px;
 }
 
+g.axis .tick {
+  text {
+    font-family: Roboto;
+    color: #666;
+    font-size: 13px;
+  }
+}
+
 /**
  * Interactive lede steps
  */
