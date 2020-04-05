@@ -40,13 +40,13 @@ function graphData() {
     .range([ 0, gWidth ]);
   // Create y scale
   const yScale = scaleLinear()
-    .domain(extent(data, d => d.increase))
+    .domain(extent(data, d => d.cases))
     .range([ gHeight, 0 ]);
 
   // Create line generator
   const line = d3Line()
     .x(d => xScale(d.date))
-    .y(d => yScale(d.increase));
+    .y(d => yScale(d.cases));
 
   // Create SVG
   const svg = select('#chart-container')

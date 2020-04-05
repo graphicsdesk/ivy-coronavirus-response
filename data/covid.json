@@ -1,1 +1,1462 @@
-[{"cases":548,"country":"China","date":"2020-01-22T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-22T00:00:00.000Z"},{"cases":1,"country":"Korea, South","date":"2020-01-22T00:00:00.000Z"},{"cases":1,"country":"US","date":"2020-01-22T00:00:00.000Z"},{"cases":643,"country":"China","date":"2020-01-23T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-23T00:00:00.000Z"},{"cases":1,"country":"Korea, South","date":"2020-01-23T00:00:00.000Z"},{"cases":1,"country":"US","date":"2020-01-23T00:00:00.000Z"},{"cases":920,"country":"China","date":"2020-01-24T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-24T00:00:00.000Z"},{"cases":2,"country":"Korea, South","date":"2020-01-24T00:00:00.000Z"},{"cases":2,"country":"US","date":"2020-01-24T00:00:00.000Z"},{"cases":1406,"country":"China","date":"2020-01-25T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-25T00:00:00.000Z"},{"cases":2,"country":"Korea, South","date":"2020-01-25T00:00:00.000Z"},{"cases":2,"country":"US","date":"2020-01-25T00:00:00.000Z"},{"cases":2075,"country":"China","date":"2020-01-26T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-26T00:00:00.000Z"},{"cases":3,"country":"Korea, South","date":"2020-01-26T00:00:00.000Z"},{"cases":5,"country":"US","date":"2020-01-26T00:00:00.000Z"},{"cases":2877,"country":"China","date":"2020-01-27T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-27T00:00:00.000Z"},{"cases":4,"country":"Korea, South","date":"2020-01-27T00:00:00.000Z"},{"cases":5,"country":"US","date":"2020-01-27T00:00:00.000Z"},{"cases":5509,"country":"China","date":"2020-01-28T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-28T00:00:00.000Z"},{"cases":4,"country":"Korea, South","date":"2020-01-28T00:00:00.000Z"},{"cases":5,"country":"US","date":"2020-01-28T00:00:00.000Z"},{"cases":6087,"country":"China","date":"2020-01-29T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-29T00:00:00.000Z"},{"cases":4,"country":"Korea, South","date":"2020-01-29T00:00:00.000Z"},{"cases":5,"country":"US","date":"2020-01-29T00:00:00.000Z"},{"cases":8141,"country":"China","date":"2020-01-30T00:00:00.000Z"},{"cases":0,"country":"Italy","date":"2020-01-30T00:00:00.000Z"},{"cases":4,"country":"Korea, South","date":"2020-01-30T00:00:00.000Z"},{"cases":5,"country":"US","date":"2020-01-30T00:00:00.000Z"},{"cases":9802,"country":"China","date":"2020-01-31T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-01-31T00:00:00.000Z"},{"cases":11,"country":"Korea, South","date":"2020-01-31T00:00:00.000Z"},{"cases":7,"country":"US","date":"2020-01-31T00:00:00.000Z"},{"cases":11891,"country":"China","date":"2020-02-01T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-01T00:00:00.000Z"},{"cases":12,"country":"Korea, South","date":"2020-02-01T00:00:00.000Z"},{"cases":8,"country":"US","date":"2020-02-01T00:00:00.000Z"},{"cases":16630,"country":"China","date":"2020-02-02T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-02T00:00:00.000Z"},{"cases":15,"country":"Korea, South","date":"2020-02-02T00:00:00.000Z"},{"cases":8,"country":"US","date":"2020-02-02T00:00:00.000Z"},{"cases":19716,"country":"China","date":"2020-02-03T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-03T00:00:00.000Z"},{"cases":15,"country":"Korea, South","date":"2020-02-03T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-03T00:00:00.000Z"},{"cases":23707,"country":"China","date":"2020-02-04T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-04T00:00:00.000Z"},{"cases":16,"country":"Korea, South","date":"2020-02-04T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-04T00:00:00.000Z"},{"cases":27440,"country":"China","date":"2020-02-05T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-05T00:00:00.000Z"},{"cases":19,"country":"Korea, South","date":"2020-02-05T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-05T00:00:00.000Z"},{"cases":30587,"country":"China","date":"2020-02-06T00:00:00.000Z"},{"cases":2,"country":"Italy","date":"2020-02-06T00:00:00.000Z"},{"cases":23,"country":"Korea, South","date":"2020-02-06T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-06T00:00:00.000Z"},{"cases":34110,"country":"China","date":"2020-02-07T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-07T00:00:00.000Z"},{"cases":24,"country":"Korea, South","date":"2020-02-07T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-07T00:00:00.000Z"},{"cases":36814,"country":"China","date":"2020-02-08T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-08T00:00:00.000Z"},{"cases":24,"country":"Korea, South","date":"2020-02-08T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-08T00:00:00.000Z"},{"cases":39829,"country":"China","date":"2020-02-09T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-09T00:00:00.000Z"},{"cases":25,"country":"Korea, South","date":"2020-02-09T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-09T00:00:00.000Z"},{"cases":42354,"country":"China","date":"2020-02-10T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-10T00:00:00.000Z"},{"cases":27,"country":"Korea, South","date":"2020-02-10T00:00:00.000Z"},{"cases":11,"country":"US","date":"2020-02-10T00:00:00.000Z"},{"cases":44386,"country":"China","date":"2020-02-11T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-11T00:00:00.000Z"},{"cases":28,"country":"Korea, South","date":"2020-02-11T00:00:00.000Z"},{"cases":12,"country":"US","date":"2020-02-11T00:00:00.000Z"},{"cases":44759,"country":"China","date":"2020-02-12T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-12T00:00:00.000Z"},{"cases":28,"country":"Korea, South","date":"2020-02-12T00:00:00.000Z"},{"cases":12,"country":"US","date":"2020-02-12T00:00:00.000Z"},{"cases":59895,"country":"China","date":"2020-02-13T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-13T00:00:00.000Z"},{"cases":28,"country":"Korea, South","date":"2020-02-13T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-13T00:00:00.000Z"},{"cases":66358,"country":"China","date":"2020-02-14T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-14T00:00:00.000Z"},{"cases":28,"country":"Korea, South","date":"2020-02-14T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-14T00:00:00.000Z"},{"cases":68413,"country":"China","date":"2020-02-15T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-15T00:00:00.000Z"},{"cases":28,"country":"Korea, South","date":"2020-02-15T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-15T00:00:00.000Z"},{"cases":70513,"country":"China","date":"2020-02-16T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-16T00:00:00.000Z"},{"cases":29,"country":"Korea, South","date":"2020-02-16T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-16T00:00:00.000Z"},{"cases":72434,"country":"China","date":"2020-02-17T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-17T00:00:00.000Z"},{"cases":30,"country":"Korea, South","date":"2020-02-17T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-17T00:00:00.000Z"},{"cases":74211,"country":"China","date":"2020-02-18T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-18T00:00:00.000Z"},{"cases":31,"country":"Korea, South","date":"2020-02-18T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-18T00:00:00.000Z"},{"cases":74619,"country":"China","date":"2020-02-19T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-19T00:00:00.000Z"},{"cases":31,"country":"Korea, South","date":"2020-02-19T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-19T00:00:00.000Z"},{"cases":75077,"country":"China","date":"2020-02-20T00:00:00.000Z"},{"cases":3,"country":"Italy","date":"2020-02-20T00:00:00.000Z"},{"cases":104,"country":"Korea, South","date":"2020-02-20T00:00:00.000Z"},{"cases":13,"country":"US","date":"2020-02-20T00:00:00.000Z"},{"cases":75550,"country":"China","date":"2020-02-21T00:00:00.000Z"},{"cases":20,"country":"Italy","date":"2020-02-21T00:00:00.000Z"},{"cases":204,"country":"Korea, South","date":"2020-02-21T00:00:00.000Z"},{"cases":15,"country":"US","date":"2020-02-21T00:00:00.000Z"},{"cases":77001,"country":"China","date":"2020-02-22T00:00:00.000Z"},{"cases":62,"country":"Italy","date":"2020-02-22T00:00:00.000Z"},{"cases":433,"country":"Korea, South","date":"2020-02-22T00:00:00.000Z"},{"cases":15,"country":"US","date":"2020-02-22T00:00:00.000Z"},{"cases":77022,"country":"China","date":"2020-02-23T00:00:00.000Z"},{"cases":155,"country":"Italy","date":"2020-02-23T00:00:00.000Z"},{"cases":602,"country":"Korea, South","date":"2020-02-23T00:00:00.000Z"},{"cases":15,"country":"US","date":"2020-02-23T00:00:00.000Z"},{"cases":77241,"country":"China","date":"2020-02-24T00:00:00.000Z"},{"cases":229,"country":"Italy","date":"2020-02-24T00:00:00.000Z"},{"cases":833,"country":"Korea, South","date":"2020-02-24T00:00:00.000Z"},{"cases":51,"country":"US","date":"2020-02-24T00:00:00.000Z"},{"cases":77754,"country":"China","date":"2020-02-25T00:00:00.000Z"},{"cases":322,"country":"Italy","date":"2020-02-25T00:00:00.000Z"},{"cases":977,"country":"Korea, South","date":"2020-02-25T00:00:00.000Z"},{"cases":51,"country":"US","date":"2020-02-25T00:00:00.000Z"},{"cases":78166,"country":"China","date":"2020-02-26T00:00:00.000Z"},{"cases":453,"country":"Italy","date":"2020-02-26T00:00:00.000Z"},{"cases":1261,"country":"Korea, South","date":"2020-02-26T00:00:00.000Z"},{"cases":57,"country":"US","date":"2020-02-26T00:00:00.000Z"},{"cases":78600,"country":"China","date":"2020-02-27T00:00:00.000Z"},{"cases":655,"country":"Italy","date":"2020-02-27T00:00:00.000Z"},{"cases":1766,"country":"Korea, South","date":"2020-02-27T00:00:00.000Z"},{"cases":58,"country":"US","date":"2020-02-27T00:00:00.000Z"},{"cases":78928,"country":"China","date":"2020-02-28T00:00:00.000Z"},{"cases":888,"country":"Italy","date":"2020-02-28T00:00:00.000Z"},{"cases":2337,"country":"Korea, South","date":"2020-02-28T00:00:00.000Z"},{"cases":60,"country":"US","date":"2020-02-28T00:00:00.000Z"},{"cases":79356,"country":"China","date":"2020-02-29T00:00:00.000Z"},{"cases":1128,"country":"Italy","date":"2020-02-29T00:00:00.000Z"},{"cases":3150,"country":"Korea, South","date":"2020-02-29T00:00:00.000Z"},{"cases":68,"country":"US","date":"2020-02-29T00:00:00.000Z"},{"cases":79932,"country":"China","date":"2020-03-01T00:00:00.000Z"},{"cases":1694,"country":"Italy","date":"2020-03-01T00:00:00.000Z"},{"cases":3736,"country":"Korea, South","date":"2020-03-01T00:00:00.000Z"},{"cases":74,"country":"US","date":"2020-03-01T00:00:00.000Z"},{"cases":80136,"country":"China","date":"2020-03-02T00:00:00.000Z"},{"cases":2036,"country":"Italy","date":"2020-03-02T00:00:00.000Z"},{"cases":4335,"country":"Korea, South","date":"2020-03-02T00:00:00.000Z"},{"cases":98,"country":"US","date":"2020-03-02T00:00:00.000Z"},{"cases":80261,"country":"China","date":"2020-03-03T00:00:00.000Z"},{"cases":2502,"country":"Italy","date":"2020-03-03T00:00:00.000Z"},{"cases":5186,"country":"Korea, South","date":"2020-03-03T00:00:00.000Z"},{"cases":118,"country":"US","date":"2020-03-03T00:00:00.000Z"},{"cases":80386,"country":"China","date":"2020-03-04T00:00:00.000Z"},{"cases":3089,"country":"Italy","date":"2020-03-04T00:00:00.000Z"},{"cases":5621,"country":"Korea, South","date":"2020-03-04T00:00:00.000Z"},{"cases":149,"country":"US","date":"2020-03-04T00:00:00.000Z"},{"cases":80537,"country":"China","date":"2020-03-05T00:00:00.000Z"},{"cases":3858,"country":"Italy","date":"2020-03-05T00:00:00.000Z"},{"cases":6088,"country":"Korea, South","date":"2020-03-05T00:00:00.000Z"},{"cases":217,"country":"US","date":"2020-03-05T00:00:00.000Z"},{"cases":80690,"country":"China","date":"2020-03-06T00:00:00.000Z"},{"cases":4636,"country":"Italy","date":"2020-03-06T00:00:00.000Z"},{"cases":6593,"country":"Korea, South","date":"2020-03-06T00:00:00.000Z"},{"cases":262,"country":"US","date":"2020-03-06T00:00:00.000Z"},{"cases":80770,"country":"China","date":"2020-03-07T00:00:00.000Z"},{"cases":5883,"country":"Italy","date":"2020-03-07T00:00:00.000Z"},{"cases":7041,"country":"Korea, South","date":"2020-03-07T00:00:00.000Z"},{"cases":402,"country":"US","date":"2020-03-07T00:00:00.000Z"},{"cases":80823,"country":"China","date":"2020-03-08T00:00:00.000Z"},{"cases":7375,"country":"Italy","date":"2020-03-08T00:00:00.000Z"},{"cases":7314,"country":"Korea, South","date":"2020-03-08T00:00:00.000Z"},{"cases":518,"country":"US","date":"2020-03-08T00:00:00.000Z"},{"cases":80860,"country":"China","date":"2020-03-09T00:00:00.000Z"},{"cases":9172,"country":"Italy","date":"2020-03-09T00:00:00.000Z"},{"cases":7478,"country":"Korea, South","date":"2020-03-09T00:00:00.000Z"},{"cases":583,"country":"US","date":"2020-03-09T00:00:00.000Z"},{"cases":80887,"country":"China","date":"2020-03-10T00:00:00.000Z"},{"cases":10149,"country":"Italy","date":"2020-03-10T00:00:00.000Z"},{"cases":7513,"country":"Korea, South","date":"2020-03-10T00:00:00.000Z"},{"cases":959,"country":"US","date":"2020-03-10T00:00:00.000Z"},{"cases":80921,"country":"China","date":"2020-03-11T00:00:00.000Z"},{"cases":12462,"country":"Italy","date":"2020-03-11T00:00:00.000Z"},{"cases":7755,"country":"Korea, South","date":"2020-03-11T00:00:00.000Z"},{"cases":1281,"country":"US","date":"2020-03-11T00:00:00.000Z"},{"cases":80932,"country":"China","date":"2020-03-12T00:00:00.000Z"},{"cases":12462,"country":"Italy","date":"2020-03-12T00:00:00.000Z"},{"cases":7869,"country":"Korea, South","date":"2020-03-12T00:00:00.000Z"},{"cases":1663,"country":"US","date":"2020-03-12T00:00:00.000Z"},{"cases":80945,"country":"China","date":"2020-03-13T00:00:00.000Z"},{"cases":17660,"country":"Italy","date":"2020-03-13T00:00:00.000Z"},{"cases":7979,"country":"Korea, South","date":"2020-03-13T00:00:00.000Z"},{"cases":2179,"country":"US","date":"2020-03-13T00:00:00.000Z"},{"cases":80977,"country":"China","date":"2020-03-14T00:00:00.000Z"},{"cases":21157,"country":"Italy","date":"2020-03-14T00:00:00.000Z"},{"cases":8086,"country":"Korea, South","date":"2020-03-14T00:00:00.000Z"},{"cases":2727,"country":"US","date":"2020-03-14T00:00:00.000Z"},{"cases":81003,"country":"China","date":"2020-03-15T00:00:00.000Z"},{"cases":24747,"country":"Italy","date":"2020-03-15T00:00:00.000Z"},{"cases":8162,"country":"Korea, South","date":"2020-03-15T00:00:00.000Z"},{"cases":3499,"country":"US","date":"2020-03-15T00:00:00.000Z"},{"cases":81033,"country":"China","date":"2020-03-16T00:00:00.000Z"},{"cases":27980,"country":"Italy","date":"2020-03-16T00:00:00.000Z"},{"cases":8236,"country":"Korea, South","date":"2020-03-16T00:00:00.000Z"},{"cases":4632,"country":"US","date":"2020-03-16T00:00:00.000Z"},{"cases":81058,"country":"China","date":"2020-03-17T00:00:00.000Z"},{"cases":31506,"country":"Italy","date":"2020-03-17T00:00:00.000Z"},{"cases":8320,"country":"Korea, South","date":"2020-03-17T00:00:00.000Z"},{"cases":6421,"country":"US","date":"2020-03-17T00:00:00.000Z"},{"cases":81102,"country":"China","date":"2020-03-18T00:00:00.000Z"},{"cases":35713,"country":"Italy","date":"2020-03-18T00:00:00.000Z"},{"cases":8413,"country":"Korea, South","date":"2020-03-18T00:00:00.000Z"},{"cases":7783,"country":"US","date":"2020-03-18T00:00:00.000Z"},{"cases":81156,"country":"China","date":"2020-03-19T00:00:00.000Z"},{"cases":41035,"country":"Italy","date":"2020-03-19T00:00:00.000Z"},{"cases":8565,"country":"Korea, South","date":"2020-03-19T00:00:00.000Z"},{"cases":13677,"country":"US","date":"2020-03-19T00:00:00.000Z"},{"cases":81250,"country":"China","date":"2020-03-20T00:00:00.000Z"},{"cases":47021,"country":"Italy","date":"2020-03-20T00:00:00.000Z"},{"cases":8652,"country":"Korea, South","date":"2020-03-20T00:00:00.000Z"},{"cases":19100,"country":"US","date":"2020-03-20T00:00:00.000Z"},{"cases":81305,"country":"China","date":"2020-03-21T00:00:00.000Z"},{"cases":53578,"country":"Italy","date":"2020-03-21T00:00:00.000Z"},{"cases":8799,"country":"Korea, South","date":"2020-03-21T00:00:00.000Z"},{"cases":25489,"country":"US","date":"2020-03-21T00:00:00.000Z"},{"cases":81435,"country":"China","date":"2020-03-22T00:00:00.000Z"},{"cases":59138,"country":"Italy","date":"2020-03-22T00:00:00.000Z"},{"cases":8961,"country":"Korea, South","date":"2020-03-22T00:00:00.000Z"},{"cases":33276,"country":"US","date":"2020-03-22T00:00:00.000Z"},{"cases":81498,"country":"China","date":"2020-03-23T00:00:00.000Z"},{"cases":63927,"country":"Italy","date":"2020-03-23T00:00:00.000Z"},{"cases":8961,"country":"Korea, South","date":"2020-03-23T00:00:00.000Z"},{"cases":43847,"country":"US","date":"2020-03-23T00:00:00.000Z"},{"cases":81591,"country":"China","date":"2020-03-24T00:00:00.000Z"},{"cases":69176,"country":"Italy","date":"2020-03-24T00:00:00.000Z"},{"cases":9037,"country":"Korea, South","date":"2020-03-24T00:00:00.000Z"},{"cases":53740,"country":"US","date":"2020-03-24T00:00:00.000Z"},{"cases":81661,"country":"China","date":"2020-03-25T00:00:00.000Z"},{"cases":74386,"country":"Italy","date":"2020-03-25T00:00:00.000Z"},{"cases":9137,"country":"Korea, South","date":"2020-03-25T00:00:00.000Z"},{"cases":65778,"country":"US","date":"2020-03-25T00:00:00.000Z"},{"cases":81782,"country":"China","date":"2020-03-26T00:00:00.000Z"},{"cases":80589,"country":"Italy","date":"2020-03-26T00:00:00.000Z"},{"cases":9241,"country":"Korea, South","date":"2020-03-26T00:00:00.000Z"},{"cases":83836,"country":"US","date":"2020-03-26T00:00:00.000Z"},{"cases":81897,"country":"China","date":"2020-03-27T00:00:00.000Z"},{"cases":86498,"country":"Italy","date":"2020-03-27T00:00:00.000Z"},{"cases":9332,"country":"Korea, South","date":"2020-03-27T00:00:00.000Z"},{"cases":101657,"country":"US","date":"2020-03-27T00:00:00.000Z"},{"cases":81999,"country":"China","date":"2020-03-28T00:00:00.000Z"},{"cases":92472,"country":"Italy","date":"2020-03-28T00:00:00.000Z"},{"cases":9478,"country":"Korea, South","date":"2020-03-28T00:00:00.000Z"},{"cases":121478,"country":"US","date":"2020-03-28T00:00:00.000Z"},{"cases":82122,"country":"China","date":"2020-03-29T00:00:00.000Z"},{"cases":97689,"country":"Italy","date":"2020-03-29T00:00:00.000Z"},{"cases":9583,"country":"Korea, South","date":"2020-03-29T00:00:00.000Z"},{"cases":140886,"country":"US","date":"2020-03-29T00:00:00.000Z"},{"cases":82198,"country":"China","date":"2020-03-30T00:00:00.000Z"},{"cases":101739,"country":"Italy","date":"2020-03-30T00:00:00.000Z"},{"cases":9661,"country":"Korea, South","date":"2020-03-30T00:00:00.000Z"},{"cases":161807,"country":"US","date":"2020-03-30T00:00:00.000Z"},{"cases":82279,"country":"China","date":"2020-03-31T00:00:00.000Z"},{"cases":105792,"country":"Italy","date":"2020-03-31T00:00:00.000Z"},{"cases":9786,"country":"Korea, South","date":"2020-03-31T00:00:00.000Z"},{"cases":188172,"country":"US","date":"2020-03-31T00:00:00.000Z"},{"cases":82361,"country":"China","date":"2020-04-01T00:00:00.000Z"},{"cases":110574,"country":"Italy","date":"2020-04-01T00:00:00.000Z"},{"cases":9887,"country":"Korea, South","date":"2020-04-01T00:00:00.000Z"},{"cases":213372,"country":"US","date":"2020-04-01T00:00:00.000Z"},{"cases":82432,"country":"China","date":"2020-04-02T00:00:00.000Z"},{"cases":115242,"country":"Italy","date":"2020-04-02T00:00:00.000Z"},{"cases":9976,"country":"Korea, South","date":"2020-04-02T00:00:00.000Z"},{"cases":243453,"country":"US","date":"2020-04-02T00:00:00.000Z"},{"cases":82511,"country":"China","date":"2020-04-03T00:00:00.000Z"},{"cases":119827,"country":"Italy","date":"2020-04-03T00:00:00.000Z"},{"cases":10062,"country":"Korea, South","date":"2020-04-03T00:00:00.000Z"},{"cases":275586,"country":"US","date":"2020-04-03T00:00:00.000Z"}]
+[
+  {
+    "cases": 548,
+    "country": "China",
+    "date": "2020-01-22"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-22"
+  },
+  {
+    "cases": 1,
+    "country": "Korea, South",
+    "date": "2020-01-22"
+  },
+  {
+    "cases": 1,
+    "country": "US",
+    "date": "2020-01-22"
+  },
+  {
+    "cases": 643,
+    "country": "China",
+    "date": "2020-01-23"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-23"
+  },
+  {
+    "cases": 1,
+    "country": "Korea, South",
+    "date": "2020-01-23"
+  },
+  {
+    "cases": 1,
+    "country": "US",
+    "date": "2020-01-23"
+  },
+  {
+    "cases": 920,
+    "country": "China",
+    "date": "2020-01-24"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-24"
+  },
+  {
+    "cases": 2,
+    "country": "Korea, South",
+    "date": "2020-01-24"
+  },
+  {
+    "cases": 2,
+    "country": "US",
+    "date": "2020-01-24"
+  },
+  {
+    "cases": 1406,
+    "country": "China",
+    "date": "2020-01-25"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-25"
+  },
+  {
+    "cases": 2,
+    "country": "Korea, South",
+    "date": "2020-01-25"
+  },
+  {
+    "cases": 2,
+    "country": "US",
+    "date": "2020-01-25"
+  },
+  {
+    "cases": 2075,
+    "country": "China",
+    "date": "2020-01-26"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-26"
+  },
+  {
+    "cases": 3,
+    "country": "Korea, South",
+    "date": "2020-01-26"
+  },
+  {
+    "cases": 5,
+    "country": "US",
+    "date": "2020-01-26"
+  },
+  {
+    "cases": 2877,
+    "country": "China",
+    "date": "2020-01-27"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-27"
+  },
+  {
+    "cases": 4,
+    "country": "Korea, South",
+    "date": "2020-01-27"
+  },
+  {
+    "cases": 5,
+    "country": "US",
+    "date": "2020-01-27"
+  },
+  {
+    "cases": 5509,
+    "country": "China",
+    "date": "2020-01-28"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-28"
+  },
+  {
+    "cases": 4,
+    "country": "Korea, South",
+    "date": "2020-01-28"
+  },
+  {
+    "cases": 5,
+    "country": "US",
+    "date": "2020-01-28"
+  },
+  {
+    "cases": 6087,
+    "country": "China",
+    "date": "2020-01-29"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-29"
+  },
+  {
+    "cases": 4,
+    "country": "Korea, South",
+    "date": "2020-01-29"
+  },
+  {
+    "cases": 5,
+    "country": "US",
+    "date": "2020-01-29"
+  },
+  {
+    "cases": 8141,
+    "country": "China",
+    "date": "2020-01-30"
+  },
+  {
+    "cases": 0,
+    "country": "Italy",
+    "date": "2020-01-30"
+  },
+  {
+    "cases": 4,
+    "country": "Korea, South",
+    "date": "2020-01-30"
+  },
+  {
+    "cases": 5,
+    "country": "US",
+    "date": "2020-01-30"
+  },
+  {
+    "cases": 9802,
+    "country": "China",
+    "date": "2020-01-31"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-01-31"
+  },
+  {
+    "cases": 11,
+    "country": "Korea, South",
+    "date": "2020-01-31"
+  },
+  {
+    "cases": 7,
+    "country": "US",
+    "date": "2020-01-31"
+  },
+  {
+    "cases": 11891,
+    "country": "China",
+    "date": "2020-02-01"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-01"
+  },
+  {
+    "cases": 12,
+    "country": "Korea, South",
+    "date": "2020-02-01"
+  },
+  {
+    "cases": 8,
+    "country": "US",
+    "date": "2020-02-01"
+  },
+  {
+    "cases": 16630,
+    "country": "China",
+    "date": "2020-02-02"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-02"
+  },
+  {
+    "cases": 15,
+    "country": "Korea, South",
+    "date": "2020-02-02"
+  },
+  {
+    "cases": 8,
+    "country": "US",
+    "date": "2020-02-02"
+  },
+  {
+    "cases": 19716,
+    "country": "China",
+    "date": "2020-02-03"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-03"
+  },
+  {
+    "cases": 15,
+    "country": "Korea, South",
+    "date": "2020-02-03"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-03"
+  },
+  {
+    "cases": 23707,
+    "country": "China",
+    "date": "2020-02-04"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-04"
+  },
+  {
+    "cases": 16,
+    "country": "Korea, South",
+    "date": "2020-02-04"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-04"
+  },
+  {
+    "cases": 27440,
+    "country": "China",
+    "date": "2020-02-05"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-05"
+  },
+  {
+    "cases": 19,
+    "country": "Korea, South",
+    "date": "2020-02-05"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-05"
+  },
+  {
+    "cases": 30587,
+    "country": "China",
+    "date": "2020-02-06"
+  },
+  {
+    "cases": 2,
+    "country": "Italy",
+    "date": "2020-02-06"
+  },
+  {
+    "cases": 23,
+    "country": "Korea, South",
+    "date": "2020-02-06"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-06"
+  },
+  {
+    "cases": 34110,
+    "country": "China",
+    "date": "2020-02-07"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-07"
+  },
+  {
+    "cases": 24,
+    "country": "Korea, South",
+    "date": "2020-02-07"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-07"
+  },
+  {
+    "cases": 36814,
+    "country": "China",
+    "date": "2020-02-08"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-08"
+  },
+  {
+    "cases": 24,
+    "country": "Korea, South",
+    "date": "2020-02-08"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-08"
+  },
+  {
+    "cases": 39829,
+    "country": "China",
+    "date": "2020-02-09"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-09"
+  },
+  {
+    "cases": 25,
+    "country": "Korea, South",
+    "date": "2020-02-09"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-09"
+  },
+  {
+    "cases": 42354,
+    "country": "China",
+    "date": "2020-02-10"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-10"
+  },
+  {
+    "cases": 27,
+    "country": "Korea, South",
+    "date": "2020-02-10"
+  },
+  {
+    "cases": 11,
+    "country": "US",
+    "date": "2020-02-10"
+  },
+  {
+    "cases": 44386,
+    "country": "China",
+    "date": "2020-02-11"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-11"
+  },
+  {
+    "cases": 28,
+    "country": "Korea, South",
+    "date": "2020-02-11"
+  },
+  {
+    "cases": 12,
+    "country": "US",
+    "date": "2020-02-11"
+  },
+  {
+    "cases": 44759,
+    "country": "China",
+    "date": "2020-02-12"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-12"
+  },
+  {
+    "cases": 28,
+    "country": "Korea, South",
+    "date": "2020-02-12"
+  },
+  {
+    "cases": 12,
+    "country": "US",
+    "date": "2020-02-12"
+  },
+  {
+    "cases": 59895,
+    "country": "China",
+    "date": "2020-02-13"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-13"
+  },
+  {
+    "cases": 28,
+    "country": "Korea, South",
+    "date": "2020-02-13"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-13"
+  },
+  {
+    "cases": 66358,
+    "country": "China",
+    "date": "2020-02-14"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-14"
+  },
+  {
+    "cases": 28,
+    "country": "Korea, South",
+    "date": "2020-02-14"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-14"
+  },
+  {
+    "cases": 68413,
+    "country": "China",
+    "date": "2020-02-15"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-15"
+  },
+  {
+    "cases": 28,
+    "country": "Korea, South",
+    "date": "2020-02-15"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-15"
+  },
+  {
+    "cases": 70513,
+    "country": "China",
+    "date": "2020-02-16"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-16"
+  },
+  {
+    "cases": 29,
+    "country": "Korea, South",
+    "date": "2020-02-16"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-16"
+  },
+  {
+    "cases": 72434,
+    "country": "China",
+    "date": "2020-02-17"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-17"
+  },
+  {
+    "cases": 30,
+    "country": "Korea, South",
+    "date": "2020-02-17"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-17"
+  },
+  {
+    "cases": 74211,
+    "country": "China",
+    "date": "2020-02-18"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-18"
+  },
+  {
+    "cases": 31,
+    "country": "Korea, South",
+    "date": "2020-02-18"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-18"
+  },
+  {
+    "cases": 74619,
+    "country": "China",
+    "date": "2020-02-19"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-19"
+  },
+  {
+    "cases": 31,
+    "country": "Korea, South",
+    "date": "2020-02-19"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-19"
+  },
+  {
+    "cases": 75077,
+    "country": "China",
+    "date": "2020-02-20"
+  },
+  {
+    "cases": 3,
+    "country": "Italy",
+    "date": "2020-02-20"
+  },
+  {
+    "cases": 104,
+    "country": "Korea, South",
+    "date": "2020-02-20"
+  },
+  {
+    "cases": 13,
+    "country": "US",
+    "date": "2020-02-20"
+  },
+  {
+    "cases": 75550,
+    "country": "China",
+    "date": "2020-02-21"
+  },
+  {
+    "cases": 20,
+    "country": "Italy",
+    "date": "2020-02-21"
+  },
+  {
+    "cases": 204,
+    "country": "Korea, South",
+    "date": "2020-02-21"
+  },
+  {
+    "cases": 15,
+    "country": "US",
+    "date": "2020-02-21"
+  },
+  {
+    "cases": 77001,
+    "country": "China",
+    "date": "2020-02-22"
+  },
+  {
+    "cases": 62,
+    "country": "Italy",
+    "date": "2020-02-22"
+  },
+  {
+    "cases": 433,
+    "country": "Korea, South",
+    "date": "2020-02-22"
+  },
+  {
+    "cases": 15,
+    "country": "US",
+    "date": "2020-02-22"
+  },
+  {
+    "cases": 77022,
+    "country": "China",
+    "date": "2020-02-23"
+  },
+  {
+    "cases": 155,
+    "country": "Italy",
+    "date": "2020-02-23"
+  },
+  {
+    "cases": 602,
+    "country": "Korea, South",
+    "date": "2020-02-23"
+  },
+  {
+    "cases": 15,
+    "country": "US",
+    "date": "2020-02-23"
+  },
+  {
+    "cases": 77241,
+    "country": "China",
+    "date": "2020-02-24"
+  },
+  {
+    "cases": 229,
+    "country": "Italy",
+    "date": "2020-02-24"
+  },
+  {
+    "cases": 833,
+    "country": "Korea, South",
+    "date": "2020-02-24"
+  },
+  {
+    "cases": 51,
+    "country": "US",
+    "date": "2020-02-24"
+  },
+  {
+    "cases": 77754,
+    "country": "China",
+    "date": "2020-02-25"
+  },
+  {
+    "cases": 322,
+    "country": "Italy",
+    "date": "2020-02-25"
+  },
+  {
+    "cases": 977,
+    "country": "Korea, South",
+    "date": "2020-02-25"
+  },
+  {
+    "cases": 51,
+    "country": "US",
+    "date": "2020-02-25"
+  },
+  {
+    "cases": 78166,
+    "country": "China",
+    "date": "2020-02-26"
+  },
+  {
+    "cases": 453,
+    "country": "Italy",
+    "date": "2020-02-26"
+  },
+  {
+    "cases": 1261,
+    "country": "Korea, South",
+    "date": "2020-02-26"
+  },
+  {
+    "cases": 57,
+    "country": "US",
+    "date": "2020-02-26"
+  },
+  {
+    "cases": 78600,
+    "country": "China",
+    "date": "2020-02-27"
+  },
+  {
+    "cases": 655,
+    "country": "Italy",
+    "date": "2020-02-27"
+  },
+  {
+    "cases": 1766,
+    "country": "Korea, South",
+    "date": "2020-02-27"
+  },
+  {
+    "cases": 58,
+    "country": "US",
+    "date": "2020-02-27"
+  },
+  {
+    "cases": 78928,
+    "country": "China",
+    "date": "2020-02-28"
+  },
+  {
+    "cases": 888,
+    "country": "Italy",
+    "date": "2020-02-28"
+  },
+  {
+    "cases": 2337,
+    "country": "Korea, South",
+    "date": "2020-02-28"
+  },
+  {
+    "cases": 60,
+    "country": "US",
+    "date": "2020-02-28"
+  },
+  {
+    "cases": 79356,
+    "country": "China",
+    "date": "2020-02-29"
+  },
+  {
+    "cases": 1128,
+    "country": "Italy",
+    "date": "2020-02-29"
+  },
+  {
+    "cases": 3150,
+    "country": "Korea, South",
+    "date": "2020-02-29"
+  },
+  {
+    "cases": 68,
+    "country": "US",
+    "date": "2020-02-29"
+  },
+  {
+    "cases": 79932,
+    "country": "China",
+    "date": "2020-03-01"
+  },
+  {
+    "cases": 1694,
+    "country": "Italy",
+    "date": "2020-03-01"
+  },
+  {
+    "cases": 3736,
+    "country": "Korea, South",
+    "date": "2020-03-01"
+  },
+  {
+    "cases": 74,
+    "country": "US",
+    "date": "2020-03-01"
+  },
+  {
+    "cases": 80136,
+    "country": "China",
+    "date": "2020-03-02"
+  },
+  {
+    "cases": 2036,
+    "country": "Italy",
+    "date": "2020-03-02"
+  },
+  {
+    "cases": 4335,
+    "country": "Korea, South",
+    "date": "2020-03-02"
+  },
+  {
+    "cases": 98,
+    "country": "US",
+    "date": "2020-03-02"
+  },
+  {
+    "cases": 80261,
+    "country": "China",
+    "date": "2020-03-03"
+  },
+  {
+    "cases": 2502,
+    "country": "Italy",
+    "date": "2020-03-03"
+  },
+  {
+    "cases": 5186,
+    "country": "Korea, South",
+    "date": "2020-03-03"
+  },
+  {
+    "cases": 118,
+    "country": "US",
+    "date": "2020-03-03"
+  },
+  {
+    "cases": 80386,
+    "country": "China",
+    "date": "2020-03-04"
+  },
+  {
+    "cases": 3089,
+    "country": "Italy",
+    "date": "2020-03-04"
+  },
+  {
+    "cases": 5621,
+    "country": "Korea, South",
+    "date": "2020-03-04"
+  },
+  {
+    "cases": 149,
+    "country": "US",
+    "date": "2020-03-04"
+  },
+  {
+    "cases": 80537,
+    "country": "China",
+    "date": "2020-03-05"
+  },
+  {
+    "cases": 3858,
+    "country": "Italy",
+    "date": "2020-03-05"
+  },
+  {
+    "cases": 6088,
+    "country": "Korea, South",
+    "date": "2020-03-05"
+  },
+  {
+    "cases": 217,
+    "country": "US",
+    "date": "2020-03-05"
+  },
+  {
+    "cases": 80690,
+    "country": "China",
+    "date": "2020-03-06"
+  },
+  {
+    "cases": 4636,
+    "country": "Italy",
+    "date": "2020-03-06"
+  },
+  {
+    "cases": 6593,
+    "country": "Korea, South",
+    "date": "2020-03-06"
+  },
+  {
+    "cases": 262,
+    "country": "US",
+    "date": "2020-03-06"
+  },
+  {
+    "cases": 80770,
+    "country": "China",
+    "date": "2020-03-07"
+  },
+  {
+    "cases": 5883,
+    "country": "Italy",
+    "date": "2020-03-07"
+  },
+  {
+    "cases": 7041,
+    "country": "Korea, South",
+    "date": "2020-03-07"
+  },
+  {
+    "cases": 402,
+    "country": "US",
+    "date": "2020-03-07"
+  },
+  {
+    "cases": 80823,
+    "country": "China",
+    "date": "2020-03-08"
+  },
+  {
+    "cases": 7375,
+    "country": "Italy",
+    "date": "2020-03-08"
+  },
+  {
+    "cases": 7314,
+    "country": "Korea, South",
+    "date": "2020-03-08"
+  },
+  {
+    "cases": 518,
+    "country": "US",
+    "date": "2020-03-08"
+  },
+  {
+    "cases": 80860,
+    "country": "China",
+    "date": "2020-03-09"
+  },
+  {
+    "cases": 9172,
+    "country": "Italy",
+    "date": "2020-03-09"
+  },
+  {
+    "cases": 7478,
+    "country": "Korea, South",
+    "date": "2020-03-09"
+  },
+  {
+    "cases": 583,
+    "country": "US",
+    "date": "2020-03-09"
+  },
+  {
+    "cases": 80887,
+    "country": "China",
+    "date": "2020-03-10"
+  },
+  {
+    "cases": 10149,
+    "country": "Italy",
+    "date": "2020-03-10"
+  },
+  {
+    "cases": 7513,
+    "country": "Korea, South",
+    "date": "2020-03-10"
+  },
+  {
+    "cases": 959,
+    "country": "US",
+    "date": "2020-03-10"
+  },
+  {
+    "cases": 80921,
+    "country": "China",
+    "date": "2020-03-11"
+  },
+  {
+    "cases": 12462,
+    "country": "Italy",
+    "date": "2020-03-11"
+  },
+  {
+    "cases": 7755,
+    "country": "Korea, South",
+    "date": "2020-03-11"
+  },
+  {
+    "cases": 1281,
+    "country": "US",
+    "date": "2020-03-11"
+  },
+  {
+    "cases": 80932,
+    "country": "China",
+    "date": "2020-03-12"
+  },
+  {
+    "cases": 12462,
+    "country": "Italy",
+    "date": "2020-03-12"
+  },
+  {
+    "cases": 7869,
+    "country": "Korea, South",
+    "date": "2020-03-12"
+  },
+  {
+    "cases": 1663,
+    "country": "US",
+    "date": "2020-03-12"
+  },
+  {
+    "cases": 80945,
+    "country": "China",
+    "date": "2020-03-13"
+  },
+  {
+    "cases": 17660,
+    "country": "Italy",
+    "date": "2020-03-13"
+  },
+  {
+    "cases": 7979,
+    "country": "Korea, South",
+    "date": "2020-03-13"
+  },
+  {
+    "cases": 2179,
+    "country": "US",
+    "date": "2020-03-13"
+  },
+  {
+    "cases": 80977,
+    "country": "China",
+    "date": "2020-03-14"
+  },
+  {
+    "cases": 21157,
+    "country": "Italy",
+    "date": "2020-03-14"
+  },
+  {
+    "cases": 8086,
+    "country": "Korea, South",
+    "date": "2020-03-14"
+  },
+  {
+    "cases": 2727,
+    "country": "US",
+    "date": "2020-03-14"
+  },
+  {
+    "cases": 81003,
+    "country": "China",
+    "date": "2020-03-15"
+  },
+  {
+    "cases": 24747,
+    "country": "Italy",
+    "date": "2020-03-15"
+  },
+  {
+    "cases": 8162,
+    "country": "Korea, South",
+    "date": "2020-03-15"
+  },
+  {
+    "cases": 3499,
+    "country": "US",
+    "date": "2020-03-15"
+  },
+  {
+    "cases": 81033,
+    "country": "China",
+    "date": "2020-03-16"
+  },
+  {
+    "cases": 27980,
+    "country": "Italy",
+    "date": "2020-03-16"
+  },
+  {
+    "cases": 8236,
+    "country": "Korea, South",
+    "date": "2020-03-16"
+  },
+  {
+    "cases": 4632,
+    "country": "US",
+    "date": "2020-03-16"
+  },
+  {
+    "cases": 81058,
+    "country": "China",
+    "date": "2020-03-17"
+  },
+  {
+    "cases": 31506,
+    "country": "Italy",
+    "date": "2020-03-17"
+  },
+  {
+    "cases": 8320,
+    "country": "Korea, South",
+    "date": "2020-03-17"
+  },
+  {
+    "cases": 6421,
+    "country": "US",
+    "date": "2020-03-17"
+  },
+  {
+    "cases": 81102,
+    "country": "China",
+    "date": "2020-03-18"
+  },
+  {
+    "cases": 35713,
+    "country": "Italy",
+    "date": "2020-03-18"
+  },
+  {
+    "cases": 8413,
+    "country": "Korea, South",
+    "date": "2020-03-18"
+  },
+  {
+    "cases": 7783,
+    "country": "US",
+    "date": "2020-03-18"
+  },
+  {
+    "cases": 81156,
+    "country": "China",
+    "date": "2020-03-19"
+  },
+  {
+    "cases": 41035,
+    "country": "Italy",
+    "date": "2020-03-19"
+  },
+  {
+    "cases": 8565,
+    "country": "Korea, South",
+    "date": "2020-03-19"
+  },
+  {
+    "cases": 13677,
+    "country": "US",
+    "date": "2020-03-19"
+  },
+  {
+    "cases": 81250,
+    "country": "China",
+    "date": "2020-03-20"
+  },
+  {
+    "cases": 47021,
+    "country": "Italy",
+    "date": "2020-03-20"
+  },
+  {
+    "cases": 8652,
+    "country": "Korea, South",
+    "date": "2020-03-20"
+  },
+  {
+    "cases": 19100,
+    "country": "US",
+    "date": "2020-03-20"
+  },
+  {
+    "cases": 81305,
+    "country": "China",
+    "date": "2020-03-21"
+  },
+  {
+    "cases": 53578,
+    "country": "Italy",
+    "date": "2020-03-21"
+  },
+  {
+    "cases": 8799,
+    "country": "Korea, South",
+    "date": "2020-03-21"
+  },
+  {
+    "cases": 25489,
+    "country": "US",
+    "date": "2020-03-21"
+  },
+  {
+    "cases": 81435,
+    "country": "China",
+    "date": "2020-03-22"
+  },
+  {
+    "cases": 59138,
+    "country": "Italy",
+    "date": "2020-03-22"
+  },
+  {
+    "cases": 8961,
+    "country": "Korea, South",
+    "date": "2020-03-22"
+  },
+  {
+    "cases": 33276,
+    "country": "US",
+    "date": "2020-03-22"
+  },
+  {
+    "cases": 81498,
+    "country": "China",
+    "date": "2020-03-23"
+  },
+  {
+    "cases": 63927,
+    "country": "Italy",
+    "date": "2020-03-23"
+  },
+  {
+    "cases": 8961,
+    "country": "Korea, South",
+    "date": "2020-03-23"
+  },
+  {
+    "cases": 43847,
+    "country": "US",
+    "date": "2020-03-23"
+  },
+  {
+    "cases": 81591,
+    "country": "China",
+    "date": "2020-03-24"
+  },
+  {
+    "cases": 69176,
+    "country": "Italy",
+    "date": "2020-03-24"
+  },
+  {
+    "cases": 9037,
+    "country": "Korea, South",
+    "date": "2020-03-24"
+  },
+  {
+    "cases": 53740,
+    "country": "US",
+    "date": "2020-03-24"
+  },
+  {
+    "cases": 81661,
+    "country": "China",
+    "date": "2020-03-25"
+  },
+  {
+    "cases": 74386,
+    "country": "Italy",
+    "date": "2020-03-25"
+  },
+  {
+    "cases": 9137,
+    "country": "Korea, South",
+    "date": "2020-03-25"
+  },
+  {
+    "cases": 65778,
+    "country": "US",
+    "date": "2020-03-25"
+  },
+  {
+    "cases": 81782,
+    "country": "China",
+    "date": "2020-03-26"
+  },
+  {
+    "cases": 80589,
+    "country": "Italy",
+    "date": "2020-03-26"
+  },
+  {
+    "cases": 9241,
+    "country": "Korea, South",
+    "date": "2020-03-26"
+  },
+  {
+    "cases": 83836,
+    "country": "US",
+    "date": "2020-03-26"
+  },
+  {
+    "cases": 81897,
+    "country": "China",
+    "date": "2020-03-27"
+  },
+  {
+    "cases": 86498,
+    "country": "Italy",
+    "date": "2020-03-27"
+  },
+  {
+    "cases": 9332,
+    "country": "Korea, South",
+    "date": "2020-03-27"
+  },
+  {
+    "cases": 101657,
+    "country": "US",
+    "date": "2020-03-27"
+  },
+  {
+    "cases": 81999,
+    "country": "China",
+    "date": "2020-03-28"
+  },
+  {
+    "cases": 92472,
+    "country": "Italy",
+    "date": "2020-03-28"
+  },
+  {
+    "cases": 9478,
+    "country": "Korea, South",
+    "date": "2020-03-28"
+  },
+  {
+    "cases": 121478,
+    "country": "US",
+    "date": "2020-03-28"
+  },
+  {
+    "cases": 82122,
+    "country": "China",
+    "date": "2020-03-29"
+  },
+  {
+    "cases": 97689,
+    "country": "Italy",
+    "date": "2020-03-29"
+  },
+  {
+    "cases": 9583,
+    "country": "Korea, South",
+    "date": "2020-03-29"
+  },
+  {
+    "cases": 140886,
+    "country": "US",
+    "date": "2020-03-29"
+  },
+  {
+    "cases": 82198,
+    "country": "China",
+    "date": "2020-03-30"
+  },
+  {
+    "cases": 101739,
+    "country": "Italy",
+    "date": "2020-03-30"
+  },
+  {
+    "cases": 9661,
+    "country": "Korea, South",
+    "date": "2020-03-30"
+  },
+  {
+    "cases": 161807,
+    "country": "US",
+    "date": "2020-03-30"
+  },
+  {
+    "cases": 82279,
+    "country": "China",
+    "date": "2020-03-31"
+  },
+  {
+    "cases": 105792,
+    "country": "Italy",
+    "date": "2020-03-31"
+  },
+  {
+    "cases": 9786,
+    "country": "Korea, South",
+    "date": "2020-03-31"
+  },
+  {
+    "cases": 188172,
+    "country": "US",
+    "date": "2020-03-31"
+  },
+  {
+    "cases": 82361,
+    "country": "China",
+    "date": "2020-04-01"
+  },
+  {
+    "cases": 110574,
+    "country": "Italy",
+    "date": "2020-04-01"
+  },
+  {
+    "cases": 9887,
+    "country": "Korea, South",
+    "date": "2020-04-01"
+  },
+  {
+    "cases": 213372,
+    "country": "US",
+    "date": "2020-04-01"
+  },
+  {
+    "cases": 82432,
+    "country": "China",
+    "date": "2020-04-02"
+  },
+  {
+    "cases": 115242,
+    "country": "Italy",
+    "date": "2020-04-02"
+  },
+  {
+    "cases": 9976,
+    "country": "Korea, South",
+    "date": "2020-04-02"
+  },
+  {
+    "cases": 243453,
+    "country": "US",
+    "date": "2020-04-02"
+  },
+  {
+    "cases": 82511,
+    "country": "China",
+    "date": "2020-04-03"
+  },
+  {
+    "cases": 119827,
+    "country": "Italy",
+    "date": "2020-04-03"
+  },
+  {
+    "cases": 10062,
+    "country": "Korea, South",
+    "date": "2020-04-03"
+  },
+  {
+    "cases": 275586,
+    "country": "US",
+    "date": "2020-04-03"
+  }
+]
