@@ -1,6 +1,6 @@
 import { scaleTime, scaleLinear } from 'd3-scale';
-import { extent } from 'd3-array';
 import { axisBottom, axisLeft } from 'd3-axis';
+import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
 import 'd3-transition';
@@ -9,7 +9,7 @@ import { f } from 'd3-jetpack/essentials';
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
-import { fadeIn, fadeOut, INTERPOLATION_TIME, didDomainChange } from './utils';
+import { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal } from './utils';
 
 import covidData from '../../data/covid.json';
 
@@ -25,7 +25,7 @@ for (let i = 0; i < covidData.length; i++)
  * Make charts
  */
 
-const margin = { top: 20, right: 10, bottom: 50, left: 50 };
+const margin = { top: 20, right: 20, bottom: 50, left: 50 };
 
 class Graph {
   width = document.body.clientWidth;
@@ -55,14 +55,19 @@ class Graph {
   // Rescales mappings (scales, line generator) based on new data
   rescaleDataRange(data) {
     const { xScale, yScale, lineGenerator } = this;
+
     const newXDomain = extent(data, d => d.dayNumber);
     const newYDomain = extent(data, d => d.cases);
 
-    // Compare domains while setting the new ones (sorta hacky)
+    // Update scale domains. Returns whether domains had changed.
+    // Plus sign is an eager (non-short-circuiting) OR
     const didDomainsChange =
-      didDomainChange(xScale.domain(), xScale.domain(newXDomain).domain()) +
-      didDomainChange(yScale.domain(), yScale.domain(newYDomain).domain());
-    lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+      areDomainsUnequal(xScale.domain(), xScale.domain(newXDomain).domain()) +
+      areDomainsUnequal(yScale.domain(), yScale.domain(newYDomain).domain());
+
+    // Updates line generator based on new scales
+    if (didDomainsChange)
+      lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
 
     return didDomainsChange;
   }
@@ -126,7 +131,7 @@ class Graph {
 }
 
 const graph = new Graph();
-graph.update([ 'China' ]);
+graph.update([ 'US' ]);
 
 /**
  * Scroll step triggers
@@ -144,16 +149,10 @@ scroller
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
 
-function onStepEnter({ element, index }) {
-  console.log('Entered', index);
-  if (index === 1)
-    graph.update([ 'US', 'China' ]);
-  else
-    graph.update([ 'China' ]);
+function onStepEnter({ index }) {
 }
 
-function onStepExit({ element, index }) {
-  console.log('Exited', index);
+function onStepExit({ index }) {
 }
 
 /**

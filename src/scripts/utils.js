@@ -20,10 +20,8 @@ function fadeOut(selection) {
 }
 
 // Checks if two domains are equal
-function didDomainChange(d1, d2) {
-  // if (d1[0] === 0 && d1[1] === 1) // D3 scales' default initial domain
-    // return false;
+function areDomainsUnequal(d1, d2) {
   return d1[0] !== d2[0] || d1[1] !== d2[1];
 }
 
-module.exports = { fadeIn, fadeOut, INTERPOLATION_TIME, didDomainChange };
+module.exports = { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal };
