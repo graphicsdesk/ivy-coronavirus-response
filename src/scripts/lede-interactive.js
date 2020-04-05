@@ -11,7 +11,7 @@ import scrollama from 'scrollama';
 import covidData from '../../data/covid.json';
 
 /**
- * Data preprocessing 
+ * Data processing 
  */
 
 // Turn date strings into date objects
