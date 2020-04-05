@@ -48,30 +48,29 @@ class Graph {
   linesContainer = this.svg.append('g.lines-container');
 
   rescaleDataRange(data) {
-    const {
-      xScale, yScale,
-      xAxis, yAxis,
-      lineGenerator,
-    } = this;
+    const { xScale, yScale, lineGenerator } = this;
 
     // Scale the range of the data and the line generator
     xScale.domain(extent(data, d => d.dayNumber));
     yScale.domain(extent(data, d => d.cases));
     lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
-
-    // Generate axes
-    xAxis.call(axisBottom(xScale));
-    yAxis.call(axisLeft(yScale));
   }
 
   update(countries) {
+    const data = covidData.filter(d => countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
+    this.rescaleDataRange(data);
+
     const {
+      xAxis, yAxis,
+      xScale, yScale,
       linesContainer,
       lineGenerator,
     } = this;
 
-    const data = covidData.filter(d => countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
-    this.rescaleDataRange(data);
+    // Generate axes
+    console.log(xAxis);
+    xAxis.transition().call(axisBottom(xScale));
+    yAxis.transition().call(axisLeft(yScale));
 
     // Each <path> should be joined to one country's time-series COVID data (an array)
     const theJoinData = countries.map(country => data.filter(d => d.country === country));
@@ -79,11 +78,12 @@ class Graph {
     // Join the data
     const lines = linesContainer
       .selectAll('path')
-      .data(theJoinData);
+      .data(theJoinData, array => array[0].country);
 
     lines.enter()
       .append('path') // Append the entering elements
-      .merge(lines) // Merge current enter selection with the existing selection
+      .merge(lines) // Merge current enter selection with existing path selection
+      .transition()
       .attr('d', lineGenerator); // Generate line for all paths
 
     lines.exit().remove(); // Remove the exiting elements
