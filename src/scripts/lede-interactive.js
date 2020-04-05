@@ -24,51 +24,75 @@ for (let i = 0; i < covidData.length; i++)
 
 const margin = { top: 20, right: 10, bottom: 50, left: 50 };
 
-graphData();
+class Graph {
+  width = document.body.clientWidth;
+  height = document.body.clientHeight;
+  gWidth = this.width - margin.left - margin.right;
+  gHeight = this.height - margin.top - margin.bottom;
 
-function graphData() {
-  const width = document.body.clientWidth;
-  const height = document.body.clientHeight;
-  const gWidth = width - margin.left - margin.right;
-  const gHeight = height - margin.top - margin.bottom;
-
-  const data = covidData.filter(d => d.country === 'US' && d.cases >= 100 && d.cases < 6000);
-
-  // Create x scale
-  const xScale = scaleTime()
-    .domain(extent(data, d => d.date))
-    .range([ 0, gWidth ]);
-  // Create y scale
-  const yScale = scaleLinear()
-    .domain(extent(data, d => d.cases))
-    .range([ gHeight, 0 ]);
+  // Create scales on dimensions
+  xScale = scaleLinear().range([ 0, this.gWidth ]);
+  yScale = scaleLinear().range([ this.gHeight, 0 ]);
 
   // Create line generator
-  const line = d3Line()
-    .x(d => xScale(d.date))
-    .y(d => yScale(d.cases));
+  lineGenerator = d3Line();
 
-  // Create SVG
-  const svg = select('#chart-container')
+  svg = select('#chart-container')
     .append('svg')
-    .at({ width, height })
+    .at({ width: this.width, height: this.height })
     .append('g')
     .translate([ margin.left, margin.top ]);
 
-  // Call the x axis on a group tag
-  svg.append('g.x-axis')
-    .translate([ 0, gHeight ])
-    .call(axisBottom(xScale));
+  xAxis = this.svg.append('g.x-axis').translate([ 0, this.gHeight ]);
+  yAxis = this.svg.append('g.y-axis');
+  linesContainer = this.svg.append('g.lines-container');
 
-  // Call the y axis on a group tag
-  svg.append('g.y-axis')
-    .call(axisLeft(yScale));
+  rescaleDataRange(data) {
+    const {
+      xScale, yScale,
+      xAxis, yAxis,
+      lineGenerator,
+    } = this;
 
-  // Append a path
-  svg.append('path.line')
-    .datum(data) // Bind data
-    .attr('d', line); // Generate drawing instructions
+    // Scale the range of the data and the line generator
+    xScale.domain(extent(data, d => d.dayNumber));
+    yScale.domain(extent(data, d => d.cases));
+    lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+
+    // Generate axes
+    xAxis.call(axisBottom(xScale));
+    yAxis.call(axisLeft(yScale));
+  }
+
+  update(countries) {
+    const {
+      linesContainer,
+      lineGenerator,
+    } = this;
+
+    const data = covidData.filter(d => countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
+    this.rescaleDataRange(data);
+
+    // Each <path> should be joined to one country's time-series COVID data (an array)
+    const theJoinData = countries.map(country => data.filter(d => d.country === country));
+
+    // Join the data
+    const lines = linesContainer
+      .selectAll('path')
+      .data(theJoinData);
+
+    lines.enter()
+      .append('path') // Append the entering elements
+      .merge(lines) // Merge current enter selection with the existing selection
+      .attr('d', lineGenerator); // Generate line for all paths
+
+    lines.exit().remove(); // Remove the exiting elements
+  }
 }
+
+const graph = new Graph();
+graph.update([ 'China' ]);
+setTimeout(() => graph.update([ 'US', 'China' ]), 1000);
 
 /**
  * Scroll step triggers
