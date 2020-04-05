@@ -15,8 +15,20 @@ async function main() {
       date: d.Date,
     }));
 
+  // Caculate day-by-day increases
+  const countryPrevious = {};
+  for (let i = 0; i < data.length; i++) {
+    const { cases, country, date } = data[i];
+    
+    if (!countryPrevious[country]) // Initial value
+      data[i].increase = 0
+    else
+      data[i].increase = cases - countryPrevious[country];
+    countryPrevious[country] = cases;
+  }
+
   // Write to /data/covid.json
-  await fs.writeFile(process.cwd() + '/data/covid.json', JSON.stringify(data));
+  await fs.writeFile(process.cwd() + '/data/covid.json', JSON.stringify(data, null, 2));
 }
 
 main().catch(console.error);

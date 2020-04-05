@@ -11,7 +11,7 @@ import scrollama from 'scrollama';
 import covidData from '../../data/covid.json';
 
 /**
- * Data processing 
+ * Preprocess data
  */
 
 // Turn date strings into date objects
@@ -19,7 +19,7 @@ for (let i = 0; i < covidData.length; i++)
   covidData[i].date = new Date(covidData[i].date);
 
 /**
- * Chartmaking
+ * Make charts
  */
 
 const margin = { top: 20, right: 10, bottom: 50, left: 50 };
@@ -32,7 +32,7 @@ function graphData() {
   const gWidth = width - margin.left - margin.right;
   const gHeight = height - margin.top - margin.bottom;
 
-  const data = covidData.filter(d => d.country === 'US');
+  const data = covidData.filter(d => d.country === 'US' && d.cases >= 100 && d.cases < 6000);
 
   // Create x scale
   const xScale = scaleTime()
@@ -40,34 +40,34 @@ function graphData() {
     .range([ 0, gWidth ]);
   // Create y scale
   const yScale = scaleLinear()
-    .domain(extent(data, d => d.cases))
+    .domain(extent(data, d => d.increase))
     .range([ gHeight, 0 ]);
 
   // Create line generator
   const line = d3Line()
     .x(d => xScale(d.date))
-    .y(d => yScale(d.cases));
+    .y(d => yScale(d.increase));
 
-  // Add svg using margins
+  // Create SVG
   const svg = select('#chart-container')
     .append('svg')
     .at({ width, height })
     .append('g')
     .translate([ margin.left, margin.top ]);
 
-  // Call the x-axis in a group tag
+  // Call the x axis on a group tag
   svg.append('g.x-axis')
     .translate([ 0, gHeight ])
     .call(axisBottom(xScale));
 
-  // Call the y axis in a group tag
+  // Call the y axis on a group tag
   svg.append('g.y-axis')
     .call(axisLeft(yScale));
 
-  // Append the path and bind the data
+  // Append a path
   svg.append('path.line')
-    .datum(data)
-    .attr('d', line);
+    .datum(data) // Bind data
+    .attr('d', line); // Generate drawing instructions
 }
 
 /**
