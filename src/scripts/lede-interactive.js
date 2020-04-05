@@ -4,6 +4,10 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
 import { line as d3Line } from 'd3-shape';
 import { f } from 'd3-jetpack/essentials';
+
+import 'intersection-observer';
+import scrollama from 'scrollama';
+
 import covidData from '../../data/covid.json';
 
 /**
@@ -65,3 +69,35 @@ function graphData() {
     .datum(data)
     .attr('d', line);
 }
+
+/**
+ * Scroll step triggers
+ */
+
+// Instantiate the scrollama
+const scroller = scrollama();
+
+// Setup the instance, pass callback functions
+scroller
+  .setup({
+    step: '.step',
+    offset: 0.65,
+  })
+  .onStepEnter(onStepEnter)
+  .onStepExit(onStepExit);
+
+function onStepEnter({ element, index }) {
+  console.log('Entered', index);
+}
+
+function onStepExit({ element, index }) {
+  console.log('Exited', index);
+}
+
+/**
+ * Window event listeners
+ */
+
+window.addEventListener('resize', () => {
+  scroller.resize();
+});

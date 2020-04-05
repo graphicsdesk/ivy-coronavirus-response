@@ -2,8 +2,8 @@
   <div id="chart-container">
   </div>
   <div id="steps-container">
-    <each loop="item, index in item.value.steps">
-      <div class="step" data-index="{{ index }}">
+    <each loop="item in item.value.steps">
+      <div class="step">
         <p>{{{ item }}}</p>
       </div>
     </each>
