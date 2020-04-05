@@ -2,6 +2,7 @@ import enterView from 'enter-view';
 import textBalancer from 'text-balancer';
 import { USE_COVER_HED, USE_EYE_NAV } from '../config.json';
 import './scripts/page.js';
+import './scripts/lede-interactive.js';
 
 // Fade in navbar at scroll trigger
 

@@ -14,6 +14,15 @@ body {
  * Styles for interactive lede-in
  */
 
-#lede {
-  background: red;
+ #lede {
+  svg {
+    display: block;
+    margin: 0 auto;
+  }
+ }
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
 }
