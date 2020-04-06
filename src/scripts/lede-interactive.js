@@ -9,7 +9,12 @@ import { f } from 'd3-jetpack/essentials';
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
-import { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal, chainTransitions } from './utils';
+import {
+  fadeIn, fadeOut,
+  areDomainsUnequal,
+  chainTransitions,
+  INTERPOLATION_TIME,
+} from './utils';
 
 import covidData from '../../data/covid.json';
 
@@ -110,7 +115,6 @@ class Graph extends Store {
 
   update() {
     const domainsChanged = this.rescaleDataRange();
-    console.log('updating', domainsChanged)
 
     const {
       xScale, yScale,
@@ -127,43 +131,32 @@ class Graph extends Store {
     const linesUpdate = linesContainer
       .selectAll('path')
       .data(theJoinData, array => array[0].country);
-
-    // Interpolates existing elements (axes and existing paths), and schedules
-    // enterPaths(). If no domains changed, immediately enter paths.
-    const updateExistingElements = () => {
-      linesUpdate.transition()
-        .duration(INTERPOLATION_TIME)
-        .attr('d', lineGenerator)
-      console.log('Updating existing elements');
-      return this.updateAxes();
-    }
-
-    // Fade in the path enter selection
-    const enterPaths = () =>
-      linesUpdate.enter()
-        .append('path')
-        .attr('d', lineGenerator)
-        .call(fadeIn);
-
-    const exitPaths = () => {
-      // Cannot use selection.call(function) if chaining. See d3/d3-selection#102.
-      return fadeOut(linesExit);
-    }
-
-    // Always interpolate existing elements to match the new data range.
-    // But if the lines exit selection is nonempty, fade out and remove that first.
-    const linesExit = linesUpdate.exit();
+    const linesExit = linesUpdate.exit(); // Store exit selection for convenience
 
     chainTransitions(
-      [ exitPaths, !linesExit.empty() ],
-      [ updateExistingElements.bind(this), domainsChanged ],
-      [ enterPaths, true],
+      // If exiting selection is nonempty, fade those out first.
+      // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
+      !linesExit.empty() && (() => fadeOut(linesExit)),
+
+      // If domains changed, interpolate existing elements (axes and
+      // existing paths) simultaneously to match new data range
+      domainsChanged && (() => {
+        linesUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .attr('d', lineGenerator)
+        return this.updateAxes();        
+      }),
+
+      // Fade in the path enter selection
+      () => linesUpdate.enter()
+        .append('path')
+        .attr('d', lineGenerator)
+        .call(fadeIn),
     )();
   }
 
+  // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
-    console.log('> Updating axes')
-    // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
     const { xAxis, yAxis, xAxisGenerator, yAxisGenerator } = this;
 
     xAxis.transition()

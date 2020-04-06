@@ -26,11 +26,10 @@ function areDomainsUnequal(d1, d2) {
 
 // Nests a series of transitions as callbacks of the previous one
 function chainTransitions(...transitions) {
-  const transitionFns = transitions.reduce((acc, [ fn, shouldRun ]) => {
-    if (shouldRun)
-      acc.push(fn);
-    return acc;
-  }, []);
+  const transitionFns = transitions.filter(t => t !== false);
+
+  if (transitionFns.length === 0)
+    return () => undefined;
 
   // Default callback is the last transition
   let callback = transitionFns[transitionFns.length - 1];
@@ -42,4 +41,9 @@ function chainTransitions(...transitions) {
   return callback;
 }
 
-module.exports = { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal, chainTransitions };
+module.exports = {
+  fadeIn, fadeOut,
+  areDomainsUnequal,
+  chainTransitions,
+  INTERPOLATION_TIME,
+};
