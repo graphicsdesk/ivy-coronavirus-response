@@ -29,16 +29,32 @@ class Store {
   // Stores what countries are shown
   countriesShown = {};
 
-  // Adds countries
+  // State setter for adding countries
   addCountry(...countries) {
-    countries.forEach(country => this.countriesShown[country] = true);
-    this.update();
+    const didCountriesChange = countries
+      // If a country is not shown, add it (set it to true) and return true.
+      // If a country is already shown, return false
+      .map(c => !this.countriesShown[c] && (this.countriesShown[c] = true))
+      // Were any countries actually added (i.e. set to true)?
+      .includes(true);
+    this.updateComponent(didCountriesChange);
   }
 
-  // Removes countries
+  // State setter for removing countries
   removeCountry(...countries) {
-    countries.forEach(country => this.countriesShown[country] = undefined);
-    this.update();
+    const didCountriesChange = countries
+      // If a country is shown, remove it (set it to undefined) and return true.
+      // If a country is already not shown, return false.
+      .map(c => this.countriesShown[c] && ((this.countriesShown[c] = undefined) === undefined))
+      // Were any countries actually removed (i.e. set to undefined)?
+      .includes(true);
+    this.updateComponent(didCountriesChange);
+  }
+
+  // Updates component if it should update
+  updateComponent(shouldComponentUpdate) {
+    if (shouldComponentUpdate)
+      this.update();
   }
 
   // Returns countries as an array
@@ -57,7 +73,7 @@ class Store {
  */
 
 const TICK_PADDING = 12;
-const margin = { top: 200, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
+const margin = { top: 20, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
 
 class Graph extends Store {
   width = document.body.clientWidth;
@@ -94,6 +110,7 @@ class Graph extends Store {
 
   update() {
     const domainsChanged = this.rescaleDataRange();
+    console.log('updating')
 
     const {
       xScale, yScale,
@@ -175,7 +192,7 @@ class Graph extends Store {
 }
 
 const graph = new Graph();
-graph.addCountry('US', 'China', 'Korea, South');
+graph.addCountry('US');
 
 /**
  * Scroll step triggers
@@ -190,14 +207,14 @@ scroller
     step: '.step',
     offset: 0.65,
   })
-  // .onStepEnter(onStepEnter)
+  .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
 
 function onStepEnter({ index }) {
   if (index === 1)
-    graph.addCountry('US');
+    graph.addCountry('China');
   else
-    graph.removeCountry('US');
+    graph.removeCountry('China');
 }
 
 function onStepExit({ index }) {
