@@ -9,7 +9,7 @@ import { f } from 'd3-jetpack/essentials';
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
-import { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal } from './utils';
+import { fadeIn, fadeOut, INTERPOLATION_TIME, areDomainsUnequal, chainTransitions } from './utils';
 
 import covidData from '../../data/covid.json';
 
@@ -110,7 +110,7 @@ class Graph extends Store {
 
   update() {
     const domainsChanged = this.rescaleDataRange();
-    console.log('updating')
+    console.log('updating', domainsChanged)
 
     const {
       xScale, yScale,
@@ -131,14 +131,11 @@ class Graph extends Store {
     // Interpolates existing elements (axes and existing paths), and schedules
     // enterPaths(). If no domains changed, immediately enter paths.
     const updateExistingElements = () => {
-      if (domainsChanged) {
-        linesUpdate.transition()
-          .duration(INTERPOLATION_TIME)
-          .attr('d', lineGenerator)
-        this.updateAxes().on('end', enterPaths);
-      } else {
-        enterPaths();
-      }
+      linesUpdate.transition()
+        .duration(INTERPOLATION_TIME)
+        .attr('d', lineGenerator)
+      console.log('Updating existing elements');
+      return this.updateAxes();
     }
 
     // Fade in the path enter selection
@@ -148,17 +145,24 @@ class Graph extends Store {
         .attr('d', lineGenerator)
         .call(fadeIn);
 
+    const exitPaths = () => {
+      // Cannot use selection.call(function) if chaining. See d3/d3-selection#102.
+      return fadeOut(linesExit);
+    }
+
     // Always interpolate existing elements to match the new data range.
     // But if the lines exit selection is nonempty, fade out and remove that first.
-    const linesExit = linesUpdate.exit()
-    if (linesExit.empty())
-      updateExistingElements();
-    else
-      // Cannot use selection.call(function) if chaining. See d3/d3-selection#102.
-      fadeOut(linesExit).on('end', updateExistingElements);
+    const linesExit = linesUpdate.exit();
+
+    chainTransitions(
+      [ exitPaths, !linesExit.empty() ],
+      [ updateExistingElements.bind(this), domainsChanged ],
+      [ enterPaths, true],
+    )();
   }
 
   updateAxes() {
+    console.log('> Updating axes')
     // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
     const { xAxis, yAxis, xAxisGenerator, yAxisGenerator } = this;
 
