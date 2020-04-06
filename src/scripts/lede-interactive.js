@@ -56,7 +56,9 @@ class Store {
  * The Graph class draws and udpates the visualization's DOM elements
  */
 
-const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+const TICK_PADDING = 12;
+const margin = { top: 20, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
+
 class Graph extends Store {
   width = document.body.clientWidth;
   height = document.body.clientHeight;
@@ -80,8 +82,12 @@ class Graph extends Store {
   linesContainer = this.svg.append('g.lines-container');
 
   // Create axis generators
-  xAxisGenerator = axisBottom(this.xScale);
-  yAxisGenerator = axisRight(this.yScale);
+  xAxisGenerator = axisBottom(this.xScale)
+    .tickSize(-this.gHeight)
+    .tickPadding(TICK_PADDING);
+  yAxisGenerator = axisRight(this.yScale)
+    .tickSize(this.gWidth)
+    .tickPadding(TICK_PADDING);
 
   // Create line generator
   lineGenerator = d3Line();
@@ -183,10 +189,6 @@ scroller
   .onStepExit(onStepExit);
 
 function onStepEnter({ index }) {
-  if (index === 1)
-    graph.addCountry('China');
-  else
-    graph.removeCountry('China');
 }
 
 function onStepExit({ index }) {
