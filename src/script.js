@@ -39,17 +39,15 @@ var a = document.getElementById("g-columbia-desktop-img");
 
 
 a.addEventListener("load", function () {
-  console.log(a);
   // get the inner DOM of alpha.svg
   var svgDoc = a.contentDocument;
   // get the inner element by id
-  var delta = svgDoc.getElementsByClassName("March8");
+  var delta = svgDoc.getElementsByClassName("Scrolly1");
   // add behaviour
   [].slice.call(delta).forEach(function (div) {
     div.setAttribute("style", "display:none");
   });
-  var text = document.getElementsByClassName("March8");
-  console.log(text);
+  var text = document.getElementsByClassName("text");
   [].slice.call(text).forEach(function (march) {
     march.style.visibility = "hidden";
   });
@@ -87,27 +85,39 @@ function handleResize() {
 }
 
 // scrollama event handlers
+var dates = ["8", "10"];
 function handleStepEnter(response) {
   // response = { element, direction, index }
   var a = document.getElementById("g-columbia-desktop-img");
   var svgDoc = a.contentDocument;
-  // get the inner element by id
-  var delta = svgDoc.getElementsByClassName("March8");
-  // add behaviour
-  [].slice.call(delta).forEach(function (div) {
-    div.setAttribute("style", "display:visible");
-  });
-  var text = document.getElementsByClassName("March8");
-  console.log(text);
-  [].slice.call(text).forEach(function (march) {
-    march.style.visibility = "visible";
-  });
+  if (response.direction == 'down'){
+    // get the inner element by id
+    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+1));
+    // add behaviour
+    [].slice.call(delta).forEach(function (div) {
+      div.setAttribute("style", "display:visible");
+    });
+    var text = document.getElementsByClassName("g-March_"+dates[response.index]);
+    [].slice.call(text).forEach(function (march) {
+      march.style.visibility = "visible";
+    });
+  } else {
+    console.log(response);
+    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+2));
+    // add behaviour
+    [].slice.call(delta).forEach(function (div) {
+      div.setAttribute("style", "display:none");
+    });
+    var text = document.getElementsByClassName("g-March_"+dates[response.index+1]);
+    [].slice.call(text).forEach(function (march) {
+      march.style.visibility = "hidden";
+    });
+
+  }
 }
 
 function handleContainerExit(response) {
-  // response = { direction }
-
-  // un-sticky the graphic, and pin to top/bottom of container
+  
   graphic.classed("is-fixed", false);
   graphic.classed("is-bottom", response.direction === "down");
 }
@@ -125,7 +135,8 @@ function init() {
       progress:"true",
       graphic: ".scroll__graphic",
       text: ".scroll__text",
-      step: ".scroll__text .step"
+      step: ".scroll__text .step",
+      debug: "true"
     })
     .onStepEnter(handleStepEnter)
     .onContainerExit(handleContainerExit);
