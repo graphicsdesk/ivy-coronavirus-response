@@ -29,16 +29,16 @@ class Store {
   // Stores what countries are shown
   countriesShown = {};
 
-  // Adds a country
-  addCountry(country) {
-    this.countriesShown[country] = true;
-    this.update(this.rescaleDataRange());
+  // Adds countries
+  addCountry(...countries) {
+    countries.forEach(country => this.countriesShown[country] = true);
+    this.update();
   }
 
-  // Removes a country
-  removeCountry(country) {
-    this.countriesShown[country] = undefined;
-    this.update(this.rescaleDataRange());
+  // Removes countries
+  removeCountry(...countries) {
+    countries.forEach(country => this.countriesShown[country] = undefined);
+    this.update();
   }
 
   // Returns countries as an array
@@ -48,7 +48,7 @@ class Store {
 
   // Returns data necessary to display the current state
   get data() {
-    return covidData.filter(d => this.countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 25);
+    return covidData.filter(d => this.countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 18);
   }
 }
 
@@ -57,7 +57,7 @@ class Store {
  */
 
 const TICK_PADDING = 12;
-const margin = { top: 20, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
+const margin = { top: 200, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
 
 class Graph extends Store {
   width = document.body.clientWidth;
@@ -92,11 +92,11 @@ class Graph extends Store {
   // Create line generator
   lineGenerator = d3Line();
 
-  update(domainsChanged) {
+  update() {
+    const domainsChanged = this.rescaleDataRange();
+
     const {
       xScale, yScale,
-      xAxis, yAxis,
-      xAxisGenerator, yAxisGenerator,
       linesContainer,
       lineGenerator,
       svg,
@@ -111,41 +111,46 @@ class Graph extends Store {
       .selectAll('path')
       .data(theJoinData, array => array[0].country);
 
+    // Interpolates existing elements (axes and existing paths), and schedules
+    // enterPaths(). If no domains changed, immediately enter paths.
+    const updateExistingElements = () => {
+      if (domainsChanged) {
+        linesUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .attr('d', lineGenerator)
+        this.updateAxes().on('end', enterPaths);
+      } else {
+        enterPaths();
+      }
+    }
+
+    // Fade in the path enter selection
+    const enterPaths = () =>
+      linesUpdate.enter()
+        .append('path')
+        .attr('d', lineGenerator)
+        .call(fadeIn);
+
     // Always interpolate existing elements to match the new data range.
     // But if the lines exit selection is nonempty, fade out and remove that first.
     const linesExit = linesUpdate.exit()
     if (linesExit.empty())
       updateExistingElements();
     else
-      // Cannot use selection.call if chaining. See d3/d3-selection#102.
+      // Cannot use selection.call(function) if chaining. See d3/d3-selection#102.
       fadeOut(linesExit).on('end', updateExistingElements);
+  }
 
-    // Interpolates existing elements (axes and existing paths), and schedules
-    // enterPaths(). If no domains changed, immediately enter paths.
-    function updateExistingElements() {
-      if (domainsChanged) {
-        linesUpdate.transition()
-          .duration(INTERPOLATION_TIME)
-          .attr('d', lineGenerator)
-        xAxis.transition()
-          .duration(INTERPOLATION_TIME)
-          .call(xAxisGenerator);
-        yAxis.transition()
-          .duration(INTERPOLATION_TIME)
-          .call(yAxisGenerator)
-          .on('end', enterPaths);
-      } else {
-        enterPaths();
-      }
-    }
+  updateAxes() {
+    // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
+    const { xAxis, yAxis, xAxisGenerator, yAxisGenerator } = this;
 
-    // Fade in enter selection for paths
-    function enterPaths() {
-      linesUpdate.enter()
-        .append('path')
-        .attr('d', lineGenerator)
-        .call(fadeIn);
-    }
+    xAxis.transition()
+      .duration(INTERPOLATION_TIME)
+      .call(xAxisGenerator);
+    return yAxis.transition()
+      .duration(INTERPOLATION_TIME)
+      .call(yAxisGenerator);
   }
 
   // Rescales mappings (scales, line generator) based on new data
@@ -170,7 +175,7 @@ class Graph extends Store {
 }
 
 const graph = new Graph();
-graph.addCountry('US');
+graph.addCountry('US', 'China', 'Korea, South');
 
 /**
  * Scroll step triggers
@@ -185,10 +190,14 @@ scroller
     step: '.step',
     offset: 0.65,
   })
-  .onStepEnter(onStepEnter)
+  // .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
 
 function onStepEnter({ index }) {
+  if (index === 1)
+    graph.addCountry('US');
+  else
+    graph.removeCountry('US');
 }
 
 function onStepExit({ index }) {
