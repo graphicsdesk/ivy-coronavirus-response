@@ -6,8 +6,10 @@
 
   <title>{{ headline }}: {{ deck }}</title>
   <link rel="stylesheet" href="./styles.scss">
-  <link rel="shortcut icon" href="https://www.columbiaspectator.com/pb/resources/img/CDS_Favicon.ico" type="image/x-icon"/>
+  <link rel="shortcut icon" href="https://www.columbiaspectator.com/pb/resources/img/CDS_Favicon.ico"
+    type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,500&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -28,7 +30,7 @@
     </each>
   </div>
 
-  <if condition="USE_COVER_HED">    
+  <if condition="USE_COVER_HED">
     <include src="partials/header-cover.html"></include>
   </if>
   <else>
@@ -58,84 +60,117 @@
     </each>
   </div>
 
+
+  <section id='scroll'>
+    <div class='scroll__graphic'>
+      <div class='chart'>
+        <include src="columbia-desktop.html"></include>
+      </div>
+    </div>
+    <div class='scroll__text'>
+      <div class='step' data-step='1'>
+        <p>On March 8, President Lee Bollinger announced the University would shift to remote learning and temporarily
+          canceled classes prior to spring break after a Columbia affiliate came in contact with someone with COVID-19,
+          the first suspected case across the Ivy League.
+        </p>
+      </div>
+      <div class='step' data-step='2'>
+        <p>Students were encouraged to leave campus but were able to stay on campus if needed. Days later, in light of
+          the growing epidemic and the first known case in the Columbia community, the University announced a mandatory
+          move out on March 15.
+        </p>
+      </div>
+      <div class='step' data-step='3'>
+        <p>Despite Columbia being the first Ivy League university to respond to the coronavirus pandemic by shifting to
+          partial online instruction, it was the last to mandate students leave campus, when there were 3,499 cases
+          nationally and 732 cases in New York. The University followed the guidance of public health experts and state
+          officials.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+
+
   <div class="spectate-dev-footer">
     <a href="{{ DOC_URL }}" target="_blank">Doc</a>
   </div>
-  
+
   <include src="partials/footer.html"></include>
 
   <script src="./script.js"></script>
 
   <script type="text/javascript">
-      (function() {
-          // only want one resizer on the page
-          if (document.documentElement.className.indexOf("g-resizer-v3-init") > -1) return;
-          document.documentElement.className += " g-resizer-v3-init";
-          // require IE9+
-          if (!("querySelector" in document)) return;
-          function resizer() {
-              var elements = Array.prototype.slice.call(document.querySelectorAll(".g-artboard[data-min-width]")),
-                  widthById = {};
-              elements.forEach(function(el) {
-                  var parent = el.parentNode,
-                      width = widthById[parent.id] || parent.getBoundingClientRect().width,
-                      minwidth = el.getAttribute("data-min-width"),
-                      maxwidth = el.getAttribute("data-max-width");
-                  widthById[parent.id] = width;
-                  if (+minwidth <= width && (+maxwidth >= width || maxwidth === null)) {
-                      el.style.display = "block";
-                  } else {
-                      el.style.display = "none";
-                  }
+    (function () {
+      // only want one resizer on the page
+      if (document.documentElement.className.indexOf("g-resizer-v3-init") > -1) return;
+      document.documentElement.className += " g-resizer-v3-init";
+      // require IE9+
+      if (!("querySelector" in document)) return;
+      function resizer() {
+        var elements = Array.prototype.slice.call(document.querySelectorAll(".g-artboard[data-min-width]")),
+          widthById = {};
+        elements.forEach(function (el) {
+          var parent = el.parentNode,
+            width = widthById[parent.id] || parent.getBoundingClientRect().width,
+            minwidth = el.getAttribute("data-min-width"),
+            maxwidth = el.getAttribute("data-max-width");
+          widthById[parent.id] = width;
+          if (+minwidth <= width && (+maxwidth >= width || maxwidth === null)) {
+            el.style.display = "block";
+          } else {
+            el.style.display = "none";
+          }
+        });
+        try {
+          if (window.parent && window.parent.$) {
+            window.parent.$("body").trigger("resizedcontent", [window]);
+          }
+          if (window.require) {
+            require(['foundation/main'], function () {
+              require(['shared/interactive/instances/app-communicator'], function (AppCommunicator) {
+                AppCommunicator.triggerResize();
               });
-              try {
-                  if (window.parent && window.parent.$) {
-                      window.parent.$("body").trigger("resizedcontent", [window]);
-                  }
-                  if (window.require) {
-                      require(['foundation/main'], function() {
-                          require(['shared/interactive/instances/app-communicator'], function(AppCommunicator) {
-                              AppCommunicator.triggerResize();
-                          });
-                      });
-                  }
-              } catch(e) { console.log(e); }
+            });
           }
-          document.addEventListener('DOMContentLoaded', resizer);
-          // feel free to replace throttle with _.throttle, if available
-          window.addEventListener('resize', throttle(resizer, 200));        
-          function throttle(func, wait) {
-              // from underscore.js
-              var _now = Date.now || function() { return new Date().getTime(); },
-                  context, args, result, timeout = null, previous = 0;
-              var later = function() {
-                  previous = _now();
-                  timeout = null;
-                  result = func.apply(context, args);
-                  if (!timeout) context = args = null;
-              };
-              return function() {
-                  var now = _now(), remaining = wait - (now - previous);
-                  context = this;
-                  args = arguments;
-                  if (remaining <= 0 || remaining > wait) {
-                      if (timeout) {
-                          clearTimeout(timeout);
-                          timeout = null;
-                      }
-                      previous = now;
-                      result = func.apply(context, args);
-                      if (!timeout) context = args = null;
-                  } else if (!timeout /* && options.trailing !== false */ ) {
-                      timeout = setTimeout(later, remaining);
-                  }
-                  return result;
-              };
+        } catch (e) { console.log(e); }
+      }
+      document.addEventListener('DOMContentLoaded', resizer);
+      // feel free to replace throttle with _.throttle, if available
+      window.addEventListener('resize', throttle(resizer, 200));
+      function throttle(func, wait) {
+        // from underscore.js
+        var _now = Date.now || function () { return new Date().getTime(); },
+          context, args, result, timeout = null, previous = 0;
+        var later = function () {
+          previous = _now();
+          timeout = null;
+          result = func.apply(context, args);
+          if (!timeout) context = args = null;
+        };
+        return function () {
+          var now = _now(), remaining = wait - (now - previous);
+          context = this;
+          args = arguments;
+          if (remaining <= 0 || remaining > wait) {
+            if (timeout) {
+              clearTimeout(timeout);
+              timeout = null;
+            }
+            previous = now;
+            result = func.apply(context, args);
+            if (!timeout) context = args = null;
+          } else if (!timeout /* && options.trailing !== false */) {
+            timeout = setTimeout(later, remaining);
           }
-         
-      })();
+          return result;
+        };
+      }
 
-      setTimeout(() => {
+    })();
+
+    setTimeout(() => {
 
     }, 1000);
   </script>

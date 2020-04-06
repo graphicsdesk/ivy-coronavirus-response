@@ -9,9 +9,61 @@ body {
   // Arc's overflow hidden on <body> messes up position sticky
   overflow-x: visible !important;
 }
-
-.graphic-name {
-  height: 300px;
-  border: 1px solid red;
-  color: red;
+* {
+  box-sizing: border-box;
 }
+
+
+
+/* scrollama */
+
+#scroll {
+  position: relative;
+  left:0;
+}
+
+.scroll__graphic {
+  position: sticky;
+  top:2.5vh;
+  left: 0;
+  bottom: auto;
+}
+
+.scroll__graphic.is-fixed {
+  position: fixed;
+}
+
+.scroll__graphic.is-bottom {
+  bottom: 0;
+  top: auto;
+}
+
+.chart {
+  position: absolute;
+  left:0;
+
+}
+
+
+.scroll__text {
+  position: relative;
+  padding: 0 1rem;
+  max-width: 30rem;
+  width: 33%;
+  left:60%;
+}
+
+.step {
+
+}
+
+.step.is-active {
+
+}
+
+.step p {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
