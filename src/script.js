@@ -101,25 +101,25 @@ function handleStepEnter(response) {
     [].slice.call(text).forEach(function (march) {
       march.style.visibility = "visible";
     });
-  } else {
-    console.log(response);
-    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+2));
+  } 
+}
+
+function handleContainerExit(response) {
+  var a = document.getElementById("g-columbia-desktop-img");
+  var svgDoc = a.contentDocument;
+  if (response.direction == 'up'){
+    console.log(response.index);
+    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+1));
     // add behaviour
     [].slice.call(delta).forEach(function (div) {
       div.setAttribute("style", "display:none");
     });
-    var text = document.getElementsByClassName("g-March_"+dates[response.index+1]);
+    var text = document.getElementsByClassName("g-March_"+dates[response.index]);
     [].slice.call(text).forEach(function (march) {
       march.style.visibility = "hidden";
     });
 
   }
-}
-
-function handleContainerExit(response) {
-  
-  graphic.classed("is-fixed", false);
-  graphic.classed("is-bottom", response.direction === "down");
 }
 
 function init() {
@@ -132,14 +132,14 @@ function init() {
   scroller
     .setup({
       container: "#scroll",
-      progress:"true",
+      progress:true,
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .step",
       debug: "true"
     })
     .onStepEnter(handleStepEnter)
-    .onContainerExit(handleContainerExit);
+    .onStepExit(handleContainerExit);
 
   // setup resize event
   window.addEventListener("resize", handleResize);
