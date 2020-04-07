@@ -11,7 +11,7 @@ class State {
   }
 
   visibleCountries = new Store(); // Stores country-level lines
-  visibleAnnotations = new Store(annotationWithKey); // Stores annotations
+  visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
   addCountry(...countries) {
     this.updateComponent(this.visibleCountries.add(countries));

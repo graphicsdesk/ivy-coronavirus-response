@@ -1,5 +1,5 @@
 import { scaleTime, scaleLinear } from 'd3-scale';
-import { axisBottom, axisRight } from 'd3-axis';
+import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
@@ -15,6 +15,7 @@ import {
   fadeIn, fadeOut,
   areDomainsUnequal,
   chainTransitions,
+  firstQuintile,
   INTERPOLATION_TIME,
 } from './utils';
 
@@ -33,7 +34,7 @@ for (let i = 0; i < covidData.length; i++)
  */
 
 const TICK_PADDING = 12;
-const margin = { top: 20, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
+const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
   // constructor()
@@ -63,8 +64,8 @@ class Graph extends State {
   makeXAxis = axisBottom(this.xScale)
     .tickSize(-this.gHeight)
     .tickPadding(TICK_PADDING);
-  makeYAxis = axisRight(this.yScale)
-    .tickSize(this.gWidth)
+  makeYAxis = axisLeft(this.yScale)
+    .tickSize(-this.gWidth)
     .tickPadding(TICK_PADDING);
 
   // Create line generator
@@ -95,7 +96,7 @@ class Graph extends State {
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
-      .data(this.withCovidData(annotations))
+      .data(this.withCovidData(annotations), a => a.key)
       .join(
         enter => enter.append('g.annotation')
           .call(this.makeAnnotation.bind(this))
@@ -131,7 +132,37 @@ class Graph extends State {
 
   makeAnnotation(selection, i) {
     const { xScale, yScale } = this;
-    const CONNECTOR_LENGTH = 40; // later on: can change on resize
+
+    // later on: can adjust on resize
+    const CONNECTOR_LENGTH = 80;
+    const CONNECTOR_PADDING = 7;
+    const LINE_WIDTH = 15;
+    const LINE_HEIGHT = 20;
+
+    // Make a top-oriented connector
+    console.log(selection.data())
+    selection
+      .append('line.connector')
+      .at({
+        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
+        x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
+      });
+
+    // Make a y-intercept baseline thing
+    const caseCountContainer = selection.append('g.case-count-container');
+    caseCountContainer
+      .append('line') // TODO: RENAME CLASS
+      .at({
+        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
+        x2: 0, y2: d => yScale(d.cases),
+      });
+    caseCountContainer
+      .append('text')
+      .at({
+        x: d => firstQuintile(xScale.range()),
+        y: d => yScale(d.cases),
+      })
+      .text(d => d.cases + ' cases');
 
     // Make the dot
     selection
@@ -142,25 +173,18 @@ class Graph extends State {
         r: 6
       });
 
-    // Make a top-oriented connector
-    selection
-      .append('line.connector')
-      .at({
-        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
-        x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
-      })
-
     // Make label
     selection
       .append('text')
-      // .text(d => d.label);
-      .tspans(d => wordwrap(d.label, 15))
-      // .translate((d, i, thing) => { console.log(d, i, thing); return [ 0, thing.length * -15 ] });
+      .tspans(d => wordwrap(d.label, LINE_WIDTH), LINE_HEIGHT)
       .at({
         x: d => xScale(d.parent.dayNumber),
-        y: d => yScale(d.parent.cases) - CONNECTOR_LENGTH,
-      })
-
+        y: (d, i, elements) => yScale(d.parent.cases) -
+          CONNECTOR_LENGTH -
+          CONNECTOR_PADDING -
+          // Move upwards by the number of line breaks to vertically align bottom
+          (elements.length - 1) * LINE_HEIGHT,
+      });
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
@@ -218,13 +242,21 @@ scroller
 function onStepEnter({ index }) {
   if (index === 0)
     graph.addAnnotation({ label: 'Harvard, Cornell, Yale', dayNumber: 7 });
-    // graph.addCountry('China');
-  else
-    graph.removeAnnotation({ dayNumber: 7 });
-    // graph.removeCountry('China');
+  if (index === 1)
+    graph.addAnnotation(
+      { label: 'Columbia', dayNumber: 12 },
+      { label: 'Princeton and Brown', dayNumber: 8, isMinor: true },
+    );
 }
 
-function onStepExit({ index }) {
+function onStepExit({ index, direction }) {
+  if (index === 0 && direction === 'up')
+    graph.removeAnnotation({ dayNumber: 7 });
+  if (index === 1 && direction === 'up')
+    graph.removeAnnotation(
+      { dayNumber: 12 },
+      { dayNumber: 8 },
+    );
 }
 
 /**

@@ -50,7 +50,12 @@ const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
   ...rest,
 });
 
+// Returns true if a <= x < b
 const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
+
+// Returns first quintile in a range,
+// Just positions case count label nicely.
+const firstQuintile = ([ a, b ]) => a + (b - a) * .2;
 
 module.exports = {
   fadeIn, fadeOut,
@@ -58,5 +63,6 @@ module.exports = {
   chainTransitions,
   annotationWithKey,
   isBetween,
+  firstQuintile,
   INTERPOLATION_TIME,
 };

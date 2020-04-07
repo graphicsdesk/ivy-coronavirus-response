@@ -14,11 +14,13 @@ body {
  * Interactive lede chart
  */
 
+$black: #121212;
 $grid-color: #ddd;
 
 #chart-container {
   position: sticky;
   position: -webkit-sticky;
+  width: 100%;
   top: 0;
 
   svg {
@@ -47,12 +49,8 @@ g.axis {
   }
 }
 
-g.y-axis .domain {
+g.axis .domain {
   display: none;
-}
-
-g.x-axis .domain {
-  stroke: $grid-color;
 }
 
 g.annotations-container {
@@ -62,12 +60,29 @@ g.annotations-container {
     }
 
     line.connector {
-      stroke: black;
+      stroke: $black;
+    }
+
+    line.cases-line {
+      stroke: $black;
+      stroke-dasharray: 4;
     }
 
     text {
       text-anchor: middle;
     }
+  }
+}
+
+g.case-count-container {
+  line {
+    stroke: $black;
+    stroke-dasharray: 4;
+  }
+
+  text {
+    dominant-baseline: baseline;
+    font-weight: bold;
   }
 }
 
