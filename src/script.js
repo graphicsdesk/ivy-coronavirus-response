@@ -37,20 +37,25 @@ textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text')
 
 var a = document.getElementById("g-columbia-desktop-img");
 
+var dates = ["8", "10","12","15","18","20"];
+window.addEventListener("load", function () {
 
-a.addEventListener("load", function () {
-  // get the inner DOM of alpha.svg
-  var svgDoc = a.contentDocument;
-  // get the inner element by id
-  var delta = svgDoc.getElementsByClassName("Scrolly1");
+  for (var i = 0; i < 10; i++) {
+    d3.selectAll(".Scrolly" + i)
+      .style("transition", "all 0.1s ease-in-out")
+      .style("opacity", "0");
+
+    d3.selectAll(".g-March" + dates[i])
+      .classed("m-fadeOut", true);
+  }
   // add behaviour
-  [].slice.call(delta).forEach(function (div) {
-    div.setAttribute("style", "display:none");
-  });
-  var text = document.getElementsByClassName("text");
-  [].slice.call(text).forEach(function (march) {
-    march.style.visibility = "hidden";
-  });
+  // var text = document.getElementsByClassName("text");
+  // [].slice.call(text).forEach(function (march) {
+  //   march.style.visibility = "hidden";
+  // });
+
+
+
 }, false);
 
 
@@ -68,14 +73,14 @@ var scroller = scrollama();
 
 function handleResize() {
   // 1. update height of step elements
-  var stepHeight = Math.floor(window.innerHeight * 0.75);
+  var stepHeight = Math.floor(window.innerHeight * 0.55);
   step.style("height", stepHeight + "px");
 
   var bodyWidth = d3.select("body").node().offsetWidth;
 
   graphic
     .style("width", bodyWidth + "px")
-    .style("height", window.innerHeight + "px");
+    .style("height", window.innerHeight - 300 + "px");
   // 2. update width/height of graphic element
   chart
     .style("width", 65 + "%")
@@ -85,39 +90,47 @@ function handleResize() {
 }
 
 // scrollama event handlers
-var dates = ["8", "10"];
+
 function handleStepEnter(response) {
   // response = { element, direction, index }
-  var a = document.getElementById("g-columbia-desktop-img");
-  var svgDoc = a.contentDocument;
-  if (response.direction == 'down'){
+  if (response.direction == 'down') {
     // get the inner element by id
-    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+1));
-    // add behaviour
-    [].slice.call(delta).forEach(function (div) {
-      div.setAttribute("style", "display:visible");
-    });
-    var text = document.getElementsByClassName("g-March_"+dates[response.index]);
-    [].slice.call(text).forEach(function (march) {
-      march.style.visibility = "visible";
-    });
-  } 
+    d3.selectAll(".Scrolly" + (response.index))
+      .style("opacity", "1");
+
+    if (response.index == 0 || response.index == 3) {
+      d3.selectAll(".anim"+response.index)
+        .style("visibility", "visible")
+    } else {
+      console.log(response.index);
+      d3.selectAll(".anim"+(response.index - 1))
+        .style("visibility", "hidden")
+    }
+
+
+    d3.selectAll(".g-March" + dates[response.index])
+      .classed("m-fadeIn", true)
+      .classed("m-fadeOut", false);
+  } else {
+
+    if (response.index == 0 || response.index == 3) {
+      d3.selectAll(".anim" + response.index)
+      .style("visibility", "visible")
+    } else {
+      d3.selectAll(".anim" + response.index)
+      .style("visibility", "hidden")
+    }
+  }
 }
 
 function handleContainerExit(response) {
-  var a = document.getElementById("g-columbia-desktop-img");
-  var svgDoc = a.contentDocument;
-  if (response.direction == 'up'){
-    console.log(response.index);
-    var delta = svgDoc.getElementsByClassName("Scrolly"+(response.index+1));
-    // add behaviour
-    [].slice.call(delta).forEach(function (div) {
-      div.setAttribute("style", "display:none");
-    });
-    var text = document.getElementsByClassName("g-March_"+dates[response.index]);
-    [].slice.call(text).forEach(function (march) {
-      march.style.visibility = "hidden";
-    });
+  if (response.direction == 'up') {
+    d3.selectAll(".Scrolly" + (response.index))
+      .style("opacity", "0");
+
+    d3.selectAll(".g-March" + dates[response.index])
+      .classed("m-fadeOut", true)
+      .classed("m-fadeIn", false);
 
   }
 }
@@ -131,8 +144,10 @@ function init() {
   // 3. bind scrollama event handlers (this can be chained like below)
   scroller
     .setup({
+      order: true,
+      offset: 0.55,
       container: "#scroll",
-      progress:true,
+      progress: true,
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .step",
