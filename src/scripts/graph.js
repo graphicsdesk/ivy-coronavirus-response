@@ -96,8 +96,6 @@ class Graph extends State {
          // Use country as key
         array => array[0].country
       );
-    const linesEnter = linesUpdate.enter();
-    const linesExit = linesUpdate.exit();
 
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
@@ -108,34 +106,39 @@ class Graph extends State {
           .call(this.makeAnnotation.bind(this))
           .call(this.updateAnnotation.bind(this))
           .call(fadeIn),
-        update => update.transition()
-          .duration(INTERPOLATION_TIME)
-          .call(this.updateAnnotation.bind(this)),
-        exit => exit.call(fadeOut),
       );
 
     // const exitSelections = linesUpdate.exit().merge(annotationsUpdate.exit());
-    const exitSelections = linesExit;
-
+    const exitSelections = linesUpdate.exit().merge(annotationsUpdate.exit());
+    this.updateAnnotation = this.updateAnnotation.bind(this);
     chainTransitions(
       // If exiting selection is nonempty, fade those out first.
       // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
       !exitSelections.empty() && (() => fadeOut(exitSelections)),
 
-      // If domains changed, interpolate existing elements (axes and
-      // existing paths) simultaneously to match new data range
+      // If domains changed, interpolate existing elements (axes, existing lines
+      // and annotations) simultaneously to match new data range
       domainsChanged && (() => {
         linesUpdate.transition()
           .duration(INTERPOLATION_TIME)
-          .attr('d', makeLine)
-        return this.updateAxes();        
+          .attr('d', makeLine);
+        annotationsUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation);
+        return this.updateAxes();
       }),
 
       // Fade in the path enter selection
-      !linesEnter.empty() && (() => linesEnter
-        .append('path')
-        .attr('d', makeLine)
-        .call(fadeIn)),
+      () => {
+        linesUpdate.enter()
+          .append('path')
+          .attr('d', makeLine)
+          .call(fadeIn);
+        annotationsUpdate.enter()
+          .call(this.makeAnnotation)
+          .call(this.updateAnnotation)
+          .call(fadeIn);
+      },
     )();
   }
 
