@@ -9,6 +9,7 @@ import { f } from 'd3-jetpack/essentials';
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
+import State from './state';
 import {
   fadeIn, fadeOut,
   areDomainsUnequal,
@@ -27,60 +28,14 @@ for (let i = 0; i < covidData.length; i++)
   covidData[i].date = new Date(covidData[i].date);
 
 /**
- * The Store class provides an interface for storing visualization state
- */
-
-class Store {
-  // Stores what countries are shown
-  countriesShown = {};
-
-  // State setter for adding countries
-  addCountry(...countries) {
-    const didCountriesChange = countries
-      // If a country is not shown, add it (set it to true) and return true.
-      // If a country is already shown, return false
-      .map(c => !this.countriesShown[c] && (this.countriesShown[c] = true))
-      // Were any countries actually added (i.e. set to true)?
-      .includes(true);
-    this.updateComponent(didCountriesChange);
-  }
-
-  // State setter for removing countries
-  removeCountry(...countries) {
-    const didCountriesChange = countries
-      // If a country is shown, remove it (set it to undefined) and return true.
-      // If a country is already not shown, return false.
-      .map(c => this.countriesShown[c] && ((this.countriesShown[c] = undefined) === undefined))
-      // Were any countries actually removed (i.e. set to undefined)?
-      .includes(true);
-    this.updateComponent(didCountriesChange);
-  }
-
-  // Updates component if it should update
-  updateComponent(shouldComponentUpdate) {
-    if (shouldComponentUpdate)
-      this.update();
-  }
-
-  // Returns countries as an array
-  get countries() {
-    return Object.keys(this.countriesShown).filter(c => this.countriesShown[c]);
-  }
-
-  // Returns data necessary to display the current state
-  get data() {
-    return covidData.filter(d => this.countries.includes(d.country) && d.dayNumber !== undefined && d.dayNumber >= 0 && d.dayNumber < 18);
-  }
-}
-
-/**
  * The Graph class draws and udpates the visualization's DOM elements
  */
 
 const TICK_PADDING = 12;
 const margin = { top: 20, right: 50 + TICK_PADDING, bottom: 30 + TICK_PADDING, left: 20 };
 
-class Graph extends Store {
+class Graph extends State {
+  // constructor()
   width = document.body.clientWidth;
   height = document.body.clientHeight;
   gWidth = this.width - margin.left - margin.right;
@@ -188,7 +143,7 @@ class Graph extends Store {
   }
 }
 
-const graph = new Graph();
+const graph = new Graph(covidData);
 graph.addCountry('US');
 
 /**
@@ -209,9 +164,11 @@ scroller
 
 function onStepEnter({ index }) {
   if (index === 1)
-    graph.addCountry('China');
+    // graph.addAnnotation({ label: 'Harvard', dayNumber: 7 });
+  graph.addCountry('China');
   else
-    graph.removeCountry('China');
+    // graph.removeAnnotation({ label: 'Harvard', dayNumber: 7 });
+  graph.removeCountry('China');
 }
 
 function onStepExit({ index }) {

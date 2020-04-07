@@ -41,9 +41,21 @@ function chainTransitions(...transitions) {
   return callback;
 }
 
+// Adds a key to an annotation object
+const annotationWithKey = ({ label, dayNumber, ...rest }) => ({
+  key: label + '-' + dayNumber,
+  label,
+  dayNumber,
+  ...rest,
+});
+
+const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
+
 module.exports = {
   fadeIn, fadeOut,
   areDomainsUnequal,
   chainTransitions,
+  annotationWithKey,
+  isBetween,
   INTERPOLATION_TIME,
 };
