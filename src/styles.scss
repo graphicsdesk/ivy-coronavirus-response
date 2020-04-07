@@ -15,6 +15,7 @@ body {
  */
 
 $black: #121212;
+$gray: #888;
 $grid-color: #ddd;
 
 #chart-container {
@@ -70,6 +71,26 @@ g.annotations-container {
 
     text {
       text-anchor: middle;
+      font-family: $roboto;
+      fill: $black;
+    }
+  }
+
+  g.small-annotation {
+    circle {
+      fill: $gray;
+    }
+
+    text {
+      fill: $gray;
+      text-anchor: middle;
+      dominant-baseline: hanging;
+      transform: translate(0, 11px);
+    }
+
+    &.orientation-top text {
+      dominant-baseline: unset;
+      transform: translate(0, -15px);
     }
   }
 }
@@ -81,8 +102,8 @@ g.case-count-container {
   }
 
   text {
-    dominant-baseline: baseline;
     font-weight: bold;
+    transform: translate(0, -7px);
   }
 }
 
@@ -91,6 +112,7 @@ g.case-count-container {
  */
 
 #steps-container {
+  pointer-events: none;
   z-index: 2;
   transform: translate3d(0, 0, 0);
 }

@@ -134,22 +134,30 @@ class Graph extends State {
     const { xScale, yScale } = this;
 
     // later on: can adjust on resize
-    const CONNECTOR_LENGTH = 80;
+    const CONNECTOR_LENGTH = 120;
     const CONNECTOR_PADDING = 7;
+    const SMALL_LINE_WIDTH = 10;
     const LINE_WIDTH = 15;
     const LINE_HEIGHT = 20;
 
-    // Make a top-oriented connector
-    console.log(selection.data())
+    const largeAnnotations = selection.filter(d => !d.isSmall);
+    const smallAnnotations = selection.filter(d => d.isSmall)
+      .classed('small-annotation', true);
     selection
+      .filter(d => d.orientation === 'top')
+      .classed('orientation-top', true);
+
+    // Make a top-oriented connector
+    largeAnnotations
       .append('line.connector')
       .at({
         x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
         x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
       });
 
-    // Make a y-intercept baseline thing
-    const caseCountContainer = selection.append('g.case-count-container');
+    // Make a case count y-intercept marker
+    const caseCountContainer = largeAnnotations.filter(d => d.showCases)
+      .append('g.case-count-container');
     caseCountContainer
       .append('line') // TODO: RENAME CLASS
       .at({
@@ -158,33 +166,30 @@ class Graph extends State {
       });
     caseCountContainer
       .append('text')
-      .at({
-        x: d => firstQuintile(xScale.range()),
-        y: d => yScale(d.cases),
-      })
+      .at({ x: d => firstQuintile(xScale.range()), y: d => yScale(d.cases) })
       .text(d => d.cases + ' cases');
 
     // Make the dot
     selection
       .append('circle')
-      .at({
-        cx: d => xScale(d.dayNumber),
-        cy: d => yScale(d.cases),
-        r: 6
-      });
+      .at({ cx: d => xScale(d.dayNumber), cy: d => yScale(d.cases), r: 6 });
 
     // Make label
     selection
       .append('text')
-      .tspans(d => wordwrap(d.label, LINE_WIDTH), LINE_HEIGHT)
+      .tspans(d => wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH), LINE_HEIGHT)
       .at({
         x: d => xScale(d.parent.dayNumber),
-        y: (d, i, elements) => yScale(d.parent.cases) -
-          CONNECTOR_LENGTH -
-          CONNECTOR_PADDING -
-          // Move upwards by the number of line breaks to vertically align bottom
-          (elements.length - 1) * LINE_HEIGHT,
+        y: ({ parent: { cases, isSmall, orientation } }, i, elements) => {
+          let y = yScale(cases);
+          if (!isSmall)
+            y -= CONNECTOR_LENGTH + CONNECTOR_PADDING;
+          if (!isSmall || orientation === 'top')
+            y -= (elements.length - 1) * LINE_HEIGHT; // Aligns bottom of text with base
+          return y;
+        },
       });
+
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
@@ -241,22 +246,37 @@ scroller
 
 function onStepEnter({ index }) {
   if (index === 0)
-    graph.addAnnotation({ label: 'Harvard, Cornell, Yale', dayNumber: 7 });
+    graph.addAnnotation({ dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true });
   if (index === 1)
     graph.addAnnotation(
-      { label: 'Columbia', dayNumber: 12 },
-      { label: 'Princeton and Brown', dayNumber: 8, isMinor: true },
+      { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true },
+      { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' },
+      { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true },
+      { dayNumber: 12, label: 'Columbia', showCases: true },
     );
+  if (index === 2)
+    graph.addAnnotation(
+      { dayNumber: 8.375, label: 'Ivy average' },
+    );
+  // if (index === 3)
+    // graph.addCountry('China');
 }
 
 function onStepExit({ index, direction }) {
-  if (index === 0 && direction === 'up')
+  if (index === 0 && direction === 'up' || index === 1 && direction === 'down')
     graph.removeAnnotation({ dayNumber: 7 });
-  if (index === 1 && direction === 'up')
+  if (index === 1)
     graph.removeAnnotation(
       { dayNumber: 12 },
       { dayNumber: 8 },
+      { dayNumber: 9 },
     );
+  if (index === 2 && direction === 'up')
+    graph.removeAnnotation(
+      { dayNumber: 8.375 },
+    )
+  // if (index === 3 && direction === 'up')
+    // graph.removeCountry('China');
 }
 
 /**

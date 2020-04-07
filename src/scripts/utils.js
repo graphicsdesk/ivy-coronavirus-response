@@ -42,7 +42,7 @@ function chainTransitions(...transitions) {
 }
 
 // Adds a key to an annotation object
-// TODO: Here the country = US assumption is made again. Lift it up/make it more obvious?
+// TODO: Here a second country = US assumption is made. Lift it up/make it more obvious?
 const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
   key: country + '-' + dayNumber,
   country,
@@ -55,7 +55,7 @@ const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
 
 // Returns first quintile in a range,
 // Just positions case count label nicely.
-const firstQuintile = ([ a, b ]) => a + (b - a) * .2;
+const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
 module.exports = {
   fadeIn, fadeOut,

@@ -36,11 +36,29 @@ class State {
   }
 
   // Adds corresponding COVID data to an annotation array of annotations
-  // TODO: Here the country = US assumption is made. Lift it up/make it more obvious?
+  // TODO: Here a second country = US assumption is made. Lift it up/make it more obvious?
   withCovidData(annotations) {
+    const { covidData } = this;
+
     return annotations.map(({ country = 'US', dayNumber, ...rest }) => {
-      const targetRow = this.covidData.find(row => row.dayNumber === dayNumber && row.country === country);
-      return { ...targetRow, ...rest };
+      const targetRow = covidData.find(row => row.dayNumber === dayNumber && row.country === country);
+      if (targetRow)
+        return { ...targetRow, ...rest };
+
+      // Doing some more work to interpolation values for annotation pointing
+      const countryData = covidData.filter(row => row.country === country);
+      for (let i = 1; i < countryData.length; i++) {
+        const { dayNumber: prevNum, cases: prevCases } = countryData[i - 1];
+        const { dayNumber: nextNum, cases: nextCases } = countryData[i];
+        if (prevNum < dayNumber && dayNumber < nextNum) {
+          return {
+            country,
+            dayNumber,
+            cases: prevCases + (nextCases - prevCases) * (dayNumber - prevNum) / (nextNum - prevNum),
+            ...rest,
+          };
+        }
+      }
     });
   }
 
