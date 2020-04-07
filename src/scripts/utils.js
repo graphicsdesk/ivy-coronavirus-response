@@ -42,9 +42,10 @@ function chainTransitions(...transitions) {
 }
 
 // Adds a key to an annotation object
-const annotationWithKey = ({ label, dayNumber, ...rest }) => ({
-  key: label + '-' + dayNumber,
-  label,
+// TODO: Here the country = US assumption is made again. Lift it up/make it more obvious?
+const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
+  key: country + '-' + dayNumber,
+  country,
   dayNumber,
   ...rest,
 });

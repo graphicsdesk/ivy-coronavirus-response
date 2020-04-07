@@ -4,7 +4,8 @@ import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
 import 'd3-transition';
-import { f } from 'd3-jetpack/essentials';
+import 'd3-jetpack/essentials';
+import wordwrap from 'd3-jetpack/src/wordwrap';
 
 import 'intersection-observer';
 import scrollama from 'scrollama';
@@ -52,83 +53,131 @@ class Graph extends State {
     .append('g')
     .translate([ margin.left, margin.top ]);
 
-  // Create axis container, lines container
+  // Create axis container, other containers
   xAxis = this.svg.append('g.axis.x-axis').translate([ 0, this.gHeight ]);
   yAxis = this.svg.append('g.axis.y-axis');
   linesContainer = this.svg.append('g.lines-container');
+  annotationsContainer = this.svg.append('g.annotations-container');
 
   // Create axis generators
-  xAxisGenerator = axisBottom(this.xScale)
+  makeXAxis = axisBottom(this.xScale)
     .tickSize(-this.gHeight)
     .tickPadding(TICK_PADDING);
-  yAxisGenerator = axisRight(this.yScale)
+  makeYAxis = axisRight(this.yScale)
     .tickSize(this.gWidth)
     .tickPadding(TICK_PADDING);
 
   // Create line generator
-  lineGenerator = d3Line();
+  makeLine = d3Line();
 
   update() {
     const domainsChanged = this.rescaleDataRange();
 
     const {
       xScale, yScale,
-      lineGenerator,
-      svg, linesContainer,
+      makeLine,
+      svg, linesContainer, annotationsContainer,
       countries, annotations, data
     } = this;
 
-    console.log(annotations);
-
-    // Each <path> should be joined to one country's time-series COVID data (an array)
-    const theJoinData = countries.map(country => data.filter(d => d.country === country));
-
-    // Join data, store update selection
+    // Join countries data, store enter, update, and exit selections
     const linesUpdate = linesContainer
       .selectAll('path')
-      .data(theJoinData, array => array[0].country);
-
-    // Store enter and exit selections for convenience
+      .data(
+        // Each <path> should be joined to one country's time-series COVID data (an array)
+        countries.map(country => data.filter(d => d.country === country)),
+         // Use country as key
+        array => array[0].country
+      );
     const linesEnter = linesUpdate.enter();
     const linesExit = linesUpdate.exit();
+
+    // Join annotations data, store selections
+    const annotationsUpdate = annotationsContainer
+      .selectAll('g.annotation')
+      .data(this.withCovidData(annotations))
+      .join(
+        enter => enter.append('g.annotation')
+          .call(this.makeAnnotation.bind(this))
+          .call(fadeIn),
+        update => update,
+        exit => exit.call(fadeOut),
+      );
+
+    // const exitSelections = linesUpdate.exit().merge(annotationsUpdate.exit());
+    const exitSelections = linesExit;
 
     chainTransitions(
       // If exiting selection is nonempty, fade those out first.
       // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
-      !linesExit.empty() && (() => fadeOut(linesExit)),
+      !exitSelections.empty() && (() => fadeOut(exitSelections)),
 
       // If domains changed, interpolate existing elements (axes and
       // existing paths) simultaneously to match new data range
       domainsChanged && (() => {
         linesUpdate.transition()
           .duration(INTERPOLATION_TIME)
-          .attr('d', lineGenerator)
+          .attr('d', makeLine)
         return this.updateAxes();        
       }),
 
       // Fade in the path enter selection
       !linesEnter.empty() && (() => linesEnter
         .append('path')
-        .attr('d', lineGenerator)
+        .attr('d', makeLine)
         .call(fadeIn)),
     )();
   }
 
+  makeAnnotation(selection, i) {
+    const { xScale, yScale } = this;
+    const CONNECTOR_LENGTH = 40; // later on: can change on resize
+
+    // Make the dot
+    selection
+      .append('circle')
+      .at({
+        cx: d => xScale(d.dayNumber),
+        cy: d => yScale(d.cases),
+        r: 6
+      });
+
+    // Make a top-oriented connector
+    selection
+      .append('line.connector')
+      .at({
+        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
+        x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
+      })
+
+    // Make label
+    selection
+      .append('text')
+      // .text(d => d.label);
+      .tspans(d => wordwrap(d.label, 15))
+      // .translate((d, i, thing) => { console.log(d, i, thing); return [ 0, thing.length * -15 ] });
+      .at({
+        x: d => xScale(d.parent.dayNumber),
+        y: d => yScale(d.parent.cases) - CONNECTOR_LENGTH,
+      })
+
+  }
+
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
-    const { xAxis, yAxis, xAxisGenerator, yAxisGenerator } = this;
+    const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
 
     xAxis.transition()
       .duration(INTERPOLATION_TIME)
-      .call(xAxisGenerator);
+      .call(makeXAxis);
     return yAxis.transition()
       .duration(INTERPOLATION_TIME)
-      .call(yAxisGenerator);
+      .call(makeYAxis);
   }
 
   // Rescales mappings (scales, line generator) based on new data
   rescaleDataRange() {
-    const { xScale, yScale, lineGenerator } = this;
+    const { xScale, yScale, makeLine } = this;
 
     const newXDomain = extent(this.data, d => d.dayNumber);
     const newYDomain = extent(this.data, d => d.cases);
@@ -141,7 +190,7 @@ class Graph extends State {
 
     // Updates line generator based on new scales
     if (didDomainsChange)
-      lineGenerator.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+      makeLine.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
 
     return didDomainsChange;
   }
@@ -167,11 +216,11 @@ scroller
   .onStepExit(onStepExit);
 
 function onStepEnter({ index }) {
-  if (index === 1)
-    graph.addAnnotation({ label: 'Harvard', dayNumber: 7 });
+  if (index === 0)
+    graph.addAnnotation({ label: 'Harvard, Cornell, Yale', dayNumber: 7 });
     // graph.addCountry('China');
   else
-    graph.removeAnnotation({ label: 'Harvard', dayNumber: 7 });
+    graph.removeAnnotation({ dayNumber: 7 });
     // graph.removeCountry('China');
 }
 

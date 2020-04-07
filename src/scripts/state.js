@@ -35,6 +35,15 @@ class State {
       this.update();
   }
 
+  // Adds corresponding COVID data to an annotation array of annotations
+  // TODO: Here the country = US assumption is made. Lift it up/make it more obvious?
+  withCovidData(annotations) {
+    return annotations.map(({ country = 'US', dayNumber, ...rest }) => {
+      const targetRow = this.covidData.find(row => row.dayNumber === dayNumber && row.country === country);
+      return { ...targetRow, ...rest };
+    });
+  }
+
   // Returns visible countries as an array
   get countries() { return this.visibleCountries.getState(); }
 

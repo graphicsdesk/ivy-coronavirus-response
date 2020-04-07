@@ -55,6 +55,22 @@ g.x-axis .domain {
   stroke: $grid-color;
 }
 
+g.annotations-container {
+  g.annotation {
+    circle {
+      fill: red;
+    }
+
+    line.connector {
+      stroke: black;
+    }
+
+    text {
+      text-anchor: middle;
+    }
+  }
+}
+
 /**
  * Interactive lede steps
  */
