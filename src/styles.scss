@@ -100,3 +100,9 @@ body {
 .small {
   height:300px !important;
 }
+
+.Scrolly0, .Scrolly1, .Scrolly2, .Scrolly3, .Scrolly4, .Scrolly5 {
+  opacity:0;
+  transition: all 0.1s ease-in-out;
+}
+

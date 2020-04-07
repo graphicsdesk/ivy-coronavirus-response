@@ -35,28 +35,8 @@ export function hamburgerTrigger() {
 
 textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
 
-var a = document.getElementById("g-columbia-desktop-img");
 
 var dates = ["8", "10","12","15","18","20"];
-window.addEventListener("load", function () {
-
-  for (var i = 0; i < 10; i++) {
-    d3.selectAll(".Scrolly" + i)
-      .style("transition", "all 0.1s ease-in-out")
-      .style("opacity", "0");
-
-    d3.selectAll(".g-March" + dates[i])
-      .classed("m-fadeOut", true);
-  }
-  // add behaviour
-  // var text = document.getElementsByClassName("text");
-  // [].slice.call(text).forEach(function (march) {
-  //   march.style.visibility = "hidden";
-  // });
-
-
-
-}, false);
 
 
 // using d3 for convenience
@@ -102,7 +82,6 @@ function handleStepEnter(response) {
       d3.selectAll(".anim"+response.index)
         .style("visibility", "visible")
     } else {
-      console.log(response.index);
       d3.selectAll(".anim"+(response.index - 1))
         .style("visibility", "hidden")
     }
@@ -134,6 +113,22 @@ function handleContainerExit(response) {
 
   }
 }
+var notDone = true;
+function handleStepProgress(response) {
+  if (response.index!=0 && notDone){ 
+    console.log(response.index);
+    for (var i = 0; i <= response.index; i++){
+      d3.selectAll(".Scrolly" + i)
+      .style("opacity", "1");
+    
+    d3.selectAll(".g-March" + dates[i])
+      .classed("m-fadeOut", false)
+      .classed("m-fadeIn", true);
+    }
+    notDone = false;
+  }
+    
+}
 
 function init() {
   // 1. force a resize on load to ensure proper dimensions are sent to scrollama
@@ -153,7 +148,8 @@ function init() {
       step: ".scroll__text .step"
     })
     .onStepEnter(handleStepEnter)
-    .onStepExit(handleContainerExit);
+    .onStepExit(handleContainerExit)
+    .onStepProgress(handleStepProgress);
 
   // setup resize event
   window.addEventListener("resize", handleResize);
