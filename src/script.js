@@ -31,12 +31,11 @@ export function hamburgerTrigger() {
   navbar.classList.toggle('show-nav-links');
 }
 
-// Text balance headline, deck, and image captions
 
 textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
 
-
-var dates = ["8", "10","12","15","18","20"];
+// animation dates for columbia
+var dates = ["8", "10", "12", "15", "18", "20"];
 
 
 // using d3 for convenience
@@ -50,7 +49,6 @@ var step = text.selectAll(".step");
 var scroller = scrollama();
 
 // generic window resize listener event
-
 function handleResize() {
   // 1. update height of step elements
   var stepHeight = Math.floor(window.innerHeight * 0.55);
@@ -70,38 +68,37 @@ function handleResize() {
 }
 
 // scrollama event handlers
-
 function handleStepEnter(response) {
   // response = { element, direction, index }
   if (response.direction == 'down') {
-    // get the inner element by id
+    // make animation appear
     d3.selectAll(".Scrolly" + (response.index))
       .style("opacity", "1");
-
+    // define appearance of pulsating circle
     if (response.index == 0 || response.index == 3) {
-      d3.selectAll(".anim"+response.index)
+      d3.selectAll(".anim" + response.index)
         .style("visibility", "visible")
     } else {
-      d3.selectAll(".anim"+(response.index - 1))
+      d3.selectAll(".anim" + (response.index - 1))
         .style("visibility", "hidden")
     }
 
-
+    // make text appear
     d3.selectAll(".g-March" + dates[response.index])
       .classed("m-fadeIn", true)
       .classed("m-fadeOut", false);
   } else {
-
     if (response.index == 0 || response.index == 3) {
       d3.selectAll(".anim" + response.index)
-      .style("visibility", "visible")
+        .style("visibility", "visible")
     } else {
       d3.selectAll(".anim" + response.index)
-      .style("visibility", "hidden")
+        .style("visibility", "hidden")
     }
   }
 }
 
+// make text disappear when scrolling up
 function handleContainerExit(response) {
   if (response.direction == 'up') {
     d3.selectAll(".Scrolly" + (response.index))
@@ -113,21 +110,23 @@ function handleContainerExit(response) {
 
   }
 }
+
+// handle the appearance of surpassed animations on refresh
 var notDone = true;
 function handleStepProgress(response) {
-  if (response.index!=0 && notDone){ 
+  if (response.index != 0 && notDone) {
     console.log(response.index);
-    for (var i = 0; i <= response.index; i++){
+    for (var i = 0; i <= response.index; i++) {
       d3.selectAll(".Scrolly" + i)
-      .style("opacity", "1");
-    
-    d3.selectAll(".g-March" + dates[i])
-      .classed("m-fadeOut", false)
-      .classed("m-fadeIn", true);
+        .style("opacity", "1");
+
+      d3.selectAll(".g-March" + dates[i])
+        .classed("m-fadeOut", false)
+        .classed("m-fadeIn", true);
     }
     notDone = false;
   }
-    
+
 }
 
 function init() {
