@@ -78,11 +78,14 @@ function handleStepEnter(response) {
     if (response.index == 0 || response.index == 3) {
       d3.selectAll(".anim" + response.index)
         .style("visibility", "visible")
-      d3.selectAll(".mobil" + response.index)
-        .style("visibility", "visible")
     } else {
       d3.selectAll(".anim" + (response.index - 1))
         .style("visibility", "hidden")
+      if (window.screen.width < 800) {
+        d3.selectAll(".mobil" + (response.index-1))
+          .classed("m-fadeOut", true)
+          .classed("m-fadeIn", false);
+      }
     }
     d3.selectAll(".g-March" + dates[response.index])
       .classed("m-fadeIn", true)
@@ -103,12 +106,17 @@ function handleStepEnter(response) {
         .style("visibility", "hidden")
 
     }
+    console.log(response.index);
+    if (window.screen.width < 800) {
+      d3.selectAll(".mobil" + response.index)
+        .classed("m-fadeOut", false)
+        .classed("m-fadeIn", true);
+    }
   }
 }
 
 // make text disappear when scrolling up
 function handleContainerExit(response) {
-  console.log(response.index);
   if (response.direction == 'up') {
     d3.selectAll(".Scrolly" + (response.index))
       .style("opacity", "0");
@@ -120,9 +128,16 @@ function handleContainerExit(response) {
     d3.selectAll(".mobil" + response.index)
       .classed("m-fadeOut", true)
       .classed("m-fadeIn", false);
+  } else {
+    if (response.index == 5) {
+      d3.selectAll(".mobil5")
+      .classed("m-fadeOut", true)
+      .classed("m-fadeIn", false);
+    }
   }
-
 }
+
+
 
 // handle the appearance of surpassed animations on refresh
 var notDone = true;
@@ -138,13 +153,6 @@ function handleStepProgress(response) {
     }
     notDone = false;
   }
-  if (response.index == 5 && response.progress >= 0.78) {
-    for (var i = 0; i <= response.index; i++) {
-      d3.selectAll(".mobil" + i)
-        .style("visibility","hidden")
-    }
-  }
-
 }
 
 function init() {
