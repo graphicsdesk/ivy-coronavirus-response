@@ -78,8 +78,6 @@ function handleStepEnter(response) {
     if (response.index == 0 || response.index == 3) {
       d3.selectAll(".anim" + response.index)
         .style("visibility", "visible")
-      d3.selectAll(".mobil" + response.index)
-        .style("visibility", "visible")
     } else {
       d3.selectAll(".anim" + (response.index - 1))
         .style("visibility", "hidden")
@@ -87,6 +85,7 @@ function handleStepEnter(response) {
     d3.selectAll(".g-March" + dates[response.index])
       .classed("m-fadeIn", true)
       .classed("m-fadeOut", false);
+      
     if (window.screen.width < 800) {
       d3.selectAll(".mobil" + response.index)
         .classed("m-fadeOut", false)
@@ -137,12 +136,6 @@ function handleStepProgress(response) {
         .classed("m-fadeIn", true);
     }
     notDone = false;
-  }
-  if (response.index == 5 && response.progress >= 0.78) {
-    for (var i = 0; i <= response.index; i++) {
-      d3.selectAll(".mobil" + i)
-        .style("visibility","hidden")
-    }
   }
 
 }

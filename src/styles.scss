@@ -142,33 +142,50 @@ body {
     margin-left:5% !important;
     margin-top:12.5% !important;
   }
+  .step {
+    height:50px !important;
+  }
   .mobil0 {
-    position:fixed;
-    top:17.5%;
-    left:32.5%;
-    width:50%;
+    position:absolute;
+    top:-10.5%;
+    right:70.5%;
+    width:100%;
     font-size:13px !important;
     background-color:rgba(191, 191, 191, 0.3)
   }
   .mobil3 {
-    position:fixed;
-    top:45.5%;
-    left:43.5%;
-    width:50%;
+    position:absolute;
+    top:62.5%;
+    right:40.5%;
+    width:100%;
     font-size:13px !important;
     background-color:rgba(191, 191, 191, 0.3)
   }
   .mobil5 {
-    position:fixed;
-    top:57.5%;
-    left:44.5%;
-    width:50%;
+    position:absolute;
+    top:99.5%;
+    left:10%;
+    width:100%;
     font-size:13px !important;
     background-color:rgba(191, 191, 191, 0.3)
   }
   .desk {
     opacity:0 !important;
+    height:20px;
   }
+  .scroll__graphic {
+    position: relative !important;
+    top:2.5%;
+    left: 0;
+  }
+  #scroll {
+    margin-bottom:0% !important;
+    height:900px !important;
+  }
+  .scroll__text {
+    top:-550px;
+  }
+  
 }
 
 
