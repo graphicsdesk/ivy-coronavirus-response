@@ -3,9 +3,8 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
-import 'd3-transition';
-import 'd3-jetpack/essentials';
-import wordwrap from 'd3-jetpack/src/wordwrap';
+import { transition } from 'd3-transition';
+import { wordwrap } from 'd3-jetpack';
 
 import 'intersection-observer';
 import scrollama from 'scrollama';
@@ -33,7 +32,14 @@ for (let i = 0; i < covidData.length; i++)
  * The Graph class draws and udpates the visualization's DOM elements
  */
 
+// later on: can adjust on resize
 const TICK_PADDING = 12;
+const CONNECTOR_LENGTH = 120;
+const CONNECTOR_PADDING = 7;
+const SMALL_LINE_WIDTH = 10;
+const LINE_WIDTH = 15;
+const LINE_HEIGHT = 20;
+
 const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
@@ -100,8 +106,11 @@ class Graph extends State {
       .join(
         enter => enter.append('g.annotation')
           .call(this.makeAnnotation.bind(this))
+          .call(this.updateAnnotation.bind(this))
           .call(fadeIn),
-        update => update,
+        update => update.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation.bind(this)),
         exit => exit.call(fadeOut),
       );
 
@@ -131,15 +140,6 @@ class Graph extends State {
   }
 
   makeAnnotation(selection, i) {
-    const { xScale, yScale } = this;
-
-    // later on: can adjust on resize
-    const CONNECTOR_LENGTH = 120;
-    const CONNECTOR_PADDING = 7;
-    const SMALL_LINE_WIDTH = 10;
-    const LINE_WIDTH = 15;
-    const LINE_HEIGHT = 20;
-
     const largeAnnotations = selection.filter(d => !d.isSmall);
     const smallAnnotations = selection.filter(d => d.isSmall)
       .classed('small-annotation', true);
@@ -147,9 +147,28 @@ class Graph extends State {
       .filter(d => d.orientation === 'top')
       .classed('orientation-top', true);
 
-    // Make a top-oriented connector
+    largeAnnotations.append('line.connector'); // Make a top-oriented connector
+
+    const caseCountContainer = largeAnnotations.filter(d => d.showCases)
+      .append('g.case-count-container');
+    caseCountContainer.append('line');
+    caseCountContainer.append('text');
+
+    selection.append('circle'); // Make the circle
+    selection
+      .append('text.label') // Make the label
+      .tspans(d => wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH), LINE_HEIGHT);
+  }
+
+  updateAnnotation(selection, i) {
+    const { xScale, yScale } = this;
+
+    const largeAnnotations = selection.filter(d => !d.isSmall);
+    const smallAnnotations = selection.filter(d => d.isSmall);
+
+    // Place connector
     largeAnnotations
-      .append('line.connector')
+      .select('line.connector')
       .at({
         x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
         x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
@@ -157,27 +176,27 @@ class Graph extends State {
 
     // Make a case count y-intercept marker
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
-      .append('g.case-count-container');
+      .select('g.case-count-container');
     caseCountContainer
-      .append('line') // TODO: RENAME CLASS
+      .select('line')
       .at({
         x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
         x2: 0, y2: d => yScale(d.cases),
       });
     caseCountContainer
-      .append('text')
+      .select('text')
       .at({ x: d => firstQuintile(xScale.range()), y: d => yScale(d.cases) })
       .text(d => d.cases + ' cases');
 
-    // Make the dot
+    // Place the dot
     selection
-      .append('circle')
+      .select('circle')
       .at({ cx: d => xScale(d.dayNumber), cy: d => yScale(d.cases), r: 6 });
 
-    // Make label
+    // Place label
     selection
-      .append('text')
-      .tspans(d => wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH), LINE_HEIGHT)
+      .select('text.label')
+      .selectAll('tspan')
       .at({
         x: d => xScale(d.parent.dayNumber),
         y: ({ parent: { cases, isSmall, orientation } }, i, elements) => {
@@ -258,8 +277,8 @@ function onStepEnter({ index }) {
     graph.addAnnotation(
       { dayNumber: 8.375, label: 'Ivy average' },
     );
-  // if (index === 3)
-    // graph.addCountry('China');
+  if (index === 3)
+    graph.addCountry('China');
 }
 
 function onStepExit({ index, direction }) {
@@ -275,8 +294,8 @@ function onStepExit({ index, direction }) {
     graph.removeAnnotation(
       { dayNumber: 8.375 },
     )
-  // if (index === 3 && direction === 'up')
-    // graph.removeCountry('China');
+  if (index === 3 && direction === 'up')
+    graph.removeCountry('China');
 }
 
 /**
