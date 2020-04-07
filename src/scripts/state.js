@@ -26,7 +26,7 @@ class State {
   }
 
   removeAnnotation(...annotations) {
-    this.updateComponent(this.visibleAnnotations.add(annotations));
+    this.updateComponent(this.visibleAnnotations.remove(annotations));
   }
 
   // Updates component if it should update

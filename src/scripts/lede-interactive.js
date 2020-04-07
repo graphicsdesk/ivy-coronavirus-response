@@ -73,11 +73,12 @@ class Graph extends State {
 
     const {
       xScale, yScale,
-      linesContainer,
       lineGenerator,
-      svg,
-      countries, data
+      svg, linesContainer,
+      countries, annotations, data
     } = this;
+
+    console.log(annotations);
 
     // Each <path> should be joined to one country's time-series COVID data (an array)
     const theJoinData = countries.map(country => data.filter(d => d.country === country));
@@ -86,7 +87,10 @@ class Graph extends State {
     const linesUpdate = linesContainer
       .selectAll('path')
       .data(theJoinData, array => array[0].country);
-    const linesExit = linesUpdate.exit(); // Store exit selection for convenience
+
+    // Store enter and exit selections for convenience
+    const linesEnter = linesUpdate.enter();
+    const linesExit = linesUpdate.exit();
 
     chainTransitions(
       // If exiting selection is nonempty, fade those out first.
@@ -103,10 +107,10 @@ class Graph extends State {
       }),
 
       // Fade in the path enter selection
-      () => linesUpdate.enter()
+      !linesEnter.empty() && (() => linesEnter
         .append('path')
         .attr('d', lineGenerator)
-        .call(fadeIn),
+        .call(fadeIn)),
     )();
   }
 
@@ -164,11 +168,11 @@ scroller
 
 function onStepEnter({ index }) {
   if (index === 1)
-    // graph.addAnnotation({ label: 'Harvard', dayNumber: 7 });
-  graph.addCountry('China');
+    graph.addAnnotation({ label: 'Harvard', dayNumber: 7 });
+    // graph.addCountry('China');
   else
-    // graph.removeAnnotation({ label: 'Harvard', dayNumber: 7 });
-  graph.removeCountry('China');
+    graph.removeAnnotation({ label: 'Harvard', dayNumber: 7 });
+    // graph.removeCountry('China');
 }
 
 function onStepExit({ index }) {

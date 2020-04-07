@@ -26,7 +26,7 @@ function areDomainsUnequal(d1, d2) {
 
 // Nests a series of transitions as callbacks of the previous one
 function chainTransitions(...transitions) {
-  const transitionFns = transitions.filter(t => t !== false);
+  const transitionFns = transitions.filter(t => t);
 
   if (transitionFns.length === 0)
     return () => undefined;
