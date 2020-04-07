@@ -150,8 +150,7 @@ function init() {
       progress: true,
       graphic: ".scroll__graphic",
       text: ".scroll__text",
-      step: ".scroll__text .step",
-      debug: "true"
+      step: ".scroll__text .step"
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit);
