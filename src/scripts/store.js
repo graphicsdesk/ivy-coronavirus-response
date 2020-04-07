@@ -11,8 +11,8 @@ class Store {
       this.withKey = withKey;
   }
 
-  // // Adds items to a store. Return true if anything was actually added.
-  add(...items) {
+  // Adds items to a store. Return true if anything was actually added.
+  add(items) {
     return items.map(this.withKey)
       .map(item => {
         // To mark an item's membership, by default use the item as the key and
@@ -29,11 +29,11 @@ class Store {
         return !this.items[key] && (this.items[key] = value);
       })
       // Were any countries actually added?
-      .includes(true);
+      .some(value => value);
   }
 
   // Remove items from a store. Return true if anything was actually removed.
-  remove(...items) {
+  remove(items) {
     return items.map(this.withKey)
       .map(item => {
         let key = hasKey(item) ? item.key : item;
@@ -42,12 +42,19 @@ class Store {
         return this.items[key] && ((this.items[key] = undefined) === undefined)
       })
       // Were any countries actually removed (i.e. set to undefined)?
-      .includes(true);
+      .some(value => value);
   }
 
   // Returns current state as an array of which items are visible
   getState() {
-    return Object.keys(this.items).filter(x => this.items[x]);
+    return Object.keys(this.items).reduce((acc, k) => {
+      const value = this.items[k]
+      if (hasKey(value))
+        acc.push(value)
+      else if (value)
+        acc.push(k)
+      return acc;
+    }, []);
   }
 }
 
