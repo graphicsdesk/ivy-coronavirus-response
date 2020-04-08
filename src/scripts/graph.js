@@ -10,15 +10,12 @@ import 'intersection-observer';
 
 import State from './state';
 import {
-  fadeIn, fadeOut,
+  fadeIn, fadeOut, drawIn,
   areDomainsEqual,
-  chainTransitions,
+  chainTransitions, genericTransition,
   firstQuintile,
-  unionSelection,
-  INTERPOLATION_TIME,
+  INTERPOLATION_TIME, FADE_TIME, DRAW_TIME,
 } from './utils';
-
-selection.prototype.union = unionSelection;
 
 import covidData from '../../data/covid.json';
 
@@ -68,82 +65,81 @@ class Graph extends State {
   linesContainer = this.svg.append('g.lines-container');
   annotationsContainer = this.svg.append('g.annotations-container');
 
-  // Create axis generators
-  makeXAxis = axisBottom(this.xScale)
-    .tickSize(-this.gHeight)
-    .tickPadding(TICK_PADDING);
-  makeYAxis = axisLeft(this.yScale)
-    .tickSize(-this.gWidth)
-    .tickPadding(TICK_PADDING);
+  // Axis generators
+  makeXAxis = axisBottom(this.xScale).tickSize(-this.gHeight).tickPadding(TICK_PADDING);
+  makeYAxis = axisLeft(this.yScale).tickSize(-this.gWidth).tickPadding(TICK_PADDING);
 
-  // Create line generator
+  // Line generator
   makeLine = d3Line();
 
-  update() {
+  async update() {
     const domainsChanged = this.rescaleDataRange();
 
     const {
-      xScale, yScale,
-      makeLine,
+      xScale, yScale, makeLine,
       svg, linesContainer, annotationsContainer,
       countries, annotations, data
     } = this;
 
-    // Join countries data, store enter, update, and exit selections
+    // Join countries data, store selections
     const linesUpdate = linesContainer
       .selectAll('path')
       .data(
-        // Each <path> should be joined to one country's time-series COVID data (an array)
+        // Each <path> should be joined to a country's time-series COVID data (an array)
         countries.map(country => data.filter(d => d.country === country)),
-         // Use country as key
-        array => array[0].country
+        array => array[0].country,
       );
+    const linesExit = linesUpdate.exit();
 
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
       .data(this.withCovidData(annotations), a => a.key);
-    const linesExit = linesUpdate.exit();
     const annotationsExit = annotationsUpdate.exit();
+
     this.updateAnnotation = this.updateAnnotation.bind(this);
 
-    chainTransitions(
-      // If exiting selection is nonempty, fade those out first.
-      // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
-      !(linesExit.empty() && annotationsExit.empty()) && (() => {
-        const t1 = fadeOut(annotationsExit);
-        const t2 = fadeOut(linesExit);
-        return select('svg').transition().duration(0);
-      }),
+    // If exiting selection is nonempty, fade those out first.
+    // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
+    if (!(linesExit.empty() && annotationsExit.empty())) {
+      const linesFade = fadeOut(linesExit, 'lines');
+      const annotationsFade = fadeOut(annotationsExit);
+      if (linesExit.empty())
+        await annotationsFade.end();
+      else
+        await linesFade.end();
+    }
 
-      // If domains changed, interpolate existing elements (axes, existing lines
-      // and annotations) simultaneously to match new data range
-      domainsChanged && (() => {
-        linesUpdate.transition()
-          .duration(INTERPOLATION_TIME)
-          .attr('d', makeLine);
-        annotationsUpdate.transition()
-          .duration(INTERPOLATION_TIME)
-          .call(this.updateAnnotation);
-        return this.updateAxes();
-      }),
+    // If domains changed, interpolate existing elements (axes, existing lines
+    // and annotations) simultaneously to match new data range
+    if (domainsChanged) {
+      linesUpdate.transition()
+        .duration(INTERPOLATION_TIME)
+        .attr('d', makeLine);
+      annotationsUpdate.transition()
+        .duration(INTERPOLATION_TIME)
+        .call(this.updateAnnotation);
+      // return this.updateAxes();
+      await this.updateAxes().end();
+    }
 
-      // Fade in the path enter selection
-      () => {
-        linesUpdate.enter()
-          .append('path')
-          .attr('d', makeLine)
-          .call(fadeIn);
+    // Draw in the path enter selection
+    if (!linesUpdate.enter().empty()) {
+      await drawIn(linesUpdate.enter().append('path').attr('d', makeLine)).end();
+    }
+
+    // Fade in the annotations enter selection
+    if (!annotationsUpdate.enter().empty()) {
+      await fadeIn(
         annotationsUpdate.enter()
           .append('g.annotation')
-          .call(this.makeAnnotation)
+          .call(this.enterAnnotation)
           .call(this.updateAnnotation)
-          .call(fadeIn);
-      },
-    )();
+      ).end();
+    }
   }
 
-  makeAnnotation(selection, i) {
+  enterAnnotation(selection, i) {
     const largeAnnotations = selection.filter(d => !d.isSmall);
     const smallAnnotations = selection.filter(d => d.isSmall)
       .classed('small-annotation', true);
@@ -265,8 +261,6 @@ scroller
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
 
-const initialState = { countries: [ 'US' ] };
-
 // Storing annotations for convenience
 const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' };
@@ -276,6 +270,7 @@ const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
 
+const initialState = { countries: [ 'US' ] };
 const allStates = [
   { annotations: [ us7 ], countries: [ 'US' ] },
   { annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] },
@@ -287,7 +282,9 @@ const allStates = [
 graph.set(initialState);
 
 function onStepEnter({ index }) {
-  graph.set(allStates[index]);
+  allStates[index] !== undefined ?
+    graph.set(allStates[index]) :
+    console.error('No state specified for index', index);
 }
 
 function onStepExit({ index, direction }) {

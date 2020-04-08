@@ -21,7 +21,7 @@ class State {
   // Updates component if it should update
   updateComponent(shouldComponentUpdate) {
     if (shouldComponentUpdate)
-      this.update();
+      this.update().catch(console.error);
   }
 
   // Adds corresponding COVID data to an annotation array of annotations
