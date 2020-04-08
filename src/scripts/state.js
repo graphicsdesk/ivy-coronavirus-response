@@ -14,9 +14,8 @@ class State {
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
   set({ countries = [], annotations = [] }) {
-    const shouldComponentUpdate = this.visibleAnnotations.set(annotations) +
-      this.visibleCountries.set(countries);
-    this.updateComponent(shouldComponentUpdate);
+    this.updateComponent(this.visibleAnnotations.set(annotations) +
+      this.visibleCountries.set(countries));
   }
 
   // Updates component if it should update

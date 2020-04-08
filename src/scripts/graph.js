@@ -5,8 +5,8 @@ import { line as d3Line } from 'd3-shape';
 import { select, selection } from 'd3-selection';
 import { transition } from 'd3-transition';
 import { wordwrap } from 'd3-jetpack';
-import 'intersection-observer';
 import scrollama from 'scrollama';
+import 'intersection-observer';
 
 import State from './state';
 import {
@@ -95,6 +95,7 @@ class Graph extends State {
          // Use country as key
         array => array[0].country
       );
+
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
@@ -263,6 +264,7 @@ scroller
 
 const initialState = { countries: [ 'US' ] };
 
+// Storing annotations for convenience
 const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
@@ -271,24 +273,18 @@ const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
 
+const allStates = [
+  { annotations: [ us7 ], countries: [ 'US' ] },
+  { annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] },
+  { annotations: [ usIvy ], countries: [ 'US' ] },
+  { annotations: [ usIvy, china ], countries: [ 'US', 'China' ] },
+  { annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] },
+];
+
 graph.set(initialState);
 
 function onStepEnter({ index }) {
-  if (index === 0) {
-    graph.set({ annotations: [ us7 ], countries: [ 'US' ] });
-  }
-  if (index === 1) {
-    graph.set({ annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] });
-  }
-  if (index === 2) {
-    graph.set({ annotations: [ usIvy ], countries: [ 'US' ] });
-  }
-  if (index === 3) {
-    graph.set({ annotations: [ usIvy, china ], countries: [ 'US', 'China' ] });
-  }
-  if (index === 4) {
-    graph.set({ annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] });
-  }
+  graph.set(allStates[index]);
 }
 
 function onStepExit({ index, direction }) {

@@ -74,7 +74,7 @@ function unionSelection(that) {
 // Keep only first group in a selection
 // Useful when chaining transitions each with variable groups at the end
 function keepFirstGroup(selection) {}
-
+selection.prototype.union = unionSelection;
 module.exports = {
   fadeIn, fadeOut,
   areDomainsEqual,
