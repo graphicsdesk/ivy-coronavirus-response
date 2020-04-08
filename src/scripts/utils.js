@@ -1,6 +1,3 @@
-import { select } from 'd3-selection';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 /**
  * D3 selection helper functions
  */

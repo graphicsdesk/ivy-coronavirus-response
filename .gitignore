@@ -2,3 +2,6 @@
 .cache
 dist
 node_modules
+
+# Webstorm
+.idea
