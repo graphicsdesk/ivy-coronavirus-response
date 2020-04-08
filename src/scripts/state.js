@@ -13,44 +13,9 @@ class State {
   visibleCountries = new Store(); // Stores country-level lines
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
-  addCountry(...countries) {
-    this.updateComponent(this.visibleCountries.add(countries));
-  }
-
-  removeCountry(...countries) {
-    this.updateComponent(this.visibleCountries.remove(countries));
-  }
-
-  addAnnotation(...annotations) {
-    this.updateComponent(this.visibleAnnotations.add(annotations));
-  }
-
-  removeAnnotation(...annotations) {
-    this.updateComponent(this.visibleAnnotations.remove(annotations));
-  }
-
-  add({ countries, annotations }) {
-    const shouldComponentUpdate = this.visibleCountries.add(countries || []) +
-      this.visibleAnnotations.add(annotations || []);
-    this.updateComponent(shouldComponentUpdate)
-  }
-
-  remove({ countries, annotations }) {
-    const shouldComponentUpdate = this.visibleCountries.remove(countries || []) +
-      this.visibleAnnotations.remove(annotations || []);
-    this.updateComponent(shouldComponentUpdate)
-  }
-
-  setAnnotations(annotations) {
-    console.log('SETTING annotations')
-    const shouldComponentUpdate = this.visibleAnnotations.set(annotations);
-    console.log('stuff changed:', shouldComponentUpdate);
-    this.updateComponent(shouldComponentUpdate)
-  }
-
-  set({ countries, annotations }) {
-    const shouldComponentUpdate = this.visibleAnnotations.set(annotations || []) +
-      this.visibleCountries.set(countries || []);
+  set({ countries = [], annotations = [] }) {
+    const shouldComponentUpdate = this.visibleAnnotations.set(annotations) +
+      this.visibleCountries.set(countries);
     this.updateComponent(shouldComponentUpdate);
   }
 

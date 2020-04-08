@@ -185,7 +185,7 @@ class Graph extends State {
       });
     caseCountContainer
       .select('text')
-      .at({ x: d => firstQuintile(xScale.range()), y: d => yScale(d.cases) })
+      .at({ x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())), y: d => yScale(d.cases) })
       .text(d => d.cases + ' cases');
 
     // Place the dot
