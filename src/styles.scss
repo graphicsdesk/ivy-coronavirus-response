@@ -113,15 +113,15 @@ body {
     width:121%;
   }
   .mobil3 {
-    top:319%;
-    left:-65%;
+    top:322.5%;
+    left:-5%;
     right:0%;
-    width:180%;
+    width:100%;
   }
   .mobil5 {
-    top:360%;
+    top:375%;
     right:-4%;
-    width:165%;
+    width:110%;
   }
 
   .scroll__text {
@@ -133,7 +133,7 @@ body {
   .mobil0, .mobil3, .mobil5 {
     position:absolute;
     padding:4.5px !important;
-    font-size:9.5px !important;
+    font-size:9px !important;
     background-color:rgba(191, 191, 191, 0.3)
   }
   #g-columbia-mobile {
@@ -147,6 +147,7 @@ body {
   .step {
     height:25px !important;
     font-size:inherit;
+    font-family:'Georgia',serif;
   }
   .desk {
     font-size:1px !important;
@@ -165,20 +166,20 @@ body {
 @media screen and (max-width: 600px) and (max-height: 800px) and (min-height:700px){ //iPhone 6, 7, 8 Plus
 
     .mobil0 {
-      top:200.5%;
+      top:195.5%;
       right:8.5%;
       width:125%;
     }
     .mobil3 {
-      top:306.5%;
-      left:-70%;
+      top:310%;
+      left:-10%;
       right:0%;
-      width:185%;
+      width:100%;
     }
     .mobil5 {
-      top:350%;
+      top:370%;
       right:-4%;
-      width:170%;
+      width:120%;
     }
     .scroll__text {
       top:-180%;
@@ -193,15 +194,15 @@ body {
       width:120%;
     }
     .mobil3 {
-      top:129.2%;
-      left:-65%;
+      top:131%;
+      left:-5%;
       right:0%;
-      width:180%;
+      width:110%;
     }
     .mobil5 {
-      top:142%;
-      right:-4%;
-      width:165%;
+      top:147.5%;
+      right:-5%;
+      width:110%;
     }
     .scroll__text {
       top:-250% !important;
@@ -223,7 +224,7 @@ body {
 
   .mobil0 {
     position:absolute;
-    top:-10.5%;
+    top:-5.5%;
     right:70.5%;
     width:100%;
     font-size:13px !important;
@@ -239,7 +240,7 @@ body {
   }
   .mobil5 {
     position:absolute;
-    top:190.5%;
+    top:195.5%;
     left:10%;
     width:100%;
     font-size:13px !important;
@@ -250,6 +251,10 @@ body {
   }
   #scroll {
     height:900px !important;
+  }
+
+  .mobil0, .mobil3, .mobil5 {
+    padding:9px !important;
   }
 }
 
