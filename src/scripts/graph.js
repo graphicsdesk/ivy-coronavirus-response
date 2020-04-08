@@ -14,8 +14,11 @@ import {
   areDomainsEqual,
   chainTransitions,
   firstQuintile,
+  unionSelection,
   INTERPOLATION_TIME,
 } from './utils';
+
+selection.prototype.union = unionSelection;
 
 import covidData from '../../data/covid.json';
 

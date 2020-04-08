@@ -1,4 +1,4 @@
-import { select, selection, selectAll } from 'd3-selection';
+import { selection, selectAll } from 'd3-selection';
 
 /**
  * D3 selection helper functions
@@ -67,14 +67,10 @@ function unionSelection(that) {
   }else{
     throw new Error("Can only union with another d3 selection");
   }
-};
+}
 
-// TODO: TRY USING TRANSITION.END (A PROMISE)
+// @TODO: TRY USING TRANSITION.END (A PROMISE)
 
-// Keep only first group in a selection
-// Useful when chaining transitions each with variable groups at the end
-function keepFirstGroup(selection) {}
-selection.prototype.union = unionSelection;
 module.exports = {
   fadeIn, fadeOut,
   areDomainsEqual,
@@ -82,7 +78,6 @@ module.exports = {
   annotationWithKey,
   isBetween,
   firstQuintile,
-  keepFirstGroup,
   unionSelection,
   INTERPOLATION_TIME,
 };
