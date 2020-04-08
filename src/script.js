@@ -85,7 +85,7 @@ function handleStepEnter(response) {
     d3.selectAll(".g-March" + dates[response.index])
       .classed("m-fadeIn", true)
       .classed("m-fadeOut", false);
-      
+
     if (window.screen.width < 800) {
       d3.selectAll(".mobil" + response.index)
         .classed("m-fadeOut", false)
@@ -156,7 +156,7 @@ function init() {
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .step",
-      debug: true
+      debug: false
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)
