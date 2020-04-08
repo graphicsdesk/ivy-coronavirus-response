@@ -15,9 +15,7 @@ function fadeIn(selection) {
 }
 
 // Fades out a selection; returns the transition
-function fadeOut(selection, debug) {
-  if (debug)
-    console.log('fadeOut', selection)
+function fadeOut(selection) {
   return selection.transition()
     .duration(FADE_TIME)
     .style('opacity', 0)
