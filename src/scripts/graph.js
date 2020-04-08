@@ -12,9 +12,8 @@ import State from './state';
 import {
   fadeIn, fadeOut, drawIn,
   areDomainsEqual,
-  chainTransitions, genericTransition,
   firstQuintile,
-  INTERPOLATION_TIME, FADE_TIME, DRAW_TIME,
+  INTERPOLATION_TIME,
 } from './utils';
 
 import covidData from '../../data/covid.json';
@@ -89,12 +88,14 @@ class Graph extends State {
         countries.map(country => data.filter(d => d.country === country)),
         array => array[0].country,
       );
+    const linesEnter = linesUpdate.enter();
     const linesExit = linesUpdate.exit();
 
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
       .data(this.withCovidData(annotations), a => a.key);
+    const annotationsEnter = annotationsUpdate.enter();
     const annotationsExit = annotationsUpdate.exit();
 
     this.updateAnnotation = this.updateAnnotation.bind(this);
@@ -102,7 +103,7 @@ class Graph extends State {
     // If exiting selection is nonempty, fade those out first.
     // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
     if (!(linesExit.empty() && annotationsExit.empty())) {
-      const linesFade = fadeOut(linesExit, 'lines');
+      const linesFade = fadeOut(linesExit);
       const annotationsFade = fadeOut(annotationsExit);
       if (linesExit.empty())
         await annotationsFade.end();
@@ -119,19 +120,18 @@ class Graph extends State {
       annotationsUpdate.transition()
         .duration(INTERPOLATION_TIME)
         .call(this.updateAnnotation);
-      // return this.updateAxes();
       await this.updateAxes().end();
     }
 
     // Draw in the path enter selection
-    if (!linesUpdate.enter().empty()) {
-      await drawIn(linesUpdate.enter().append('path').attr('d', makeLine)).end();
+    if (!linesEnter.empty()) {
+      await drawIn(linesEnter.append('path').attr('d', makeLine)).end();
     }
 
     // Fade in the annotations enter selection
-    if (!annotationsUpdate.enter().empty()) {
+    if (!annotationsEnter.empty()) {
       await fadeIn(
-        annotationsUpdate.enter()
+        annotationsEnter
           .append('g.annotation')
           .call(this.enterAnnotation)
           .call(this.updateAnnotation)
@@ -282,9 +282,8 @@ const allStates = [
 graph.set(initialState);
 
 function onStepEnter({ index }) {
-  allStates[index] !== undefined ?
-    graph.set(allStates[index]) :
-    console.error('No state specified for index', index);
+  if (allStates[index] !== undefined)
+    graph.set(allStates[index]);
 }
 
 function onStepExit({ index, direction }) {
