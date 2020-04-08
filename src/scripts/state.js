@@ -29,6 +29,31 @@ class State {
     this.updateComponent(this.visibleAnnotations.remove(annotations));
   }
 
+  add({ countries, annotations }) {
+    const shouldComponentUpdate = this.visibleCountries.add(countries || []) +
+      this.visibleAnnotations.add(annotations || []);
+    this.updateComponent(shouldComponentUpdate)
+  }
+
+  remove({ countries, annotations }) {
+    const shouldComponentUpdate = this.visibleCountries.remove(countries || []) +
+      this.visibleAnnotations.remove(annotations || []);
+    this.updateComponent(shouldComponentUpdate)
+  }
+
+  setAnnotations(annotations) {
+    console.log('SETTING annotations')
+    const shouldComponentUpdate = this.visibleAnnotations.set(annotations);
+    console.log('stuff changed:', shouldComponentUpdate);
+    this.updateComponent(shouldComponentUpdate)
+  }
+
+  set({ countries, annotations }) {
+    const shouldComponentUpdate = this.visibleAnnotations.set(annotations || []) +
+      this.visibleCountries.set(countries || []);
+    this.updateComponent(shouldComponentUpdate);
+  }
+
   // Updates component if it should update
   updateComponent(shouldComponentUpdate) {
     if (shouldComponentUpdate)
@@ -71,7 +96,7 @@ class State {
   get data() {
     return this.covidData.filter(d =>
       this.countries.includes(d.country) &&
-      isBetween(d.dayNumber, [ 0, 18 ])
+      isBetween(d.dayNumber, [ 0, 16 ])
     );
   }
 }

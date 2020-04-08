@@ -2,17 +2,16 @@ import { scaleTime, scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
-import { select } from 'd3-selection';
+import { select, selection } from 'd3-selection';
 import { transition } from 'd3-transition';
 import { wordwrap } from 'd3-jetpack';
-
 import 'intersection-observer';
 import scrollama from 'scrollama';
 
 import State from './state';
 import {
   fadeIn, fadeOut,
-  areDomainsUnequal,
+  areDomainsEqual,
   chainTransitions,
   firstQuintile,
   INTERPOLATION_TIME,
@@ -43,7 +42,7 @@ const LINE_HEIGHT = 20;
 const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
-  // constructor()
+
   width = document.body.clientWidth;
   height = document.body.clientHeight;
   gWidth = this.width - margin.left - margin.right;
@@ -96,25 +95,22 @@ class Graph extends State {
          // Use country as key
         array => array[0].country
       );
-
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
-      .data(this.withCovidData(annotations), a => a.key)
-      .join(
-        enter => enter.append('g.annotation')
-          .call(this.makeAnnotation.bind(this))
-          .call(this.updateAnnotation.bind(this))
-          .call(fadeIn),
-      );
-
-    // const exitSelections = linesUpdate.exit().merge(annotationsUpdate.exit());
-    const exitSelections = linesUpdate.exit().merge(annotationsUpdate.exit());
+      .data(this.withCovidData(annotations), a => a.key);
+    const linesExit = linesUpdate.exit();
+    const annotationsExit = annotationsUpdate.exit();
     this.updateAnnotation = this.updateAnnotation.bind(this);
+
     chainTransitions(
       // If exiting selection is nonempty, fade those out first.
       // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
-      !exitSelections.empty() && (() => fadeOut(exitSelections)),
+      !(linesExit.empty() && annotationsExit.empty()) && (() => {
+        const t1 = fadeOut(annotationsExit);
+        const t2 = fadeOut(linesExit);
+        return select('svg').transition().duration(0);
+      }),
 
       // If domains changed, interpolate existing elements (axes, existing lines
       // and annotations) simultaneously to match new data range
@@ -135,6 +131,7 @@ class Graph extends State {
           .attr('d', makeLine)
           .call(fadeIn);
         annotationsUpdate.enter()
+          .append('g.annotation')
           .call(this.makeAnnotation)
           .call(this.updateAnnotation)
           .call(fadeIn);
@@ -235,9 +232,8 @@ class Graph extends State {
 
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
-    const didDomainsChange =
-      areDomainsUnequal(xScale.domain(), xScale.domain(newXDomain).domain()) +
-      areDomainsUnequal(yScale.domain(), yScale.domain(newYDomain).domain());
+    const didDomainsChange = !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
+      !areDomainsEqual(yScale.domain(), yScale.domain(newYDomain).domain());
 
     // Updates line generator based on new scales
     if (didDomainsChange)
@@ -248,7 +244,6 @@ class Graph extends State {
 }
 
 const graph = new Graph(covidData);
-graph.addCountry('US');
 
 /**
  * Scroll step triggers
@@ -266,39 +261,39 @@ scroller
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
 
+const initialState = { countries: [ 'US' ] };
+
+const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true };
+const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' };
+const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
+const us12 = { dayNumber: 12, label: 'Columbia', showCases: true };
+const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
+const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
+const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
+
+graph.set(initialState);
+
 function onStepEnter({ index }) {
-  if (index === 0)
-    graph.addAnnotation({ dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true });
-  if (index === 1)
-    graph.addAnnotation(
-      { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true },
-      { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' },
-      { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true },
-      { dayNumber: 12, label: 'Columbia', showCases: true },
-    );
-  if (index === 2)
-    graph.addAnnotation(
-      { dayNumber: 8.375, label: 'Ivy average' },
-    );
-  if (index === 3)
-    graph.addCountry('China');
+  if (index === 0) {
+    graph.set({ annotations: [ us7 ], countries: [ 'US' ] });
+  }
+  if (index === 1) {
+    graph.set({ annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] });
+  }
+  if (index === 2) {
+    graph.set({ annotations: [ usIvy ], countries: [ 'US' ] });
+  }
+  if (index === 3) {
+    graph.set({ annotations: [ usIvy, china ], countries: [ 'US', 'China' ] });
+  }
+  if (index === 4) {
+    graph.set({ annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] });
+  }
 }
 
 function onStepExit({ index, direction }) {
-  if (index === 0 && direction === 'up' || index === 1 && direction === 'down')
-    graph.removeAnnotation({ dayNumber: 7 });
-  if (index === 1)
-    graph.removeAnnotation(
-      { dayNumber: 12 },
-      { dayNumber: 8 },
-      { dayNumber: 9 },
-    );
-  if (index === 2 && direction === 'up')
-    graph.removeAnnotation(
-      { dayNumber: 8.375 },
-    )
-  if (index === 3 && direction === 'up')
-    graph.removeCountry('China');
+  if (index === 0 && direction === 'up')
+    graph.set(initialState);
 }
 
 /**
