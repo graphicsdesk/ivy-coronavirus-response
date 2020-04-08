@@ -1,9 +1,8 @@
-import { scaleTime, scaleLinear } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
-import { select, selection } from 'd3-selection';
-import { transition } from 'd3-transition';
+import { select } from 'd3-selection';
 import { wordwrap } from 'd3-jetpack';
 import scrollama from 'scrollama';
 import 'intersection-observer';
@@ -75,8 +74,7 @@ class Graph extends State {
     const domainsChanged = this.rescaleDataRange();
 
     const {
-      xScale, yScale, makeLine,
-      svg, linesContainer, annotationsContainer,
+      makeLine, linesContainer, annotationsContainer,
       countries, annotations, data
     } = this;
 
@@ -140,13 +138,10 @@ class Graph extends State {
   }
 
   enterAnnotation(selection, i) {
-    const largeAnnotations = selection.filter(d => !d.isSmall);
-    const smallAnnotations = selection.filter(d => d.isSmall)
-      .classed('small-annotation', true);
-    selection
-      .filter(d => d.orientation === 'top')
-      .classed('orientation-top', true);
+    selection.filter(d => d.isSmall).classed('small-annotation', true);
+    selection.filter(d => d.orientation === 'top').classed('orientation-top', true);
 
+    const largeAnnotations = selection.filter(d => !d.isSmall);
     largeAnnotations.append('line.connector'); // Make a top-oriented connector
 
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
@@ -164,7 +159,6 @@ class Graph extends State {
     const { xScale, yScale } = this;
 
     const largeAnnotations = selection.filter(d => !d.isSmall);
-    const smallAnnotations = selection.filter(d => d.isSmall);
 
     // Place connector
     largeAnnotations
