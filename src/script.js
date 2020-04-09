@@ -30,6 +30,10 @@ export function hamburgerTrigger() {
   navbar.classList.toggle('show-nav-links');
 }
 
+d3.select("#g-schools-desktop")
+.style("width", 750 * (window.screen.width/900))
+.style("height", 500 * (window.screen.width/900))
+
 
 textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
 
