@@ -66,7 +66,7 @@ class Graph extends State {
   // Line generator
   makeLine = d3Line();
 
-  async update() {
+  async update(shouldUpdateAnnotations, shouldUpdateCountries) {
     const domainsChanged = this.rescaleDataRange();
 
     const {
@@ -80,7 +80,7 @@ class Graph extends State {
       .data(
         // Each <path> should be joined to a country's time-series COVID data (an array)
         countries.map(country => data.filter(d => d.country === country)),
-        array => array[0].country,
+        ary => ary[0].country,
       );
 
     // Join annotations data, store selections
@@ -104,6 +104,10 @@ class Graph extends State {
         .duration(INTERPOLATION_TIME)
         .call(this.updateAnnotation);
       await this.updateAxes().end();
+    } else if (shouldUpdateAnnotations) {
+      annotationsUpdate.transition()
+        .duration(INTERPOLATION_TIME)
+        .call(this.updateAnnotation);
     }
 
     // Draw in the path enter selection
@@ -150,9 +154,6 @@ class Graph extends State {
   }
 
   enterAnnotation(selection) {
-    selection.filter(d => d.isSmall).classed('small-annotation', true);
-    selection.filter(d => d.orientation === 'top').classed('orientation-top', true);
-
     const largeAnnotations = selection.filter(d => !d.isSmall);
     largeAnnotations.append('line.connector'); // Append a connector element
 
@@ -168,6 +169,9 @@ class Graph extends State {
   }
 
   updateAnnotation(selection) {
+    selection.classed('small-annotation', d => d.isSmall);
+    selection.classed('orientation-top', d => d.orientation === 'top');
+
     const { xScale, yScale } = this;
     // Convenience functions for accessing x and y coordinates
     const getX = d => xScale(d.dayNumber);
@@ -253,9 +257,11 @@ scroller
 
 // Storing annotations for convenience
 const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases: true };
+const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true, orientation: 'top' };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
 const us12 = { dayNumber: 12, label: 'Columbia', showCases: true };
+const us12Small = { dayNumber: 12, label: 'Columbia', isSmall: true };
 const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
@@ -264,7 +270,7 @@ const initialState = { countries: [ 'US' ] };
 const allStates = [
   { annotations: [ us7 ], countries: [ 'US' ] },
   { annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] },
-  { annotations: [ usIvy ], countries: [ 'US' ] },
+  { annotations: [ usIvy, us7Small, us8, us9, us12Small ], countries: [ 'US' ] },
   { annotations: [ usIvy, china ], countries: [ 'US', 'China' ] },
   { annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] },
 ];
@@ -308,7 +314,7 @@ function bottomAlignText({ isSmall, orientation }) {
     transY -= 7; // Padd label from connector
   }
 
-  text.translate([ 0, transY ]);
+  text.translate([0, transY]);
 }
 
 // Helper function to wrap annotation text

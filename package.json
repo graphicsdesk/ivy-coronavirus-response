@@ -39,5 +39,9 @@
   },
   "browserslist": [
     "last 1 Chrome version"
-  ]
+  ],
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": true
+  }
 }

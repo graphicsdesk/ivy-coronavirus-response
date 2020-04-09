@@ -5,10 +5,11 @@ const areDomainsEqual = (d1, d2) =>
 
 // Adds a key to an annotation object
 // TODO: Here a second country = US assumption is made. Lift it up/make it more obvious?
-const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
-  key: country + '-' + dayNumber,
+const annotationWithKey = ({ country = 'US', dayNumber, isSmall, ...rest }) => ({
+  key: country + '-' + dayNumber, // + '-' + isSmall,
   country,
   dayNumber,
+  isSmall,
   ...rest,
 });
 
@@ -19,6 +20,7 @@ const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
 // Just positions case count label nicely.
 const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
+// Formats the number of cases
 const formatCaseCount = ({ cases }) => {
   let output = cases;
   if (cases >= 1000)

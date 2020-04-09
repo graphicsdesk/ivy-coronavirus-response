@@ -14,19 +14,22 @@ class State {
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
   set({ countries = [], annotations = [] }) {
-    this.updateComponent(this.visibleAnnotations.set(annotations) +
-      this.visibleCountries.set(countries));
+    this.updateComponent({
+      shouldUpdateAnnotations: this.visibleAnnotations.set(annotations),
+      shouldUpdateCountries: this.visibleCountries.set(countries)
+    });
   }
 
   // Updates component if it should update
-  updateComponent(shouldComponentUpdate) {
-    if (shouldComponentUpdate)
-      this.update().catch(function(error) {
-        console.error(error);
-        // A transition was cancelled or interrupted. This can happen when another
-        // transition of the same name (no transitions are named at the moment)
-        // starts on the same element. See The Life of a Transition.
-      });
+  updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries }) {
+    if (shouldUpdateAnnotations || shouldUpdateCountries)
+      this.update(shouldUpdateAnnotations, shouldUpdateCountries)
+        .catch(function(error) {
+          console.error(error);
+          // Usually a transition was cancelled or interrupted. This can happen
+          // when another transition of the same name (current transitions are
+          // all unnamed) starts on the same element. Se
+        });
   }
 
   // Adds corresponding COVID data to an annotation array of annotations

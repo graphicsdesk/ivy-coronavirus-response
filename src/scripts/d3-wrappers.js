@@ -3,6 +3,7 @@
  */
 
 import { selection } from 'd3-selection';
+import { transition } from 'd3-transition';
 
 selection.prototype.tspansBackgrounds = tspansBackgrounds;
 selection.prototype.appendCircle = appendCircle;
@@ -10,6 +11,8 @@ selection.prototype.makeText = makeText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
+
+transition.prototype.classed = selection.prototype.classed;
 
 // Append circle and set radius.
 const RADIUS = 6;

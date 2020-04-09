@@ -14,7 +14,6 @@ class Store {
   // Set store to these items. Return true if anything changed
   // Only checks for key differences right now
   set(array) {
-    // console.log('previously', this.items)
     array = array.map(this.withKey);
 
     // Remove extraneous existing items
@@ -27,22 +26,39 @@ class Store {
       })
       .includes(true);
 
-    // Add things not already there
+    // Add things not already there; check if anything was added
     const didAddItems = array.map(item => {
-      let key = item;
-      let value = true;
-      if (hasKey(item)) {
-        key = item.key;
-        value = item;
-      }
+      const key = hasKey(item) ? item.key : item;
       if (!this.items[key]) {
-        this.items[key] = value;
+        this.items[key] = item;
         return true;
       }
     }).includes(true);
 
-    // console.log('afterwards', this.items)
-    return didRemoveItems || didAddItems;
+    const didChangeItems = array.map(item => {
+      if (!hasKey(item))
+        return false; // No way that an non-keyholding item's value changed
+
+      const { key } = item;
+      const other = this.items[key];
+
+      const didOtherChange =
+        Object.keys(item).map(p => {
+          if (item[p] !== other[p]) {
+            this.items[key][p] = item[p];
+            return true;
+          }
+        }).includes(true) +
+        Object.keys(other).map(p => {
+          if (other[p] !== item[p]) {
+            this.items[key][p] = item[p]; // Likely becomes undefined
+            return true;
+          }
+        }).includes(true);
+      return !!didOtherChange
+    }).includes(true);
+
+    return didRemoveItems || didAddItems || didChangeItems;
   }
 
   // Returns current state as an array of which items are visible
