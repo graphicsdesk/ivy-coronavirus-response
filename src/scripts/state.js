@@ -13,17 +13,18 @@ class State {
   visibleCountries = new Store(); // Stores country-level lines
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
-  set({ countries = [], annotations = [] }) {
+  set({ countries = [], annotations = [], scaleYAxis }) {
     this.updateComponent({
       shouldUpdateAnnotations: this.visibleAnnotations.set(annotations),
-      shouldUpdateCountries: this.visibleCountries.set(countries)
+      shouldUpdateCountries: this.visibleCountries.set(countries),
+      scaleYAxis,
     });
   }
 
   // Updates component if it should update
-  updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries }) {
+  updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis }) {
     if (shouldUpdateAnnotations || shouldUpdateCountries)
-      this.update(shouldUpdateAnnotations, shouldUpdateCountries)
+      this.update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis)
         .catch(function(error) {
           console.error(error);
           // Usually a transition was cancelled or interrupted. This can happen
@@ -66,8 +67,11 @@ class State {
 
   // Selector for the data necessary to display the current state
   get data() {
+    let countries = this.countries;
+    if (countries.length === 0)
+      countries = ['US'];
     return this.covidData.filter(d =>
-      this.countries.includes(d.country) &&
+      countries.includes(d.country) &&
       isBetween(d.dayNumber, [ 0, 16 ])
     );
   }

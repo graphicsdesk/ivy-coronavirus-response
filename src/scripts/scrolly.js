@@ -24,22 +24,28 @@ const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', sho
 const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true, orientation: 'top' };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
-const us12 = { dayNumber: 12, label: 'Columbia', showCases: true };
-const us12Small = { dayNumber: 12, label: 'Columbia', isSmall: true };
-const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
+const columbia = { dayNumber: 12, label: 'Columbia', showCases: true };
+const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true };
+const ivies = { dayNumber: 8.375, label: 'Ivy average' };
+const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall: true };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
+const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
+const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases: true};
 
-const initialState = { countries: [ 'US' ] };
+const ZOOM_FACTOR = 0.35;
+
 const allStates = [
+  { countries: [ 'US' ] },
   { annotations: [ us7 ], countries: [ 'US' ] },
-  { annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] },
-  { annotations: [ usIvy, us7Small, us8, us9, us12Small ], countries: [ 'US' ] },
-  { annotations: [ usIvy, china ], countries: [ 'US', 'China' ] },
-  { annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] },
+  { annotations: [ us7, us8, us9, columbia ], countries: [ 'US' ] },
+  { annotations: [ ivies, us7Small, us8, us9, columbiaSmall ], countries: [ 'US' ] },
+  { annotations: [ iviesSmall, columbiaSmall, china ], countries: [ 'US', 'China' ] },
+  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, korea ], countries: [ 'US', 'China', 'Korea, South' ], scaleYAxis: ZOOM_FACTOR },
+  // { annotations: [ iviesSmall, columbiaSmall, china, korea, italy ], countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR + 0.05 },
 ];
 
-graph.set(initialState);
+graph.update();
 
 /**
  * Scroll step triggers
@@ -55,8 +61,6 @@ function onStepEnter({ index }) {
 }
 
 function onStepExit({ index, direction }) {
-  if (index === 0 && direction === 'up')
-    graph.set(initialState);
 }
 
 // Instantiate the scrollama

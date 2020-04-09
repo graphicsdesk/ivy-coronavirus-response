@@ -56,8 +56,8 @@ class Graph extends State {
   // Line generator
   makeLine = d3Line();
 
-  async update(shouldUpdateAnnotations, shouldUpdateCountries) {
-    const domainsChanged = this.rescaleDataRange();
+  async update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis) {
+    const domainsChanged = this.rescaleDataRange(scaleYAxis);
 
     const {
       linesContainer, annotationsContainer,
@@ -159,7 +159,7 @@ class Graph extends State {
     selection.append('text.note-text'); // Make the label
   }
 
-  updateAnnotation(selection, justEntered) {
+  updateAnnotation(selection) {
     selection.classed('small-annotation', d => d.isSmall);
     selection.classed('orientation-top', d => d.orientation === 'top');
 
@@ -167,15 +167,6 @@ class Graph extends State {
     const getX = d => xScale(d.dayNumber);
     const getY = d => yScale(d.cases);
 
-    // Place connector
-    if (justEntered) {
-      console.log('just entered')
-    selection.select('line.connector')
-      .at({ x1: getX, y1: getY, x2: getX, y2: getY })
-      .transition()
-      .at({ y2: d => getY(d) - (!d.isSmall && CONNECTOR_LENGTH) });
-    }
-    else
     selection.select('line.connector')
       .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - (!d.isSmall && CONNECTOR_LENGTH) });
 
@@ -213,13 +204,15 @@ class Graph extends State {
   }
 
   // Rescales mappings (scales, line generator) based on new data
-  rescaleDataRange() {
+  rescaleDataRange(scaleYAxis) {
     const { xScale, yScale, makeLine } = this;
 
     const newXDomain = extent(this.data, d => d.dayNumber);
     const newYDomain = extent(this.data, d => d.cases);
+    if (scaleYAxis)
+      newYDomain[1] *= scaleYAxis;
     newYDomain[1] *= 1.1; // Leave some space at the top for labels
-    console.log(newXDomain, newYDomain, this.data)
+
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
     const didDomainsChange = !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
