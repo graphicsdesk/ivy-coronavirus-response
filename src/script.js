@@ -5,6 +5,9 @@ import 'intersection-observer';
 import scrollama from "scrollama";
 import * as d3 from "d3";
 import './scripts/page.js';
+import './scripts/scrolly';
+import './scripts/page';
+import { COUNTRY_COLORS } from './scripts/constants';
 
 // Fade in navbar at scroll trigger
 
@@ -172,3 +175,14 @@ function init() {
 
 // kick things off
 init();
+// textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
+
+// Highlights all country names <c></c>
+
+[].forEach.call(document.getElementsByTagName('c'), el => {
+  const color = COUNTRY_COLORS[el.innerText];
+  if (color) {
+    el.classList.add('country-name-highlight');
+    el.style.backgroundColor = color;
+  }
+})

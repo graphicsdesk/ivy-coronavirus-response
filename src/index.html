@@ -4,11 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{{ headline }}: {{ deck }}</title>
+  <title>{{ headline }}</title>
   <link rel="stylesheet" href="./styles.scss">
+<<<<<<< HEAD
   <link rel="shortcut icon" href="https://www.columbiaspectator.com/pb/resources/img/CDS_Favicon.ico"
     type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,500&display=swap" rel="stylesheet">
+=======
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+>>>>>>> e60492d90aee88eebe27a09f0b1bccad05a039dc
 </head>
 
 <body>
@@ -16,16 +20,15 @@
   <include src="partials/navbar.html"></include>
 
   <div class="story-top">
-    <each loop="item in top">
-      <switch expression="item.type">
-        <case n="'graphic'">
-          <div class="graphic">
-            <if condition="item.value.asset === 'graphic-name.html'">
-              <include src="graphic-name.html"></include>
-            </if>
-          </div>
-        </case>
-      </switch>
+    <each loop='item in top'>
+      <if condition="item.type === 'text'">
+        <include src="partials/top-paragraph.html"></include>
+      </if>
+      <elseif condition="item.type === 'graphic' && item.value.asset === 'lede.html'">
+        <div class="graphic">
+          <include src="lede.html"></include>
+        </div>
+      </elseif>
     </each>
   </div>
 
@@ -50,15 +53,16 @@
         </case>
         <case n="'graphic'">
           <div class="graphic">
-            <if condition="item.value.asset === 'graphic-name.html'">
+            <!-- <if condition="item.value.asset === 'graphic-name.html'">
               <include src="graphic-name.html"></include>
-            </if>
+            </if> -->
           </div>
         </case>
       </switch>
     </each>
   </div>
 
+<<<<<<< HEAD
   <include src="columbia-graphic.html"></include>
   <include src="schools.html"></include>
 
@@ -66,6 +70,8 @@
     <a href="{{ DOC_URL }}" target="_blank">Doc</a>
   </div>
 
+=======
+>>>>>>> e60492d90aee88eebe27a09f0b1bccad05a039dc
   <include src="partials/footer.html"></include>
 
   <script src="./script.js"></script>

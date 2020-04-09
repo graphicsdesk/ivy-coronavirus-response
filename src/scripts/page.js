@@ -1,5 +1,7 @@
 /* Scripts that should be on every Spectate page */
 
+const isOnSpectatorPage = window.location.host === 'www.columbiaspectator.com';
+
 /**
  * Disable stylesheets on contributor page. Stylesheets are included in the
  * server-side render and styles in files like news-ellipsis.scss
@@ -64,5 +66,5 @@ function ready(timestamp) {
 };
 
 // Initialize our ready() function.
-if (window.location.host === 'www.columbiaspectator.com')
+if (isOnSpectatorPage)
   window.requestAnimationFrame(ready);

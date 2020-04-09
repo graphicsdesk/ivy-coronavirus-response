@@ -1,0 +1,12 @@
+@keyframes pulse {
+  0% {
+      stroke-width: 0;
+      stroke-opacity: 1;
+  }
+  100% {
+      stroke-width: 24;
+      stroke-opacity: 0;
+  }
+}
+
+$pulse-anim: pulse infinite 1.2s;
