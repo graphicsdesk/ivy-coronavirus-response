@@ -9,6 +9,7 @@ selection.prototype.appendCircle = appendCircle;
 selection.prototype.makeText = makeText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
+selection.prototype.drawIn = drawIn;
 
 // Append circle and set radius.
 const RADIUS = 6;
@@ -63,9 +64,26 @@ function fadeIn() {
 }
 
 // Fades out a selection; returns the transition
-function fadeOut(selection) {
+function fadeOut() {
   return this.transition()
     .duration(FADE_TIME)
     .style('opacity', 0)
     .remove();
+}
+
+// Draws in the path of a line container
+const DRAW_TIME = 1200;
+function drawIn() {
+  const path = this.select('path');
+  const node = path.node();
+  if (node.tagName !== 'path')
+    throw 'drawIn can only act on paths, but you passed in a: ' + path.tagName;
+
+  const totalLength = node.getTotalLength();
+  return path
+    .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+    .attr('stroke-dashoffset', totalLength)
+    .transition()
+      .duration(DRAW_TIME)
+      .attr('stroke-dashoffset', 0);
 }

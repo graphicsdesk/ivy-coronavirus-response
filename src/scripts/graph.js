@@ -9,7 +9,6 @@ import 'intersection-observer';
 
 import State from './state';
 import {
-  drawIn,
   areDomainsEqual,
   firstQuintile,
   formatCases,
@@ -118,7 +117,7 @@ class Graph extends State {
         .call(this.enterLineContainer)
         .call(this.updateLineContainer);
       const pointLabel = lines.select('g.point-label').style('opacity', 0);
-      await drawIn(lines).end();
+      await lines.drawIn().end();
       pointLabel.fadeIn(); // No await so point labels fade in with annotations
     }
 
