@@ -5,11 +5,10 @@ const areDomainsEqual = (d1, d2) =>
 
 // Adds a key to an annotation object
 // TODO: Here a second country = US assumption is made. Lift it up/make it more obvious?
-const annotationWithKey = ({ country = 'US', dayNumber, isSmall, ...rest }) => ({
-  key: country + '-' + dayNumber, // + '-' + isSmall,
+const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
+  key: country + '-' + dayNumber,
   country,
   dayNumber,
-  isSmall,
   ...rest,
 });
 

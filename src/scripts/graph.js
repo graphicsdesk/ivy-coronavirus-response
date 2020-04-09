@@ -4,27 +4,17 @@ import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
 import { wordwrap } from 'd3-jetpack';
-import scrollama from 'scrollama';
 import 'intersection-observer';
 
 import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
-import { getLineLabel, getLineColor } from './constants';
+import { getLineLabel, getLineColor, getCountryColor } from './constants';
 import './d3-wrappers';
-
-import covidData from '../../data/covid.json';
 
 const INTERPOLATION_TIME = 800;
 
 /**
- * Preprocess data
- */
-
-for (let i = 0; i < covidData.length; i++)
-  covidData[i].date = new Date(covidData[i].date);
-
-/**
- * The Graph class draws and udpates the visualization's DOM elements
+ * The Graph class draws and updates the visualization's DOM elements
  */
 
 const TICK_PADDING = 12;
@@ -37,7 +27,7 @@ const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_
 
 class Graph extends State {
 
-  width = document.body.clientWidth;
+  width = Math.min(700, document.body.clientWidth);
   height = document.body.clientHeight;
   gWidth = this.width - margin.left - margin.right;
   gHeight = this.height - margin.top - margin.bottom;
@@ -92,7 +82,10 @@ class Graph extends State {
     this.updateLineContainer = this.updateLineContainer.bind(this);
 
     // If exiting selection is nonempty, fade those out first.
-    await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+    if (domainsChanged)
+      await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+    else
+      bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
 
     // If domains changed, interpolate existing elements (axes, existing lines
     // and annotations) simultaneously to match new data range
@@ -154,18 +147,16 @@ class Graph extends State {
   }
 
   enterAnnotation(selection) {
-    const largeAnnotations = selection.filter(d => !d.isSmall);
-    largeAnnotations.append('line.connector'); // Append a connector element
+    selection.append('line.connector'); // Append a connector element
 
     // Create case count markers
-    const caseCountContainer = largeAnnotations.filter(d => d.showCases)
+    const caseCountContainer = selection.filter(d => !d.isSmall && d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
     caseCountContainer.makeText(formatCaseCount);
 
-    selection.appendCircle();
-    selection.append('text.note-text') // Make the label
-      .tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
+    selection.appendCircle(getCountryColor);
+    selection.append('text.note-text'); // Make the label
   }
 
   updateAnnotation(selection) {
@@ -177,15 +168,12 @@ class Graph extends State {
     const getX = d => xScale(d.dayNumber);
     const getY = d => yScale(d.cases);
 
-    const largeAnnotations = selection.filter(d => !d.isSmall);
-
     // Place connector
-    largeAnnotations.select('line.connector')
+    selection.select('line.connector')
       .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - CONNECTOR_LENGTH });
 
     // Make a case count y-intercept marker
-    const caseCountContainer = largeAnnotations.filter(d => d.showCases)
-      .select('g.case-count-container');
+    const caseCountContainer = selection.select('g.case-count-container');
     caseCountContainer.select('line').at({ x1: getX, y1: getY, x2: 0, y2: getY });
     caseCountContainer.selectAll('tspan')
       .at({
@@ -197,9 +185,10 @@ class Graph extends State {
     selection.select('circle').at({ cx: getX, cy: getY });
 
     // Place label
-    selection.select('text.note-text')
-      .at({ y: d => d.isSmall ? getY(d) : getY(d) - CONNECTOR_LENGTH })
-      .each(bottomAlignText)
+    const noteText = selection.select('text.note-text');
+    (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
+    noteText
+      .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
       .selectAll('tspan')
       .at({ x: d => getX(d.parent) })
   }
@@ -237,84 +226,22 @@ class Graph extends State {
   }
 }
 
-const graph = new Graph(covidData);
-
-/**
- * Scroll step triggers
- */
-
-// Instantiate the scrollama
-const scroller = scrollama();
-
-// Setup the instance, pass callback functions
-scroller
-  .setup({
-    step: '.step',
-    offset: 0.65,
-  })
-  .onStepEnter(onStepEnter)
-  .onStepExit(onStepExit);
-
-// Storing annotations for convenience
-const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases: true };
-const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true, orientation: 'top' };
-const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
-const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
-const us12 = { dayNumber: 12, label: 'Columbia', showCases: true };
-const us12Small = { dayNumber: 12, label: 'Columbia', isSmall: true };
-const usIvy = { dayNumber: 8.375, label: 'Ivy average' };
-const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
-const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true};
-
-const initialState = { countries: [ 'US' ] };
-const allStates = [
-  { annotations: [ us7 ], countries: [ 'US' ] },
-  { annotations: [ us7, us8, us9, us12 ], countries: [ 'US' ] },
-  { annotations: [ usIvy, us7Small, us8, us9, us12Small ], countries: [ 'US' ] },
-  { annotations: [ usIvy, china ], countries: [ 'US', 'China' ] },
-  { annotations: [ usIvy, china, korea ], countries: [ 'US', 'China', 'Korea, South' ] },
-];
-
-graph.set(initialState);
-
-const chartContainer = document.getElementById('chart-container');
-chartContainer.setAttribute('data-index', 0);
-
-function onStepEnter({ index }) {
-  chartContainer.setAttribute('data-index', index);
-  if (allStates[index] !== undefined)
-    graph.set(allStates[index]);
-}
-
-function onStepExit({ index, direction }) {
-  if (index === 0 && direction === 'up')
-    graph.set(initialState);
-}
-
-/**
- * Window event listeners
- */
-
-window.addEventListener('resize', () => {
-  scroller.resize();
-});
-
 // Bottom aligns a selection by translating up by total line height.
 // Makes the assumption that large annotations are always top-oriented.
-function bottomAlignText({ isSmall, orientation }) {
+function bottomAlignAdjust({ isSmall, orientation }) {
   const text = select(this);
   const numLines = text.selectAll('tspan').nodes().length / 2;
   let transY = -(numLines - 1) * LINE_HEIGHT;
 
   // Making small spacing adjustements
   if (isSmall) {
-    if (orientation === 'top') transY -= 15; // Lift label above the point
-    else transY = 11; // Label already hangs baseline, just push a tad more
+    if (orientation === 'top') transY -= 16; // Lift label above the point
+    else transY = 28; // Label already hangs baseline, just push a tad more
   } else {
-    transY -= 7; // Padd label from connector
+    transY -= CONNECTOR_LENGTH + 7; // Pad label from connector
   }
 
-  text.translate([0, transY]);
+  return transY;
 }
 
 // Helper function to wrap annotation text
@@ -322,6 +249,7 @@ function wrapAnnotation(d) {
   return wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
 }
 
+// Fade out all exiting selections in an array of update selection
 async function bulkFadeOutExiting(updateSelections) {
   await Promise.allSettled(
     updateSelections
@@ -330,3 +258,5 @@ async function bulkFadeOutExiting(updateSelections) {
       .map(s => s.fadeOut().end()) // Fade them all out
   );
 }
+
+export default Graph;

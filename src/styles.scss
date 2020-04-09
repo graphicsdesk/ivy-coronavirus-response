@@ -19,6 +19,8 @@ $black: #121212;
 $gray: #888;
 $grid-color: #ddd;
 
+$trans-dur: .3s;
+
 #chart-container {
   position: sticky;
   position: -webkit-sticky;
@@ -81,11 +83,14 @@ g.axis .domain {
 g.annotations-container {
   g.annotation {
     circle {
-      fill: red;
+      transition-property: fill, stroke;
+      transition-duration: $trans-dur;
     }
 
     line.connector {
       stroke: $black;
+      stroke-width: 1px;
+      transition-duration: .3s;
     }
 
     line.cases-line {
@@ -94,6 +99,7 @@ g.annotations-container {
     }
 
     text {
+      transition-duration: $trans-dur;
       text-anchor: middle;
       font-family: $roboto;
       font-size: 17px;
@@ -104,15 +110,15 @@ g.annotations-container {
   g.small-annotation {
     circle {
       fill: $gray;
+      stroke: $gray;
     }
 
-    text {
+    text.note-text {
       fill: $gray;
-      dominant-baseline: hanging;
     }
 
-    &.orientation-top text {
-      dominant-baseline: unset;
+    line.connector {
+      stroke-opacity: 0;
     }
   }
 }

@@ -24,7 +24,8 @@ function appendCircle(color) {
 
 // Same as d3-jetpack/src/tspans, but adds background tspans
 function tspansBackgrounds(lines, lh) {
-  return this.selectAll('tspan')
+  const that = this;
+  that.selectAll('tspan')
     .data(function(d) {
       const linesAry = typeof lines === 'function' ? lines(d) : lines;
       return linesAry.reduce((acc, line) => {
@@ -34,16 +35,19 @@ function tspansBackgrounds(lines, lh) {
         return acc;
       }, []);
     })
-    .enter()
-  .append('tspan')
+    .join(
+      enter => enter.append('tspan'),
+      update => update,
+      exit => exit.remove(),
+    )
     .text(function(d) { return d.line; })
     .attr('dy', ({ parent, line, isBackground }, i) => {
       if (i < 2 || !isBackground)
         return 0;
       return typeof lh === 'function' ? lh(parent, line) : lh;
     })
-    .filter(d => d.isBackground)
-    .classed('background-text', true)
+    .classed('background-text', d => d.isBackground);
+  return this;
 }
 
 // Adds text with one backgrounded tspan

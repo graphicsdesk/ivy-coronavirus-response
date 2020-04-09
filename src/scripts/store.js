@@ -79,4 +79,4 @@ function hasKey(item) {
   return typeof item === 'object' && item !== null && 'key' in item;
 }
 
-module.exports = Store;
+export default Store;
