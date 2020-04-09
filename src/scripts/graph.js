@@ -120,7 +120,7 @@ class Graph extends State {
     await annotationsEnter
       .append('g.annotation')
       .call(this.enterAnnotation)
-      .call(this.updateAnnotation)
+      .call(this.updateAnnotation, true)
       .fadeIn()
       .end();
   }
@@ -147,7 +147,7 @@ class Graph extends State {
   }
 
   enterAnnotation(selection) {
-    selection.append('line.connector'); // Append a connector element
+    selection.append('line.connector')
 
     // Create case count markers
     const caseCountContainer = selection.filter(d => !d.isSmall && d.showCases)
@@ -159,18 +159,25 @@ class Graph extends State {
     selection.append('text.note-text'); // Make the label
   }
 
-  updateAnnotation(selection) {
+  updateAnnotation(selection, justEntered) {
     selection.classed('small-annotation', d => d.isSmall);
     selection.classed('orientation-top', d => d.orientation === 'top');
 
     const { xScale, yScale } = this;
-    // Convenience functions for accessing x and y coordinates
     const getX = d => xScale(d.dayNumber);
     const getY = d => yScale(d.cases);
 
     // Place connector
+    if (justEntered) {
+      console.log('just entered')
     selection.select('line.connector')
-      .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - CONNECTOR_LENGTH });
+      .at({ x1: getX, y1: getY, x2: getX, y2: getY })
+      .transition()
+      .at({ y2: d => getY(d) - (!d.isSmall && CONNECTOR_LENGTH) });
+    }
+    else
+    selection.select('line.connector')
+      .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - (!d.isSmall && CONNECTOR_LENGTH) });
 
     // Make a case count y-intercept marker
     const caseCountContainer = selection.select('g.case-count-container');
@@ -212,7 +219,7 @@ class Graph extends State {
     const newXDomain = extent(this.data, d => d.dayNumber);
     const newYDomain = extent(this.data, d => d.cases);
     newYDomain[1] *= 1.1; // Leave some space at the top for labels
-
+    console.log(newXDomain, newYDomain, this.data)
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
     const didDomainsChange = !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
