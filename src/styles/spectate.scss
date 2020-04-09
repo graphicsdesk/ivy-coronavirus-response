@@ -356,10 +356,17 @@ header {
 
   .hamburger-btn {
     display: block;
-  }  
+  }
 }
 
 .paragraph {
+  margin-bottom: 20px;
+  font-family: $georgia;
+  font-size: 19px;
+  line-height: 1.63;
+}
+
+.top-paragraph {
   margin-bottom: 20px;
   font-family: $georgia;
   font-size: 19px;

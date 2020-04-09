@@ -27,7 +27,7 @@ const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_
 
 class Graph extends State {
 
-  width = Math.min(700, document.body.clientWidth);
+  width = Math.min(800, document.body.clientWidth);
   height = document.body.clientHeight;
   gWidth = this.width - margin.left - margin.right;
   gHeight = this.height - margin.top - margin.bottom;
