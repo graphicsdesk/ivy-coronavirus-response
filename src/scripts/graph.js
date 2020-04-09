@@ -12,8 +12,10 @@ import {
   fadeIn, fadeOut, drawIn,
   areDomainsEqual,
   firstQuintile,
+  thousandsCommas,
   INTERPOLATION_TIME,
 } from './utils';
+import { COUNTRY_COLORS, getCountryLabel } from './constants';
 
 import covidData from '../../data/covid.json';
 
@@ -36,6 +38,7 @@ const CONNECTOR_PADDING = 7;
 const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 20;
+const RADIUS = 6;
 
 const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
@@ -80,7 +83,7 @@ class Graph extends State {
 
     // Join countries data, store selections
     const linesUpdate = linesContainer
-      .selectAll('path')
+      .selectAll('g.line-container')
       .data(
         // Each <path> should be joined to a country's time-series COVID data (an array)
         countries.map(country => data.filter(d => d.country === country)),
@@ -97,6 +100,7 @@ class Graph extends State {
     const annotationsExit = annotationsUpdate.exit();
 
     this.updateAnnotation = this.updateAnnotation.bind(this);
+    this.updateLineContainer = this.updateLineContainer.bind(this);
 
     // If exiting selection is nonempty, fade those out first.
     // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
@@ -112,9 +116,10 @@ class Graph extends State {
     // If domains changed, interpolate existing elements (axes, existing lines
     // and annotations) simultaneously to match new data range
     if (domainsChanged) {
-      linesUpdate.transition()
+      linesUpdate
+        .transition()
         .duration(INTERPOLATION_TIME)
-        .attr('d', makeLine);
+        .call(this.updateLineContainer);
       annotationsUpdate.transition()
         .duration(INTERPOLATION_TIME)
         .call(this.updateAnnotation);
@@ -123,7 +128,11 @@ class Graph extends State {
 
     // Draw in the path enter selection
     if (!linesEnter.empty()) {
-      await drawIn(linesEnter.append('path').attr('d', makeLine)).end();
+      const lines = linesEnter
+        .append('g.line-container')
+        .call(this.enterLineContainer)
+        .call(this.updateLineContainer);
+      await drawIn(lines).end();
     }
 
     // Fade in the annotations enter selection
@@ -135,6 +144,41 @@ class Graph extends State {
           .call(this.updateAnnotation)
       ).end();
     }
+  }
+
+  enterLineContainer(selection) {
+    selection.append('path');
+
+    const endpoint = selection.append('g.point-label');
+    endpoint.append('circle');
+    endpoint.append('text');
+  }
+
+  updateLineContainer(selection) {
+    const { xScale, yScale, makeLine } = this;
+
+    const getColor = ary => COUNTRY_COLORS[ary[0].country];
+    // Set path description
+    selection.select('path')
+      .at({ d: makeLine, stroke: getColor });
+
+    const endpoint = selection.select('g.point-label');
+    endpoint.select('circle')
+      .at({
+        cx: ary => xScale(ary[ary.length - 1].dayNumber),
+        cy: ary => yScale(ary[ary.length - 1].cases),
+        r: RADIUS,
+        fill: getColor,
+        stroke: getColor,
+        'data-country': ary => ary[0].country,
+      });
+    endpoint.select('text')
+      .at({
+        x: ary => xScale(ary[ary.length - 1].dayNumber),
+        y: ary => yScale(ary[ary.length - 1].cases),
+      })
+      .text(ary => getCountryLabel(ary[0].country))
+      .style('fill', getColor)
   }
 
   enterAnnotation(selection, i) {
@@ -180,12 +224,12 @@ class Graph extends State {
     caseCountContainer
       .select('text')
       .at({ x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())), y: d => yScale(d.cases) })
-      .text(d => d.cases + ' cases');
+      .text(d => thousandsCommas(d.cases) + ' cases');
 
     // Place the dot
     selection
       .select('circle')
-      .at({ cx: d => xScale(d.dayNumber), cy: d => yScale(d.cases), r: 6 });
+      .at({ cx: d => xScale(d.dayNumber), cy: d => yScale(d.cases), r: RADIUS });
 
     // Place label
     selection
@@ -223,6 +267,7 @@ class Graph extends State {
 
     const newXDomain = extent(this.data, d => d.dayNumber);
     const newYDomain = extent(this.data, d => d.cases);
+    newYDomain[1] *= 1.1; // Leave some space at the top for labels
 
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
@@ -275,7 +320,11 @@ const allStates = [
 
 graph.set(initialState);
 
+const chartContainer = document.getElementById('chart-container');
+chartContainer.setAttribute('data-index', 0);
+
 function onStepEnter({ index }) {
+  chartContainer.setAttribute('data-index', index);
   if (allStates[index] !== undefined)
     graph.set(allStates[index]);
 }

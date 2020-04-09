@@ -22,23 +22,24 @@ function fadeOut(selection) {
     .remove();
 }
 
-// Draws in a path selection; returns the transition
-function drawIn(path) {
-  if (path.empty())
-    return;
+// Draws in a path and circle/label of a line container
+async function drawIn(selection) {
+  const pointLabel = selection.select('g.point-label').style('opacity', 0);
+  const path = selection.select('path');
 
   const node = path.node();
   if (node.tagName !== 'path')
     throw 'drawIn can only act on paths, but you passed in a: ' + path.tagName;
 
   const totalLength = node.getTotalLength();
-  return path
+  await path
     .attr('stroke-dasharray', totalLength + ' ' + totalLength)
     .attr('stroke-dashoffset', totalLength)
     .transition()
       .duration(DRAW_TIME)
-      // .ease('linear')
-      .attr('stroke-dashoffset', 0);
+      .attr('stroke-dashoffset', 0)
+      .end();
+  return fadeIn(pointLabel).end();
 }
 
 // Checks if two domains are CLOSE ENOUGH, because this function is only used
@@ -62,11 +63,18 @@ const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
 // Just positions case count label nicely.
 const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
+const thousandsCommas = number => {
+  if (number < 1000)
+    return number;
+  return Math.floor(number / 1000) + ',' + number % 1000;
+};
+
 module.exports = {
   fadeIn, fadeOut, drawIn,
   areDomainsEqual,
   annotationWithKey,
   isBetween,
   firstQuintile,
+  thousandsCommas,
   INTERPOLATION_TIME,
 };
