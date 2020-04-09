@@ -14,19 +14,15 @@
   <include src="partials/navbar.html"></include>
 
   <div class="story-top">
-    <each loop="item in top">
-      <switch expression="item.type">
-        <case n="'text'">
-          <include src="partials/top-paragraph.html"></include>
-        </case>
-        <case n="'graphic'">
-          <div class="graphic">
-            <if condition="item.value.asset === 'lede.html'">
-              <include src="lede.html"></include>
-            </if>
-          </div>
-        </case>
-      </switch>
+    <each loop='item in top'>
+      <if condition="item.type === 'text'">
+        <include src="partials/top-paragraph.html"></include>
+      </if>
+      <elseif condition="item.type === 'graphic' && item.value.asset === 'lede.html'">
+        <div class="graphic">
+          <include src="lede.html"></include>
+        </div>
+      </elseif>
     </each>
   </div>
 
