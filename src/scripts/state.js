@@ -22,6 +22,7 @@ class State {
   updateComponent(shouldComponentUpdate) {
     if (shouldComponentUpdate)
       this.update().catch(function(error) {
+        console.error(error);
         // A transition was cancelled or interrupted. This can happen when another
         // transition of the same name (no transitions are named at the moment)
         // starts on the same element. See The Life of a Transition.

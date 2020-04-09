@@ -39,7 +39,7 @@ async function drawIn(selection) {
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0)
       .end();
-  return fadeIn(pointLabel).end();
+  return fadeIn(pointLabel);
 }
 
 // Checks if two domains are CLOSE ENOUGH, because this function is only used

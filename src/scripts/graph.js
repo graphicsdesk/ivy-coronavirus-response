@@ -147,6 +147,7 @@ class Graph extends State {
   }
 
   enterLineContainer(selection) {
+    selection.attr('data-country', ary => ary[0].country);
     selection.append('path');
 
     const endpoint = selection.append('g.point-label');
@@ -170,7 +171,6 @@ class Graph extends State {
         r: RADIUS,
         fill: getColor,
         stroke: getColor,
-        'data-country': ary => ary[0].country,
       });
     endpoint.select('text')
       .at({
