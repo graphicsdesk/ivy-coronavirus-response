@@ -6,6 +6,7 @@ import { selection } from 'd3-selection';
 
 selection.prototype.tspansBackgrounds = tspansBackgrounds;
 selection.prototype.appendCircle = appendCircle;
+selection.prototype.makeText = makeText;
 
 // Append circle and set radius.
 const RADIUS = 6;
@@ -37,4 +38,15 @@ function tspansBackgrounds(lines, lh) {
     })
     .filter(d => d.isBackground)
     .classed('background-text', true)
+}
+
+// Adds text with one backgrounded tspan
+function makeText(textFn, colorFn) {
+  const text = this.append('text');
+  text.append('tspan.background-text');
+  const tspan = text.append('tspan');
+  if (colorFn)
+    tspan.style('fill', colorFn);
+  if (textFn)
+    text.selectAll('tspan').text(textFn);
 }

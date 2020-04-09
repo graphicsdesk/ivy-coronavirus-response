@@ -151,7 +151,7 @@ class Graph extends State {
 
     const endpoint = selection.append('g.point-label');
     endpoint.appendCircle(getLineColor);
-    endpoint.call(makeText, getLineLabel, getLineColor)
+    endpoint.makeText(getLineLabel, getLineColor)
   }
 
   updateLineContainer(selection) {
@@ -177,7 +177,7 @@ class Graph extends State {
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
-    caseCountContainer.call(makeText, formatCases);
+    caseCountContainer.makeText(formatCases);
 
     selection.appendCircle();
     selection.append('text.note-text') // Make the label
@@ -326,17 +326,6 @@ function bottomAlignText({ isSmall, orientation }) {
   }
 
   text.translate([ 0, transY ]);
-}
-
-// Adds text with one backgrounded tspan
-function makeText(selection, textFn, colorFn) {
-  const text = selection.append('text');
-  text.append('tspan.background-text');
-  const tspan = text.append('tspan');
-  if (colorFn)
-    tspan.style('fill', colorFn);
-  if (textFn)
-    text.selectAll('tspan').text(textFn);
 }
 
 // Helper function to wrap annotation text
