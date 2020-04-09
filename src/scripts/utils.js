@@ -1,9 +1,3 @@
-/**
- * D3 selection helper functions
- */
-
-const INTERPOLATION_TIME = 800;
-
 // Checks if two domains are CLOSE ENOUGH, because this function is only used
 // to determine whether axes/scales should be reset and rerendered.
 const areDomainsEqual = (d1, d2) =>
@@ -25,7 +19,7 @@ const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
 // Just positions case count label nicely.
 const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
-const formatCases = ({ cases }) => {
+const formatCaseCount = ({ cases }) => {
   let output = cases;
   if (cases >= 1000)
     output = Math.floor(cases / 1000) + ',' + cases % 1000;
@@ -37,6 +31,5 @@ module.exports = {
   annotationWithKey,
   isBetween,
   firstQuintile,
-  formatCases,
-  INTERPOLATION_TIME,
+  formatCaseCount,
 };

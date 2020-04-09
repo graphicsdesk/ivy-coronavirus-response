@@ -8,16 +8,13 @@ import scrollama from 'scrollama';
 import 'intersection-observer';
 
 import State from './state';
-import {
-  areDomainsEqual,
-  firstQuintile,
-  formatCases,
-  INTERPOLATION_TIME,
-} from './utils';
+import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
 import { COUNTRY_COLORS, getLineLabel, getLineColor } from './constants';
 import './d3-wrappers';
 
 import covidData from '../../data/covid.json';
+
+const INTERPOLATION_TIME = 800;
 
 /**
  * Preprocess data
@@ -165,7 +162,7 @@ class Graph extends State {
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
-    caseCountContainer.makeText(formatCases);
+    caseCountContainer.makeText(formatCaseCount);
 
     selection.appendCircle();
     selection.append('text.note-text') // Make the label
