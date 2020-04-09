@@ -13,12 +13,10 @@ import {
   areDomainsEqual,
   firstQuintile,
   formatCases,
-  tspansBackgrounds,
   INTERPOLATION_TIME,
 } from './utils';
 import { COUNTRY_COLORS, getLineLabel, getLineColor } from './constants';
-
-selection.prototype.tspansBackgrounds = tspansBackgrounds;
+import './d3-wrappers';
 
 import covidData from '../../data/covid.json';
 
@@ -35,11 +33,9 @@ for (let i = 0; i < covidData.length; i++)
 
 const TICK_PADDING = 12;
 const CONNECTOR_LENGTH = 100;
-const CONNECTOR_PADDING = 7;
 const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
-const RADIUS = 6;
 
 const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
@@ -154,12 +150,7 @@ class Graph extends State {
     selection.append('path').attr('stroke', getLineColor)
 
     const endpoint = selection.append('g.point-label');
-    endpoint.append('circle')
-      .at({
-        r: RADIUS,
-        fill: getLineColor,
-        stroke: getLineColor,
-      });
+    endpoint.appendCircle(getLineColor);
     endpoint.call(makeText, getLineLabel, getLineColor)
   }
 
@@ -168,11 +159,9 @@ class Graph extends State {
     const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
-    // Set path description
-    selection.select('path').at({ d: makeLine });
+    selection.select('path').at({ d: makeLine }); // Set path description
 
-    // Position endpoint group
-    const endpoint = selection.select('g.point-label');
+    const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
     endpoint.selectAll('tspan').at({ x: endpointX, y: endpointY });
   }
@@ -184,18 +173,15 @@ class Graph extends State {
     const largeAnnotations = selection.filter(d => !d.isSmall);
     largeAnnotations.append('line.connector'); // Append a connector element
 
+    // Create case count markers
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
     caseCountContainer.call(makeText, formatCases);
 
-    const wrapNote = d =>
-      wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
-
-    selection.append('circle').attr('r', RADIUS); // Make the circle
-    selection
-      .append('text.note-text') // Make the label
-      .tspansBackgrounds(d => wrapNote(d), LINE_HEIGHT);
+    selection.appendCircle();
+    selection.append('text.note-text') // Make the label
+      .tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
   }
 
   updateAnnotation(selection, i) {
@@ -213,11 +199,10 @@ class Graph extends State {
     // Make a case count y-intercept marker
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .select('g.case-count-container');
-    caseCountContainer.select('line')
-      .at({ x1: getX, y1: getY, x2: 0, y2: getY });
+    caseCountContainer.select('line').at({ x1: getX, y1: getY, x2: 0, y2: getY });
     caseCountContainer.selectAll('tspan')
       .at({
-        x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())),
+        x: d => Math.min(getX(d) / 2, firstQuintile(xScale.range())),
         y: getY,
       })
 
@@ -226,19 +211,10 @@ class Graph extends State {
 
     // Place label
     selection.select('text.note-text')
+      .at({ y: d => d.isSmall ? getY(d) : getY(d) - CONNECTOR_LENGTH })
       .each(bottomAlignText)
-      .at({
-        y: ({ cases, isSmall, orientation }, i) => {
-          let y = yScale(cases);
-          if (!isSmall)
-            y -= CONNECTOR_LENGTH + CONNECTOR_PADDING;
-          return y;
-        },
-      })
       .selectAll('tspan')
-      .at({
-        x: d => getX(d.parent),
-      })
+      .at({ x: d => getX(d.parent) })
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
@@ -334,14 +310,19 @@ window.addEventListener('resize', () => {
   scroller.resize();
 });
 
+// Bottom aligns a selection by translating up by total line height.
+// Makes the assumption that large annotations are always top-oriented.
 function bottomAlignText({ isSmall, orientation }) {
   const text = select(this);
   const numLines = text.selectAll('tspan').nodes().length / 2;
   let transY = -(numLines - 1) * LINE_HEIGHT;
 
+  // Making small spacing adjustements
   if (isSmall) {
-    if (orientation === 'top') transY -= 15;
-    else transY = 11; // Completely disregard bottomAlign
+    if (orientation === 'top') transY -= 15; // Lift label above the point
+    else transY = 11; // Label already hangs baseline, just push a tad more
+  } else {
+    transY -= 7; // Padd label from connector
   }
 
   text.translate([ 0, transY ]);
@@ -356,4 +337,9 @@ function makeText(selection, textFn, colorFn) {
     tspan.style('fill', colorFn);
   if (textFn)
     text.selectAll('tspan').text(textFn);
+}
+
+// Helper function to wrap annotation text
+function wrapAnnotation(d) {
+  return wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
 }
