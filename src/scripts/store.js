@@ -36,7 +36,7 @@ class Store {
         value = item;
       }
       if (!this.items[key]) {
-        this.items[key] = item;
+        this.items[key] = value;
         return true;
       }
     }).includes(true);

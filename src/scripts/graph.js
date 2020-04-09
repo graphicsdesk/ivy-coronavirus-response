@@ -2,14 +2,14 @@ import { scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
-import { select, selection } from 'd3-selection';
+import { select } from 'd3-selection';
 import { wordwrap } from 'd3-jetpack';
 import scrollama from 'scrollama';
 import 'intersection-observer';
 
 import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
-import { COUNTRY_COLORS, getLineLabel, getLineColor } from './constants';
+import { getLineLabel, getLineColor } from './constants';
 import './d3-wrappers';
 
 import covidData from '../../data/covid.json';
@@ -70,7 +70,7 @@ class Graph extends State {
     const domainsChanged = this.rescaleDataRange();
 
     const {
-      makeLine, linesContainer, annotationsContainer,
+      linesContainer, annotationsContainer,
       countries, annotations, data
     } = this;
 
@@ -120,14 +120,12 @@ class Graph extends State {
 
     // Fade in the annotations enter selection
     const annotationsEnter = annotationsUpdate.enter();
-    if (!annotationsEnter.empty()) {
-      await annotationsEnter
-        .append('g.annotation')
-        .call(this.enterAnnotation)
-        .call(this.updateAnnotation)
-        .fadeIn()
-        .end();
-    }
+    await annotationsEnter
+      .append('g.annotation')
+      .call(this.enterAnnotation)
+      .call(this.updateAnnotation)
+      .fadeIn()
+      .end();
   }
 
   enterLineContainer(selection) {
@@ -151,7 +149,7 @@ class Graph extends State {
     endpoint.selectAll('tspan').at({ x: endpointX, y: endpointY });
   }
 
-  enterAnnotation(selection, i) {
+  enterAnnotation(selection) {
     selection.filter(d => d.isSmall).classed('small-annotation', true);
     selection.filter(d => d.orientation === 'top').classed('orientation-top', true);
 
@@ -169,7 +167,7 @@ class Graph extends State {
       .tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
   }
 
-  updateAnnotation(selection, i) {
+  updateAnnotation(selection) {
     const { xScale, yScale } = this;
     // Convenience functions for accessing x and y coordinates
     const getX = d => xScale(d.dayNumber);
