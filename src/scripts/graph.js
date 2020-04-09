@@ -23,7 +23,6 @@ import covidData from '../../data/covid.json';
  * Preprocess data
  */
 
-// Turn date strings into date objects
 for (let i = 0; i < covidData.length; i++)
   covidData[i].date = new Date(covidData[i].date);
 
@@ -31,7 +30,6 @@ for (let i = 0; i < covidData.length; i++)
  * The Graph class draws and udpates the visualization's DOM elements
  */
 
-// later on: can adjust on resize
 const TICK_PADDING = 12;
 const CONNECTOR_LENGTH = 120;
 const CONNECTOR_PADDING = 7;
@@ -132,7 +130,9 @@ class Graph extends State {
         .append('g.line-container')
         .call(this.enterLineContainer)
         .call(this.updateLineContainer);
-      await drawIn(lines);
+      const pointLabel = lines.select('g.point-label').style('opacity', 0);
+      await drawIn(lines).end();
+      fadeIn(pointLabel); // No await so point labels fade in with annotations
     }
 
     // Fade in the annotations enter selection
