@@ -2,25 +2,8 @@
  * D3 selection helper functions
  */
 
-const FADE_TIME = 300;
 const INTERPOLATION_TIME = 800;
 const DRAW_TIME = 1200;
-
-// Fades in a selection; returns the transition
-function fadeIn(selection) {
-  return selection.style('opacity', 0)
-    .transition()
-      .duration(FADE_TIME)
-      .style('opacity', 1);
-}
-
-// Fades out a selection; returns the transition
-function fadeOut(selection) {
-  return selection.transition()
-    .duration(FADE_TIME)
-    .style('opacity', 0)
-    .remove();
-}
 
 // Draws in a path and circle/label of a line container
 function drawIn(selection) {
@@ -67,7 +50,7 @@ const formatCases = ({ cases }) => {
 };
 
 module.exports = {
-  fadeIn, fadeOut, drawIn,
+  drawIn,
   areDomainsEqual,
   annotationWithKey,
   isBetween,

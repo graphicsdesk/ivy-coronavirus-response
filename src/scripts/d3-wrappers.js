@@ -7,6 +7,8 @@ import { selection } from 'd3-selection';
 selection.prototype.tspansBackgrounds = tspansBackgrounds;
 selection.prototype.appendCircle = appendCircle;
 selection.prototype.makeText = makeText;
+selection.prototype.fadeIn = fadeIn;
+selection.prototype.fadeOut = fadeOut;
 
 // Append circle and set radius.
 const RADIUS = 6;
@@ -49,4 +51,21 @@ function makeText(textFn, colorFn) {
     tspan.style('fill', colorFn);
   if (textFn)
     text.selectAll('tspan').text(textFn);
+}
+
+// Fades in a selection; returns the transition
+const FADE_TIME = 300;
+function fadeIn() {
+  return this.style('opacity', 0)
+    .transition()
+      .duration(FADE_TIME)
+      .style('opacity', 1);
+}
+
+// Fades out a selection; returns the transition
+function fadeOut(selection) {
+  return this.transition()
+    .duration(FADE_TIME)
+    .style('opacity', 0)
+    .remove();
 }

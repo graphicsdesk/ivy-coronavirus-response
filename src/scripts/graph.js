@@ -9,7 +9,7 @@ import 'intersection-observer';
 
 import State from './state';
 import {
-  fadeIn, fadeOut, drawIn,
+  drawIn,
   areDomainsEqual,
   firstQuintile,
   formatCases,
@@ -96,23 +96,12 @@ class Graph extends State {
     this.updateLineContainer = this.updateLineContainer.bind(this);
 
     // If exiting selection is nonempty, fade those out first.
-    // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
-    const linesExit = linesUpdate.exit();
-    const annotationsExit = annotationsUpdate.exit();
-    if (!(linesExit.empty() && annotationsExit.empty())) {
-      const linesFade = fadeOut(linesExit);
-      const annotationsFade = fadeOut(annotationsExit);
-      if (linesExit.empty())
-        await annotationsFade.end();
-      else
-        await linesFade.end();
-    }
+    await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
 
     // If domains changed, interpolate existing elements (axes, existing lines
     // and annotations) simultaneously to match new data range
     if (domainsChanged) {
-      linesUpdate
-        .transition()
+      linesUpdate.transition()
         .duration(INTERPOLATION_TIME)
         .call(this.updateLineContainer);
       annotationsUpdate.transition()
@@ -130,18 +119,18 @@ class Graph extends State {
         .call(this.updateLineContainer);
       const pointLabel = lines.select('g.point-label').style('opacity', 0);
       await drawIn(lines).end();
-      fadeIn(pointLabel); // No await so point labels fade in with annotations
+      pointLabel.fadeIn(); // No await so point labels fade in with annotations
     }
 
     // Fade in the annotations enter selection
     const annotationsEnter = annotationsUpdate.enter();
     if (!annotationsEnter.empty()) {
-      await fadeIn(
-        annotationsEnter
-          .append('g.annotation')
-          .call(this.enterAnnotation)
-          .call(this.updateAnnotation)
-      ).end();
+      await annotationsEnter
+        .append('g.annotation')
+        .call(this.enterAnnotation)
+        .call(this.updateAnnotation)
+        .fadeIn()
+        .end();
     }
   }
 
@@ -331,4 +320,13 @@ function bottomAlignText({ isSmall, orientation }) {
 // Helper function to wrap annotation text
 function wrapAnnotation(d) {
   return wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
+}
+
+async function bulkFadeOutExiting(updateSelections) {
+  await Promise.allSettled(
+    updateSelections
+      .map(s => s.exit()) // Get exit selections
+      .filter(s => !s.empty()) // Remove empty ones
+      .map(s => s.fadeOut().end()) // Fade them all out
+  );
 }
