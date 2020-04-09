@@ -12,11 +12,11 @@ import {
   fadeIn, fadeOut, drawIn,
   areDomainsEqual,
   firstQuintile,
-  thousandsCommas,
+  formatCases,
   tspansBackgrounds,
   INTERPOLATION_TIME,
 } from './utils';
-import { COUNTRY_COLORS, getCountryLabel, getLineColor } from './constants';
+import { COUNTRY_COLORS, getLineLabel, getLineColor } from './constants';
 
 selection.prototype.tspansBackgrounds = tspansBackgrounds;
 
@@ -90,21 +90,19 @@ class Graph extends State {
         countries.map(country => data.filter(d => d.country === country)),
         array => array[0].country,
       );
-    const linesEnter = linesUpdate.enter();
-    const linesExit = linesUpdate.exit();
 
     // Join annotations data, store selections
     const annotationsUpdate = annotationsContainer
       .selectAll('g.annotation')
       .data(this.withCovidData(annotations), a => a.key);
-    const annotationsEnter = annotationsUpdate.enter();
-    const annotationsExit = annotationsUpdate.exit();
 
     this.updateAnnotation = this.updateAnnotation.bind(this);
     this.updateLineContainer = this.updateLineContainer.bind(this);
 
     // If exiting selection is nonempty, fade those out first.
     // Cannot use selection.call(function) if chaining (see d3/d3-selection#102).
+    const linesExit = linesUpdate.exit();
+    const annotationsExit = annotationsUpdate.exit();
     if (!(linesExit.empty() && annotationsExit.empty())) {
       const linesFade = fadeOut(linesExit);
       const annotationsFade = fadeOut(annotationsExit);
@@ -128,6 +126,7 @@ class Graph extends State {
     }
 
     // Draw in the path enter selection
+    const linesEnter = linesUpdate.enter();
     if (!linesEnter.empty()) {
       const lines = linesEnter
         .append('g.line-container')
@@ -139,6 +138,7 @@ class Graph extends State {
     }
 
     // Fade in the annotations enter selection
+    const annotationsEnter = annotationsUpdate.enter();
     if (!annotationsEnter.empty()) {
       await fadeIn(
         annotationsEnter
@@ -160,9 +160,7 @@ class Graph extends State {
         fill: getLineColor,
         stroke: getLineColor,
       });
-    const text = endpoint.append('text');
-    text.append('tspan.background-text');
-    text.append('tspan').style('fill', getLineColor);
+    endpoint.call(makeText, getLineLabel, getLineColor)
   }
 
   updateLineContainer(selection) {
@@ -173,14 +171,10 @@ class Graph extends State {
     // Set path description
     selection.select('path').at({ d: makeLine });
 
-    // Position endpoint group;populate text
+    // Position endpoint group
     const endpoint = selection.select('g.point-label');
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
-    endpoint.select('text')
-      .at({ y: endpointY })
-      .selectAll('tspan')
-      .text(ary => getCountryLabel(ary[0].country))
-      .at({ x: endpointX });
+    endpoint.selectAll('tspan').at({ x: endpointX, y: endpointY });
   }
 
   enterAnnotation(selection, i) {
@@ -188,14 +182,12 @@ class Graph extends State {
     selection.filter(d => d.orientation === 'top').classed('orientation-top', true);
 
     const largeAnnotations = selection.filter(d => !d.isSmall);
-    largeAnnotations.append('line.connector'); // Make a top-oriented connector
+    largeAnnotations.append('line.connector'); // Append a connector element
 
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
-    const caseCountText = caseCountContainer.append('text');
-    caseCountText.append('tspan.background-text');
-    caseCountText.append('tspan');
+    caseCountContainer.call(makeText, formatCases);
 
     const wrapNote = d =>
       wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
@@ -224,7 +216,6 @@ class Graph extends State {
     caseCountContainer.select('line')
       .at({ x1: getX, y1: getY, x2: 0, y2: getY });
     caseCountContainer.selectAll('tspan')
-      .text(d => thousandsCommas(d.cases) + ' cases')
       .at({
         x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())),
         y: getY,
@@ -354,4 +345,15 @@ function bottomAlignText({ isSmall, orientation }) {
   }
 
   text.translate([ 0, transY ]);
+}
+
+// Adds text with one backgrounded tspan
+function makeText(selection, textFn, colorFn) {
+  const text = selection.append('text');
+  text.append('tspan.background-text');
+  const tspan = text.append('tspan');
+  if (colorFn)
+    tspan.style('fill', colorFn);
+  if (textFn)
+    text.selectAll('tspan').text(textFn);
 }

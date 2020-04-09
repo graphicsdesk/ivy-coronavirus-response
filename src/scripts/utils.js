@@ -59,10 +59,11 @@ const isBetween = (x, [ a, b ]) => typeof x === 'number' && x >= a && x < b;
 // Just positions case count label nicely.
 const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
-const thousandsCommas = number => {
-  if (number < 1000)
-    return number;
-  return Math.floor(number / 1000) + ',' + number % 1000;
+const formatCases = ({ cases }) => {
+  let output = cases;
+  if (cases >= 1000)
+    output = Math.floor(cases / 1000) + ',' + cases % 1000;
+  return output + ' cases';
 };
 
 function tspansBackgrounds(lines, lh) {
@@ -95,7 +96,7 @@ module.exports = {
   annotationWithKey,
   isBetween,
   firstQuintile,
-  thousandsCommas,
+  formatCases,
   tspansBackgrounds,
   INTERPOLATION_TIME,
 };
