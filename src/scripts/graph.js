@@ -132,7 +132,7 @@ class Graph extends State {
         .append('g.line-container')
         .call(this.enterLineContainer)
         .call(this.updateLineContainer);
-      await drawIn(lines).end();
+      await drawIn(lines);
     }
 
     // Fade in the annotations enter selection
