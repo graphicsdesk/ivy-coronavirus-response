@@ -167,25 +167,20 @@ class Graph extends State {
 
   updateLineContainer(selection) {
     const { xScale, yScale, makeLine } = this;
+    const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
+    const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
     // Set path description
-    selection.select('path')
-      .at({ d: makeLine });
+    selection.select('path').at({ d: makeLine });
 
+    // Position endpoint group;populate text
     const endpoint = selection.select('g.point-label');
-    endpoint.select('circle')
-      .at({
-        cx: ary => xScale(ary[ary.length - 1].dayNumber),
-        cy: ary => yScale(ary[ary.length - 1].cases),
-      });
+    endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
     endpoint.select('text')
-      .at({
-        x: ary => xScale(ary[ary.length - 1].dayNumber),
-        y: ary => yScale(ary[ary.length - 1].cases),
-      })
+      .at({ y: endpointY })
       .selectAll('tspan')
       .text(ary => getCountryLabel(ary[0].country))
-      .at({ x: ary => xScale(ary[ary.length - 1].dayNumber) });
+      .at({ x: endpointX });
   }
 
   enterAnnotation(selection, i) {
@@ -202,58 +197,45 @@ class Graph extends State {
     caseCountText.append('tspan.background-text');
     caseCountText.append('tspan');
 
-    const wrapNote = d => {
-      return wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
-    };
+    const wrapNote = d =>
+      wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
 
-    selection.append('circle'); // Make the circle
+    selection.append('circle').attr('r', RADIUS); // Make the circle
     selection
       .append('text.note-text') // Make the label
-      // .tspans(d => wrapNote(d), LINE_HEIGHT)
       .tspansBackgrounds(d => wrapNote(d), LINE_HEIGHT);
   }
 
   updateAnnotation(selection, i) {
     const { xScale, yScale } = this;
+    // Convenience functions for accessing x and y coordinates
+    const getX = d => xScale(d.dayNumber);
+    const getY = d => yScale(d.cases);
 
     const largeAnnotations = selection.filter(d => !d.isSmall);
 
     // Place connector
-    largeAnnotations
-      .select('line.connector')
-      .at({
-        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
-        x2: d => xScale(d.dayNumber), y2: d => yScale(d.cases) - CONNECTOR_LENGTH,
-      });
+    largeAnnotations.select('line.connector')
+      .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - CONNECTOR_LENGTH });
 
     // Make a case count y-intercept marker
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .select('g.case-count-container');
-    caseCountContainer
-      .select('line')
-      .at({
-        x1: d => xScale(d.dayNumber), y1: d => yScale(d.cases),
-        x2: 0, y2: d => yScale(d.cases),
-      });
-    caseCountContainer
-      .select('text')
-      .selectAll('tspan')
+    caseCountContainer.select('line')
+      .at({ x1: getX, y1: getY, x2: 0, y2: getY });
+    caseCountContainer.selectAll('tspan')
       .text(d => thousandsCommas(d.cases) + ' cases')
-      .at({ x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())), y: d => yScale(d.cases) })
+      .at({
+        x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())),
+        y: getY,
+      })
 
     // Place the dot
-    selection
-      .select('circle')
-      .at({ cx: d => xScale(d.dayNumber), cy: d => yScale(d.cases), r: RADIUS });
+    selection.select('circle').at({ cx: getX, cy: getY });
 
     // Place label
-    selection
-      .select('text.note-text')
-      .each(function() {
-        const text = select(this);
-        const numLines = text.selectAll('tspan').nodes().length / 2;
-        text.translate([ 0, -(numLines - 1) * LINE_HEIGHT ]);
-      })
+    selection.select('text.note-text')
+      .each(bottomAlignText)
       .at({
         y: ({ cases, isSmall, orientation }, i) => {
           let y = yScale(cases);
@@ -264,7 +246,7 @@ class Graph extends State {
       })
       .selectAll('tspan')
       .at({
-        x: d => xScale(d.parent.dayNumber),
+        x: d => getX(d.parent),
       })
   }
 
@@ -360,3 +342,16 @@ function onStepExit({ index, direction }) {
 window.addEventListener('resize', () => {
   scroller.resize();
 });
+
+function bottomAlignText({ isSmall, orientation }) {
+  const text = select(this);
+  const numLines = text.selectAll('tspan').nodes().length / 2;
+  let transY = -(numLines - 1) * LINE_HEIGHT;
+
+  if (isSmall) {
+    if (orientation === 'top') transY -= 15;
+    else transY = 11; // Completely disregard bottomAlign
+  }
+
+  text.translate([ 0, transY ]);
+}

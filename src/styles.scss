@@ -108,14 +108,11 @@ g.annotations-container {
 
     text {
       fill: $gray;
-      text-anchor: middle;
       dominant-baseline: hanging;
-      transform: translate(0, 11px);
     }
 
     &.orientation-top text {
       dominant-baseline: unset;
-      transform: translate(0, -38px);
     }
   }
 }
