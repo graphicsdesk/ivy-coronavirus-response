@@ -96,6 +96,7 @@ g.annotations-container {
     text {
       text-anchor: middle;
       font-family: $roboto;
+      font-size: 17px;
       fill: $black;
     }
   }
@@ -114,7 +115,7 @@ g.annotations-container {
 
     &.orientation-top text {
       dominant-baseline: unset;
-      transform: translate(0, -15px);
+      transform: translate(0, -38px);
     }
   }
 }
@@ -129,6 +130,14 @@ g.case-count-container {
     font-weight: 500;
     transform: translate(0, -7px);
   }
+}
+
+tspan.background-text {
+  stroke: #fff;
+  opacity: 0.8;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /**

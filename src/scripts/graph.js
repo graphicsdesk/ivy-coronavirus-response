@@ -2,7 +2,7 @@ import { scaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
-import { select } from 'd3-selection';
+import { select, selection } from 'd3-selection';
 import { wordwrap } from 'd3-jetpack';
 import scrollama from 'scrollama';
 import 'intersection-observer';
@@ -13,9 +13,12 @@ import {
   areDomainsEqual,
   firstQuintile,
   thousandsCommas,
+  tspansBackgrounds,
   INTERPOLATION_TIME,
 } from './utils';
-import { COUNTRY_COLORS, getCountryLabel } from './constants';
+import { COUNTRY_COLORS, getCountryLabel, getLineColor } from './constants';
+
+selection.prototype.tspansBackgrounds = tspansBackgrounds;
 
 import covidData from '../../data/covid.json';
 
@@ -31,11 +34,11 @@ for (let i = 0; i < covidData.length; i++)
  */
 
 const TICK_PADDING = 12;
-const CONNECTOR_LENGTH = 120;
+const CONNECTOR_LENGTH = 100;
 const CONNECTOR_PADDING = 7;
 const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
-const LINE_HEIGHT = 20;
+const LINE_HEIGHT = 23;
 const RADIUS = 6;
 
 const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
@@ -148,37 +151,41 @@ class Graph extends State {
 
   enterLineContainer(selection) {
     selection.attr('data-country', ary => ary[0].country);
-    selection.append('path');
+    selection.append('path').attr('stroke', getLineColor)
 
     const endpoint = selection.append('g.point-label');
-    endpoint.append('circle');
-    endpoint.append('text');
+    endpoint.append('circle')
+      .at({
+        r: RADIUS,
+        fill: getLineColor,
+        stroke: getLineColor,
+      });
+    const text = endpoint.append('text');
+    text.append('tspan.background-text');
+    text.append('tspan').style('fill', getLineColor);
   }
 
   updateLineContainer(selection) {
     const { xScale, yScale, makeLine } = this;
 
-    const getColor = ary => COUNTRY_COLORS[ary[0].country];
     // Set path description
     selection.select('path')
-      .at({ d: makeLine, stroke: getColor });
+      .at({ d: makeLine });
 
     const endpoint = selection.select('g.point-label');
     endpoint.select('circle')
       .at({
         cx: ary => xScale(ary[ary.length - 1].dayNumber),
         cy: ary => yScale(ary[ary.length - 1].cases),
-        r: RADIUS,
-        fill: getColor,
-        stroke: getColor,
       });
     endpoint.select('text')
       .at({
         x: ary => xScale(ary[ary.length - 1].dayNumber),
         y: ary => yScale(ary[ary.length - 1].cases),
       })
+      .selectAll('tspan')
       .text(ary => getCountryLabel(ary[0].country))
-      .style('fill', getColor)
+      .at({ x: ary => xScale(ary[ary.length - 1].dayNumber) });
   }
 
   enterAnnotation(selection, i) {
@@ -191,12 +198,19 @@ class Graph extends State {
     const caseCountContainer = largeAnnotations.filter(d => d.showCases)
       .append('g.case-count-container');
     caseCountContainer.append('line');
-    caseCountContainer.append('text');
+    const caseCountText = caseCountContainer.append('text');
+    caseCountText.append('tspan.background-text');
+    caseCountText.append('tspan');
+
+    const wrapNote = d => {
+      return wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH);
+    };
 
     selection.append('circle'); // Make the circle
     selection
-      .append('text.label') // Make the label
-      .tspans(d => wordwrap(d.label, d.isSmall ? SMALL_LINE_WIDTH : LINE_WIDTH), LINE_HEIGHT);
+      .append('text.note-text') // Make the label
+      // .tspans(d => wrapNote(d), LINE_HEIGHT)
+      .tspansBackgrounds(d => wrapNote(d), LINE_HEIGHT);
   }
 
   updateAnnotation(selection, i) {
@@ -223,8 +237,9 @@ class Graph extends State {
       });
     caseCountContainer
       .select('text')
+      .selectAll('tspan')
+      .text(d => thousandsCommas(d.cases) + ' cases')
       .at({ x: d => Math.min(xScale(d.dayNumber) / 2, firstQuintile(xScale.range())), y: d => yScale(d.cases) })
-      .text(d => thousandsCommas(d.cases) + ' cases');
 
     // Place the dot
     selection
@@ -233,20 +248,24 @@ class Graph extends State {
 
     // Place label
     selection
-      .select('text.label')
-      .selectAll('tspan')
+      .select('text.note-text')
+      .each(function() {
+        const text = select(this);
+        const numLines = text.selectAll('tspan').nodes().length / 2;
+        text.translate([ 0, -(numLines - 1) * LINE_HEIGHT ]);
+      })
       .at({
-        x: d => xScale(d.parent.dayNumber),
-        y: ({ parent: { cases, isSmall, orientation } }, i, elements) => {
+        y: ({ cases, isSmall, orientation }, i) => {
           let y = yScale(cases);
           if (!isSmall)
             y -= CONNECTOR_LENGTH + CONNECTOR_PADDING;
-          if (!isSmall || orientation === 'top')
-            y -= (elements.length - 1) * LINE_HEIGHT; // Aligns bottom of text with base
           return y;
         },
-      });
-
+      })
+      .selectAll('tspan')
+      .at({
+        x: d => xScale(d.parent.dayNumber),
+      })
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
@@ -301,8 +320,8 @@ scroller
   .onStepExit(onStepExit);
 
 // Storing annotations for convenience
-const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale', showCases: true };
-const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true, orientation: 'top' };
+const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases: true };
+const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
 const us12 = { dayNumber: 12, label: 'Columbia', showCases: true };
 const usIvy = { dayNumber: 8.375, label: 'Ivy average' };

@@ -11,4 +11,7 @@ const getCountryLabel = country => {
     country;
 };
 
-module.exports = { COUNTRY_COLORS, getCountryLabel };
+
+const getLineColor = ary => COUNTRY_COLORS[ary[0].country];
+
+module.exports = { COUNTRY_COLORS, getCountryLabel, getLineColor };

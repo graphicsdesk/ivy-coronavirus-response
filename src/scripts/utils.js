@@ -65,6 +65,30 @@ const thousandsCommas = number => {
   return Math.floor(number / 1000) + ',' + number % 1000;
 };
 
+function tspansBackgrounds(lines, lh) {
+  return this.selectAll('tspan')
+    .data(function(d) {
+      const linesAry = typeof lines === 'function' ? lines(d) : lines;
+      return linesAry.reduce((acc, line) => {
+        const datum = { line, parent: d, numLines: linesAry.length };
+        acc.push({ ...datum, isBackground: true });
+        acc.push(datum);
+        return acc;
+      }, []);
+    })
+    .enter()
+  .append('tspan')
+    .text(function(d) { return d.line; })
+    .attr('dy', ({ parent, line, isBackground }, i) => {
+      if (i < 2 || !isBackground)
+        return 0;
+      return typeof lh === 'function' ? lh(parent, line) : lh;
+    })
+    .filter(d => d.isBackground)
+    .classed('background-text', true)
+}
+
+
 module.exports = {
   fadeIn, fadeOut, drawIn,
   areDomainsEqual,
@@ -72,5 +96,6 @@ module.exports = {
   isBetween,
   firstQuintile,
   thousandsCommas,
+  tspansBackgrounds,
   INTERPOLATION_TIME,
 };
