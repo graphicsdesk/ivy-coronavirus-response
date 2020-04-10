@@ -1,5 +1,6 @@
 /* Scripts that should be on every Spectate page */
 
+
 const isOnSpectatorPage = window.location.host === 'www.columbiaspectator.com';
 
 /**
@@ -34,7 +35,7 @@ function hoistArticle() {
 
   // Links and meta tags are SSR'd into this first paragraph,
   // and it takes up unwanted space thanks to Arc's CSS
-  suspectParagraph = article.firstElementChild;
+  const suspectParagraph = article.firstElementChild;
   if ([ ...suspectParagraph.children ].some(el => [ 'META', 'LINK' ].includes(el.tagName))) {
     // If the paragraph includes <meta> or <link> tags, it's probably our SSR'd <head>
     suspectParagraph.style.margin = 0;
@@ -63,7 +64,7 @@ function ready(timestamp) {
     );
     window.onload = hoistArticle;
   }
-};
+}
 
 // Initialize our ready() function.
 if (isOnSpectatorPage)

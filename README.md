@@ -4,7 +4,7 @@ This story was created with [Spectate](https://github.com/spec-journalism/specta
 
 **Things to do before publishing**
 
-- [ ] Somehow write a callback for after unmounting `section#main` and mounting `article`, because Scrollama shouldn't be instantiated until after `article` is remounted.
+- [ ] Somehow write a callback for after unmounting `section#main` and mounting `article`, because Scrollama shouldn't be instantiated until after `article` is remounted. I think this can be done with `requestAnimationFrame` in `/src/scripts/page.js`.
 
 ## Data Diary
 
