@@ -37,10 +37,13 @@ function handleResize() {
   var stepHeight = Math.floor(window.innerHeight * 0.55);
   step.style("height", stepHeight + "px");
   var bodyWidth =  select("body").node().offsetWidth;
-
+  
   graphic
     .style("width", bodyWidth - 300 + "px")
     .style("height", window.innerHeight - 300 + "px");
+  text
+    .style("height", window.innerHeight * 3.5 + "px");
+
   // 2. update width/height of graphic element
   chart
     .style("width", 65 + "%")

@@ -51,20 +51,20 @@ body {
 #scroll {
   position: relative;
   left: 0;
-  margin-bottom: 20%;
 
   .scroll__graphic {
     position: sticky;
-    top: 0;
-    left: 0;
-    margin-bottom: 0%;
-    height: 100%;
+    left: 0%;
+    top:4%;
+    width:100% !important;
+    height: 100% !important;
     display: flex;
-    align-items: bottom;
+    align-items: center !important;
 
     .is-fixed {
       position: fixed;
     }
+  
 
     .is-bottom {
       bottom: 0;
@@ -74,7 +74,7 @@ body {
   .scroll__text {
     position: relative;
     padding: 0 1rem;
-    max-width: 25rem;
+    max-width: 470px;
     left: 60%;
 
     .steps > p {
@@ -83,7 +83,6 @@ body {
       font-size: 1.5rem;
       font-family: "Georgia", serif;
       width: calc(100% - 40px);
-      max-width: 470px;
       box-sizing: border-box;
     }
   }
