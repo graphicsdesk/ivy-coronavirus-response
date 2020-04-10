@@ -167,7 +167,7 @@ class Graph extends State {
     selection.append('line.connector')
 
     // Create case count markers
-    const caseCountContainer = selection.filter(d => !d.isSmall && d.showCases)
+    const caseCountContainer = selection
       .append('g.case-count-container');
     caseCountContainer.append('line');
     caseCountContainer.makeText(formatCaseCount);
@@ -178,6 +178,7 @@ class Graph extends State {
 
   updateAnnotation(selection) {
     selection.classed('small-annotation', d => d.isSmall);
+    selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
     selection.classed('orientation-top', d => d.orientation === 'top');
 
     const { xScale, yScale } = this;
@@ -200,7 +201,7 @@ class Graph extends State {
     selection.select('circle').at({ cx: getX, cy: getY });
 
     // Place label
-    const noteText = selection.select('text.note-text').at({ x: d => getX(d) });
+    const noteText = selection.select('text.note-text').at({ x: getX });
     (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
     noteText
       .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
