@@ -129,7 +129,8 @@ class Graph extends State {
 
   enterLineContainer(selection) {
     selection.attr('data-country', ary => ary[0].country);
-    selection.append('path').attr('stroke', getLineColor)
+    selection.append('path')
+      .at({ stroke: getLineColor })
 
     const endpoint = selection.append('g.point-label');
     endpoint.appendCircle(getLineColor);
@@ -141,7 +142,10 @@ class Graph extends State {
     const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
-    selection.select('path').at({ d: makeLine }); // Set path description
+    // Set path description
+    selection.select('path')
+      .at({ d: makeLine })
+      .correctDashLength();
 
     const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
