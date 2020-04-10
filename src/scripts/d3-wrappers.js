@@ -66,7 +66,7 @@ function makeText(textFn, colorFn) {
 const FADE_TIME = 300;
 function fadeIn() {
   const getKey = d => d.country + d.dayNumber;
-  return this.style('opacity', 0).transition(JSON.stringify(this.data().map(getKey)))
+  return this.style('opacity', 0).transition('fade')
     .duration(FADE_TIME)
     .style('opacity', 1);
 }
@@ -74,7 +74,7 @@ function fadeIn() {
 // Fades out a selection; returns the transition
 function fadeOut() {
   const getKey = d => d.country + d.dayNumber;
-  return this.transition(JSON.stringify(this.data().map(getKey)))
+  return this.transition('fade')
     .duration(FADE_TIME)
     .style('opacity', 0)
     .remove();

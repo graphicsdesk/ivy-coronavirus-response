@@ -81,48 +81,62 @@ class Graph extends State {
     this.updateAnnotation = this.updateAnnotation.bind(this);
     this.updateLineContainer = this.updateLineContainer.bind(this);
 
-    // If exiting selection is nonempty, fade those out first.
-    if (domainsChanged)
-      await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
-    else
-      bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+    try {
 
-    // If domains changed, interpolate existing elements (axes, existing lines
-    // and annotations) simultaneously to match new data range
-    if (domainsChanged) {
-      linesUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateLineContainer);
-      annotationsUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateAnnotation);
-      await this.updateAxes().end();
-    } else if (shouldUpdateAnnotations) {
-      annotationsUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateAnnotation);
+      // If exiting selection is nonempty, fade those out first.
+      if (domainsChanged)
+        await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+      else
+        bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+
+      // If domains changed, interpolate existing elements (axes, existing lines
+      // and annotations) simultaneously to match new data range
+      if (domainsChanged) {
+        linesUpdate.transition('lines')
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateLineContainer);
+        annotationsUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation);
+        await this.updateAxes().end();
+      } else if (shouldUpdateAnnotations) {
+        annotationsUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation);
+      }
+
+      // Draw in the path enter selection
+      const linesEnter = linesUpdate.enter();
+      if (!linesEnter.empty()) {
+        const lines = linesEnter
+          .hackyInsert('g.line-container')
+          .call(this.enterLineContainer)
+          .call(this.updateLineContainer);
+        const pointLabel = lines.select('g.point-label').style('opacity', 0);
+        await lines.drawIn().end();
+        pointLabel.fadeIn(); // No await so point labels fade in with annotations
+      }
+
+      // Fade in the annotations enter selection
+      const annotationsEnter = annotationsUpdate.enter();
+      await annotationsEnter
+        .append('g.annotation')
+        .call(this.enterAnnotation)
+        .call(this.updateAnnotation, true)
+        .fadeIn()
+        .end();
+
+    } catch (error) {
+      // Usually a transition was cancelled or interrupted. This can happen
+      // when another transition of the same name (current transitions are
+      // all unnamed) starts on the same element.
+      const { data, transition } = error;
+      if (data && transition) {
+        console.error('Transition', transition._name, 'was interrupted. Data:', data)
+      } else {
+        console.error(error);
+      }
     }
-
-    // Draw in the path enter selection
-    const linesEnter = linesUpdate.enter();
-    if (!linesEnter.empty()) {
-      const lines = linesEnter
-        .hackyInsert('g.line-container')
-        .call(this.enterLineContainer)
-        .call(this.updateLineContainer);
-      const pointLabel = lines.select('g.point-label').style('opacity', 0);
-      await lines.drawIn().end();
-      pointLabel.fadeIn(); // No await so point labels fade in with annotations
-    }
-
-    // Fade in the annotations enter selection
-    const annotationsEnter = annotationsUpdate.enter();
-    await annotationsEnter
-      .append('g.annotation')
-      .call(this.enterAnnotation)
-      .call(this.updateAnnotation, true)
-      .fadeIn()
-      .end();
   }
 
   enterLineContainer(selection) {
@@ -197,11 +211,10 @@ class Graph extends State {
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
     const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
-    const testPoint = makeYAxis.scale()(100);
     xAxis.transition()
       .duration(INTERPOLATION_TIME)
       .call(makeXAxis);
-    return yAxis.transition(makeYAxis.scale()(testPoint))
+    return yAxis.transition('y-axis')
       .duration(INTERPOLATION_TIME)
       .call(makeYAxis);
   }

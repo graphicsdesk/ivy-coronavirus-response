@@ -68,9 +68,10 @@ const allStates2 = [
 
 chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
+  console.log(index);
   chartContainer.setAttribute('data-index', index);
-  if (allStates2[index] !== undefined)
-    graph.set(allStates2[index]);
+  if (allStates[index] !== undefined)
+    graph.set(allStates[index]);
 }
 
 function onStepExit({ index, direction }) {
@@ -82,8 +83,9 @@ const scroller = scrollama();
 // Setup the instance, pass callback functions
 scroller
   .setup({
-    step: '.lede-step',
+    step: '.lede-step-surrounding-padding',
     offset: 0.65,
+    order:false,
   })
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);

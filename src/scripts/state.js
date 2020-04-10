@@ -24,13 +24,7 @@ class State {
   // Updates component if it should update
   updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis }) {
     if (shouldUpdateAnnotations || shouldUpdateCountries)
-      this.update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis)
-        .catch(function(error) {
-          console.error(error);
-          // Usually a transition was cancelled or interrupted. This can happen
-          // when another transition of the same name (current transitions are
-          // all unnamed) starts on the same element. Se
-        });
+      this.update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis);
   }
 
   // Adds corresponding COVID data to an annotation array of annotations
