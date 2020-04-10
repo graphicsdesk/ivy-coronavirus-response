@@ -7,22 +7,15 @@ select("#g-columbia-desktop")
         .style("width", 700 * (window.innerHeight/800)+"px")
         .style("height", 750 * (window.innerHeight/800)+"px")
         
-select("#g-schools-desktop")
-        .style("width", 750 * (window.screen.width/900)+"px")
-        .style("height", 370 * (window.screen.width/900)+"px")
+
 
 window.addEventListener('resize', function() {
     select("#g-columbia-desktop")
         .style("width", 700 * (window.innerHeight/800)+"px")
         .style("height", 750 * (window.innerHeight/800)+"px")
-    select("#g-schools-desktop")
-        .style("width", 750 * (window.screen.width/900)+"px")
-        .style("height", 370 * (window.screen.width/900)+"px")
 }, true);
 
-select("#g-schools-desktop")
-.style("width", 750 * (window.screen.width/900)+"px")
-.style("height", 370 * (window.screen.width/900)+"px")
+
 
 // animation dates for columbia
 var dates = ["8", "10", "12", "15", "18", "20"];
