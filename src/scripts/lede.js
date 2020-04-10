@@ -26,9 +26,11 @@ const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true,
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
 const columbia = { dayNumber: 12, label: 'Columbia', showCases: true };
-const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true };
+const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true, orientation: 'top' };
+const columbiaSmallBtm = { dayNumber: 12, label: 'Columbia', isSmall: true, orientation: 'bottom' };
 const ivies = { dayNumber: 8.375, label: 'Ivy average' };
 const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall: true, orientation: 'top' };
+const iviesSmallBtm = { dayNumber: 8.375, label: 'Ivy average', isSmall: true, orientation: 'bottom' };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
 const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', showCases: false, isSmall: true, orientation: 'top' };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true };
@@ -50,7 +52,7 @@ const allStates = [
     countries: [ 'US', 'China' ] },
   { annotations: [ iviesSmall, columbiaSmall, chinaSmall, korea ],
     countries: [ 'US', 'China', 'Korea, South' ], scaleYAxis: ZOOM_FACTOR },
-  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italy ],
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italy ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
 ];
 
@@ -64,7 +66,7 @@ const chartContainer = document.getElementById('chart-container');
 
 chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
-  console.log(index)
+  // console.log(index)
   chartContainer.setAttribute('data-index', index);
   if (allStates[index] !== undefined)
     graph.set(allStates[index]);
