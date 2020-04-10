@@ -2,7 +2,7 @@
  * This file is where the actual scrolling and graphing happens.
  */
 
-import scrollama from 'scrollama';
+import scrollama from 'scrollama/src/init.js';
 import Graph from './graph';
 import { COUNTRY_COLORS } from './constants';
 import covidData from '../../data/covid.json';
@@ -26,17 +26,19 @@ const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true,
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
 const columbia = { dayNumber: 12, label: 'Columbia', showCases: true };
-const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true, orientation: 'top' };
+const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true };
 const ivies = { dayNumber: 8.375, label: 'Ivy average' };
 const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall: true, orientation: 'top' };
 const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
-const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, isSmall: true, orientation: 'top' };
+const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', showCases: false, isSmall: true, orientation: 'top' };
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true };
-const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true, isSmall: true, orientation: 'top' };
+const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: false, isSmall: true, orientation: 'top' };
 const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases: true};
 
 const ZOOM_FACTOR = 0.35;
 const allStates = [
+  // { countries: [ 'US', 'China', 'Korea, South', 'Italy' ], xBounds: [0, 30] },
+  // { countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
   { countries: [ 'US' ] },
   { annotations: [ us7 ],
     countries: [ 'US' ] },
@@ -60,15 +62,9 @@ graph.update();
 
 const chartContainer = document.getElementById('chart-container');
 
-const allStates2 = [
-  { countries: [ 'US' ], scaleYAxis: 1.2 },
-  { annotations: [ us7 ],
-    countries: [ 'US' ] },
-];
-
 chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
-  console.log(index);
+  console.log(index)
   chartContainer.setAttribute('data-index', index);
   if (allStates[index] !== undefined)
     graph.set(allStates[index]);
@@ -85,7 +81,6 @@ scroller
   .setup({
     step: '.lede-step-surrounding-padding',
     offset: 0.65,
-    order:false,
   })
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);

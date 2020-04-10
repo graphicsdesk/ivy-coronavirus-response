@@ -48,7 +48,8 @@ g.lines-container > g.line-container {
 #chart-container[data-index="0"] g.line-container[data-country="US"],
 #chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
-#chart-container[data-index="5"] g.line-container[data-country="Korea, South"] {
+#chart-container[data-index="5"] g.line-container[data-country="Korea, South"],
+#chart-container[data-index="6"] g.line-container[data-country="Italy"] {
   circle {
     animation: $pulse-anim;
   }
@@ -112,9 +113,18 @@ g.annotations-container {
       // stroke-opacity: 0;
     }
   }
+
+  g.hide-cases {
+    g.case-count-container {
+      opacity: 0;
+    }
+  }
 }
 
 g.case-count-container {
+  transition-duration: $trans-dur;
+  transition-property: opacity;
+
   line {
     stroke: $black;
     stroke-dasharray: 4;
