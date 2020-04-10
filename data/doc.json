@@ -123,7 +123,133 @@
     },
     {
       "type": "text",
-      "value": "Similar actions were taken at Columbia, Yale, Princeton, and Dartmouth. These universities originally only announced remote classes for a few weeks and later extended them to the entire semester in order to respond to the rapidly changing nature of the virus as recommended by government officials. At the time of the initial announcement, students may not have understood the severity of the situation until weeks later when they were forced to evacuate.<i>"
+      "value": "Similar actions were taken at Columbia, Yale, Princeton, and Dartmouth. These universities originally only announced remote classes for a few weeks and later extended them to the entire semester in order to respond to the rapidly changing nature of the virus as recommended by government officials. At the time of the initial announcement, students may not have understood the severity of the situation until weeks later when they were forced to evacuate."
+    },
+    {
+      "type": "subhed",
+      "value": "Harvard"
+    },
+    {
+      "type": "text",
+      "value": "Harvard and Cornell, were the first Ivy League schools to announce a move to online instruction for the rest of the semester on March 10. On the same day, Harvard, Cornell, and Yale also announced mandatory move-out."
+    },
+    {
+      "type": "graphic",
+      "value": {
+        "asset": "harvard.html"
+      }
+    },
+    {
+      "type": "subhed",
+      "value": "Cornell"
+    },
+    {
+      "type": "text",
+      "value": "Cornell was the last Ivy to see positive cases within its community. It also set the latest move-out deadline of March 28."
+    },
+    {
+      "type": "graphic",
+      "value": {
+        "asset": "cornell.html"
+      }
+    },
+    {
+      "type": "subhed",
+      "value": "Penn"
+    },
+    {
+      "type": "graphic",
+      "value": {
+        "asset": "penn.html"
+      }
+    },
+    {
+      "type": "text",
+      "value": "However, Dustin Duncan, a social and spatial epidemiologist at the Columbia Mailman School of Public Health, said he believes the University responded to the crisis in a clear and timely manner. Universities, he said, likely reacted based on recommendations from public health officials and epidemiologists to make administrative decisions."
+    },
+    {
+      "type": "text",
+      "value": "<b>"
+    },
+    {
+      "type": "text",
+      "value": "</b><b>“</b>I think that it is and remains to be a rapidly changing landscape of what to do,” Duncan said. “And then comparing COVID to other [societies] ... I think that the issue of the emerging effects of this disease is we’re learning about the disease as it’s happening.”"
+    },
+    {
+      "type": "text",
+      "value": "Arthur Reingold, an epidemiology professor at the University of California, Berkeley, said university administrators reacted based on the mixed messaging they received from federal agencies."
+    },
+    {
+      "type": "text",
+      "value": "<b>"
+    },
+    {
+      "type": "text",
+      "value": "</b>“Different levels of government provid[ed] different messages, the federal government, the White House, providing one message, federal health authorities and state health authorities a different message,” Reingold said. “I think that’s probably the biggest problem is that the messaging is not being consistent and many people are uncertain or confused about exactly what the right response is.”"
+    },
+    {
+      "type": "text",
+      "value": "Despite these concerns, Bolden-Albala added that Columbia, as well as University of Washington and UCI ultimately responded in a timely manner, citing the presence of well-established public health schools, which led to conversations between high-level administrators and experts on how to prepare and address the crisis."
+    },
+    {
+      "type": "text",
+      "value": "Still, she said she found the response rate and conflicting information alarming, citing those among the reasons for the rapid spread across the United States."
+    },
+    {
+      "type": "text",
+      "value": "“We need to all work together now to keep some semblance of calm as we deal with the current grim reality,” Bolden-Albala said."
+    },
+    {
+      "type": "text",
+      "value": "________"
+    },
+    {
+      "type": "text",
+      "value": "<b>Notes on data"
+    },
+    {
+      "type": "text",
+      "value": "</b><b>"
+    },
+    {
+      "type": "text",
+      "value": "</b>Data regarding the global number of coronavirus cases was compiled by the <a href=\"https://github.com/datasets/covid-19/tree/master/data\">Center for Systems Science and Engineering</a> at Johns Hopkins. National coronavirus data by state was compiled by the <a href=\"https://github.com/nytimes/covid-19-data/blob/master/us-counties.csv\">New York Times</a>."
+    },
+    {
+      "type": "text",
+      "value": "Johns Hopkins CSSE data begins on January 22 and was used as a starting point to measure the number of positive cases in each country. Spectator was not able to accurately retrieve daily case numbers in China between the <a href=\"https://www.nejm.org/doi/full/10.1056/NEJMoa2001316\">first four known cases of coronavirus</a> in Wuhan, on Dec. 29 and January 22, 2020."
+    },
+    {
+      "type": "text",
+      "value": "Governmental and university administrative actions and announcements were analyzed from official press releases, university websites, and news sources. There may be some discrepancies in dates due to time differences. All data was last updated March 31, 2020."
+    },
+    {
+      "type": "text",
+      "value": "<i>Kelly Pu is a Graphics deputy editor at Spectator. She can be contacted at </i><a href=\"mailto:kelly.pu@columbiaspectator.com\"><i>kelly.pu@columbiaspectator.com</i></a><i>."
+    },
+    {
+      "type": "text",
+      "value": "</i><i>"
+    },
+    {
+      "type": "text",
+      "value": "</i><i>Jun Yi Zhang is a Graphics reporter at Spectator. She can be contacted at </i><a href=\"mailto:junyi.zhang@columbiaspectator.com\"><i>junyi.zhang@columbiaspectator.com</i></a><i>. Follow her on Twitter </i><a href=\"https://twitter.com/jsonkao\"><i>@jsonkao</i></a><i>."
+    },
+    {
+      "type": "text",
+      "value": "</i>"
+    },
+    {
+      "type": "text",
+      "value": "<i>Stephanie Lai is a News editor at Spectator. She can be contacted at </i><a href=\"mailto:stephanie.lai@columbiaspectator.com\"><i>stephanie.lai@columbiaspectator.com</i></a><i>. Follow her on Twitter </i><a href=\"https://twitter.com/stephaniealai\"><i>@stephaniealai</i></a><i>."
+    },
+    {
+      "type": "text",
+      "value": "</i><i>"
+    },
+    {
+      "type": "text",
+      "value": "</i><i>Raeedah Wahid is the Graphics editor at Spectator. She can be contacted at </i><a href=\"mailto:raeedah.wahid@columbiaspectator.com\"><i>raeedah.wahid@columbiaspectator.com</i></a><i>. Follow her on Twitter </i><a href=\"https://twitter.com/raeedahwahid\"><i>@raeedahwahid</i></a><i>."
     },
     {
       "type": "text",

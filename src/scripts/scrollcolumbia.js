@@ -3,9 +3,26 @@ import scrollama from "scrollama";
 import { select } from 'd3-selection';
 import { selectAll } from 'd3-selection';
 
- select("#g-schools-desktop")
-.style("width", 750 * (window.screen.width/900))
-.style("height", 370 * (window.screen.width/900))
+select("#g-columbia-desktop")
+        .style("width", 700 * (window.innerHeight/800)+"px")
+        .style("height", 750 * (window.innerHeight/800)+"px")
+        
+select("#g-schools-desktop")
+        .style("width", 750 * (window.screen.width/900)+"px")
+        .style("height", 370 * (window.screen.width/900)+"px")
+
+window.addEventListener('resize', function() {
+    select("#g-columbia-desktop")
+        .style("width", 700 * (window.innerHeight/800)+"px")
+        .style("height", 750 * (window.innerHeight/800)+"px")
+    select("#g-schools-desktop")
+        .style("width", 750 * (window.screen.width/900)+"px")
+        .style("height", 370 * (window.screen.width/900)+"px")
+}, true);
+
+select("#g-schools-desktop")
+.style("width", 750 * (window.screen.width/900)+"px")
+.style("height", 370 * (window.screen.width/900)+"px")
 
 // animation dates for columbia
 var dates = ["8", "10", "12", "15", "18", "20"];
@@ -81,7 +98,6 @@ function handleStepEnter(response) {
 
 // make text disappear when scrolling up
 function handleContainerExit(response) {
-  console.log(response.index);
   if (response.direction == 'up') {
      selectAll(".Scrolly" + (response.index))
       .style("opacity", "0");
