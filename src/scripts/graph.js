@@ -5,6 +5,8 @@ import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
 import { wordwrap } from 'd3-jetpack';
 import 'intersection-observer';
+const regeneratorRuntime = require("regenerator-runtime");
+
 
 import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
