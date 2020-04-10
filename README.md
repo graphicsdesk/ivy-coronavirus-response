@@ -5,6 +5,7 @@ This story was created with [Spectate](https://github.com/spec-journalism/specta
 **Things to do before publishing**
 
 - [ ] Somehow write a callback for after unmounting `section#main` and mounting `article`, because Scrollama shouldn't be instantiated until after `article` is remounted. I think this can be done with `requestAnimationFrame` in `/src/scripts/page.js`.
+- [ ] Fix pathLength issue on Safari by reverting [e8e29a](https://github.com/spec-journalism/ivy-coronavirus-response/commit/e8e29a5a6f9bf2cafb2596e36c0661505402797f)
 
 ## Data Diary
 
