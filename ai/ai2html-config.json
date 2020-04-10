@@ -1,5 +1,5 @@
 {
-  "html_output_path": "../src/",
+  "html_output_path": "../src/ai2html",
   "fonts": [
     {
       "aifont": "Roboto-Regular",
@@ -18,6 +18,31 @@
       "family": "Roboto,arial,helvetica,sans-serif",
       "weight": "",
       "style": "italic"
+    },
+    {
+      "aifont": "Roboto-Light",
+      "family": "Roboto,arial,helvetica,sans-serif",
+      "weight": "300",
+      "style": ""
+    },
+    {
+      "aifont": "Roboto-Medium",
+      "family": "Roboto,arial,helvetica,sans-serif",
+      "weight": "500",
+      "style": ""
+    },
+    {
+      "aifont": "Roboto-Thin",
+      "family": "Roboto,arial,helvetica,sans-serif",
+      "weight": "200",
+      "style": ""
+    },
+    {
+      "aifont": "Roboto-LightItalic",
+      "family": "Roboto,arial,helvetica,sans-serif",
+      "weight": "300",
+      "style": "italic"
     }
+
   ]
 }
