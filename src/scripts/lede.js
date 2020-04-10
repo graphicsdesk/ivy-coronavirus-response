@@ -60,11 +60,17 @@ graph.update();
 
 const chartContainer = document.getElementById('chart-container');
 
+const allStates2 = [
+  { countries: [ 'US' ], scaleYAxis: 1.2 },
+  { annotations: [ us7 ],
+    countries: [ 'US' ] },
+];
+
 chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
   chartContainer.setAttribute('data-index', index);
-  if (allStates[index] !== undefined)
-    graph.set(allStates[index]);
+  if (allStates2[index] !== undefined)
+    graph.set(allStates2[index]);
 }
 
 function onStepExit({ index, direction }) {
