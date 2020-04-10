@@ -65,15 +65,16 @@ function makeText(textFn, colorFn) {
 // Fades in a selection; returns the transition
 const FADE_TIME = 300;
 function fadeIn() {
-  return this.style('opacity', 0)
-    .transition()
-      .duration(FADE_TIME)
-      .style('opacity', 1);
+  const getKey = d => d.country + d.dayNumber;
+  return this.style('opacity', 0).transition(JSON.stringify(this.data().map(getKey)))
+    .duration(FADE_TIME)
+    .style('opacity', 1);
 }
 
 // Fades out a selection; returns the transition
 function fadeOut() {
-  return this.transition()
+  const getKey = d => d.country + d.dayNumber;
+  return this.transition(JSON.stringify(this.data().map(getKey)))
     .duration(FADE_TIME)
     .style('opacity', 0)
     .remove();
