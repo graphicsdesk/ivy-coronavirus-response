@@ -140,14 +140,16 @@ class Graph extends State {
   }
 
   enterLineContainer(selection) {
-    const PATH_LENGTH = 100;
+    const PATH_LEN = 100;
     selection.attr('data-country', ary => ary[0].country);
     selection.append('path')
-      .at({ stroke: getLineColor, pathLength: PATH_LENGTH, 'stroke-dasharray': PATH_LENGTH })
+      .at({ stroke: getLineColor, pathLength: PATH_LEN, 'stroke-dasharray': PATH_LEN })
 
     const endpoint = selection.append('g.point-label');
     endpoint.appendCircle(getLineColor);
-    endpoint.makeText(getLineLabel, getLineColor)
+    endpoint.append('text')
+      .tspans(ary => wordwrap(getLineLabel(ary), 8), LINE_HEIGHT)
+      .attr('fill', d => getLineColor(d.parent));
   }
 
   updateLineContainer(selection) {
@@ -160,7 +162,8 @@ class Graph extends State {
 
     const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
-    endpoint.selectAll('tspan').at({ x: endpointX, y: endpointY });
+    endpoint.selectAll('tspan')
+      .at({ x: d => endpointX(d.parent) + 14, y: d => endpointY(d.parent) });
   }
 
   enterAnnotation(selection) {

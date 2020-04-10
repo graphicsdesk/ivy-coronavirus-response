@@ -36,12 +36,8 @@ g.lines-container > g.line-container {
   g.point-label text {
     font-weight: 500;
     font-size: 18px;
-    text-anchor: end;
-    transform: translate(9px, -18px); // top-oriented text
-  }
-
-  &[data-country="Korea, South"] g.point-label text {
-    transform: translate(9px, 27px); // bottom-oriented text
+    text-anchor: start;
+    dominant-baseline: central;
   }
 }
 
