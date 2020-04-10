@@ -56,7 +56,7 @@ body {
 }
 
 
-.step p {
+.steps p {
   text-align: center;
   padding: 1rem;
   font-size: 1.5rem;
@@ -277,6 +277,7 @@ body {
     left:0;
     margin-bottom:30%;
   }
+}
 
 /**
  * Interactive lede chart
@@ -324,11 +325,12 @@ g.lines-container > g.line-container {
 
 #chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
-#chart-container[data-index="5"] g.line-container[data-country="Korea, South"], {
+#chart-container[data-index="5"] g.line-container[data-country="Korea, South"] {
   circle {
     animation: $pulse-anim;
   }
 }
+
 
 g.axis {
   .tick {

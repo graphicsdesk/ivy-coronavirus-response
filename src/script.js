@@ -162,7 +162,7 @@ function init() {
       progress:true,
       graphic: ".scroll__graphic",
       text: ".scroll__text",
-      step: ".scroll__text .step",
+      step: ".scroll__text .steps",
       debug: false
     })
     .onStepEnter(handleStepEnter)
