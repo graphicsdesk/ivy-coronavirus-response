@@ -4,7 +4,6 @@
 
 import scrollama from 'scrollama/src/init.js';
 import Graph from './graph';
-import debounce from './underscore-debounce';
 import { COUNTRY_COLORS } from './constants';
 import covidData from '../../data/covid.json';
 
@@ -92,13 +91,12 @@ scroller
  * Window event listeners
  */
 
-// Resizers
-function resize() {
-  console.log('Resizing');
+function handleResize() {
   graph.resize();
   scroller.resize();
 }
-window.addEventListener('resize', debounce(resize, 100));
+
+module.exports = { handleResize };
 
 /**
  * Highlights all country names <c></c>

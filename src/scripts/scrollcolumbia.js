@@ -146,10 +146,9 @@ function init() {
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)
     .onStepProgress(handleStepProgress);
-
-  // setup resize event
-  window.addEventListener("resize", handleResize);
 }
 
 // kick things off
 init();
+
+module.exports = { handleResize };
