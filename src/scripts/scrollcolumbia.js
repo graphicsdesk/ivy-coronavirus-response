@@ -18,7 +18,7 @@ window.addEventListener('resize', function() {
 
 
 // animation dates for columbia
-var dates = ["8", "10", "12", "15", "18", "20"];
+var dates = ["8", "10", "12", "15", "20"];
 
 
 // using d3 for convenience
