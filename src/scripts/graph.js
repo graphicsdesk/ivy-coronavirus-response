@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleLog } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
@@ -23,7 +23,7 @@ const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
 
-const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
+const margin = { top: 50, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
 
@@ -34,7 +34,7 @@ class Graph extends State {
 
   // Create scales; we only know range right now
   xScale = scaleLinear().range([ 0, this.gWidth ]);
-  yScale = scaleLinear().range([ this.gHeight, 0 ]);
+  yScale = scaleLog().range([ this.gHeight, 0 ]);
 
   // Create SVG and the main group for margins
   svg = select('#chart-container')
@@ -168,7 +168,10 @@ class Graph extends State {
     const getY = d => yScale(d.cases);
 
     selection.select('line.connector')
-      .at({ x1: getX, y1: getY, x2: getX, y2: d => getY(d) - (!d.isSmall && CONNECTOR_LENGTH) });
+      .at({
+        x1: getX, y1: getY, x2: getX,
+        y2: d => getY(d) + (!d.isSmall && ((d.orientation === 'bottom' ? 1 : -1) * CONNECTOR_LENGTH))
+      });
 
     // Make a case count y-intercept marker
     const caseCountContainer = selection.select('g.case-count-container');
@@ -186,7 +189,7 @@ class Graph extends State {
     const noteText = selection.select('text.note-text');
     (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
     noteText
-      .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
+      .at({ y: function(d) { return getY(d) + alignAdjust.call(this, d); } })
       .selectAll('tspan')
       .at({ x: d => getX(d.parent) })
   }
@@ -228,17 +231,24 @@ class Graph extends State {
 
 // Bottom aligns a selection by translating up by total line height.
 // Makes the assumption that large annotations are always top-oriented.
-function bottomAlignAdjust({ isSmall, orientation }) {
+function alignAdjust({ isSmall, orientation }) {
   const text = select(this);
   const numLines = text.selectAll('tspan').nodes().length / 2;
-  let transY = -(numLines - 1) * LINE_HEIGHT;
+  const factor = orientation === 'bottom' ? 1 : -1;
+  let transY = factor * (numLines - 1) * LINE_HEIGHT;
 
   // Making small spacing adjustements
   if (isSmall) {
-    if (orientation === 'top') transY -= 16; // Lift label above the point
-    else transY = 28; // Label already hangs baseline, just push a tad more
+    if (orientation === 'top')
+      transY -= 15; // Lift label above the point
+    else
+      transY = 23; // Label already hangs baseline, just push a tad more
   } else {
-    transY -= CONNECTOR_LENGTH + 7; // Pad label from connector
+    if (orientation === 'bottom')
+      transY = 15;
+    else
+      transY *= factor;
+    transY += factor * (CONNECTOR_LENGTH + 7); // Pad label from connector
   }
 
   return transY;
