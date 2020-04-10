@@ -1,8 +1,9 @@
 import 'intersection-observer';
 import scrollama from "scrollama";
-import * as d3 from "d3";
+import { select } from 'd3-selection';
+import { selectAll } from 'd3-selection';
 
-d3.select("#g-schools-desktop")
+ select("#g-schools-desktop")
 .style("width", 750 * (window.screen.width/900))
 .style("height", 500 * (window.screen.width/900))
 
@@ -11,7 +12,7 @@ var dates = ["8", "10", "12", "15", "18", "20"];
 
 
 // using d3 for convenience
-var container = d3.select("#scroll");
+var container =  select("#scroll");
 var graphic = container.select(".scroll__graphic");
 var chart = graphic.select(".chart");
 var text = container.select(".scroll__text");
@@ -26,7 +27,7 @@ function handleResize() {
 
   var stepHeight = Math.floor(window.innerHeight * 0.55);
   step.style("height", stepHeight + "px");
-  var bodyWidth = d3.select("body").node().offsetWidth;
+  var bodyWidth =  select("body").node().offsetWidth;
 
   graphic
     .style("width", bodyWidth + "px")
@@ -45,22 +46,22 @@ function handleStepEnter(response) {
   // response = { element, direction, index }
   if (response.direction == 'down') {
     // make animation appear
-    d3.selectAll(".Scrolly" + (response.index))
+     selectAll(".Scrolly" + (response.index))
       .style("opacity", "1");
     // define appearance of pulsating circle
     if (response.index == 0 || response.index == 3) {
-      d3.selectAll(".anim" + response.index)
+       selectAll(".anim" + response.index)
         .style("visibility", "visible")
     } else {
-      d3.selectAll(".anim" + (response.index - 1))
+       selectAll(".anim" + (response.index - 1))
         .style("visibility", "hidden")
     }
-    d3.selectAll(".g-March" + dates[response.index])
+     selectAll(".g-March" + dates[response.index])
       .classed("m-fadeIn", true)
       .classed("m-fadeOut", false);
 
     if (window.screen.width < 800) {
-      d3.selectAll(".mobil" + response.index)
+       selectAll(".mobil" + response.index)
         .classed("m-fadeOut", false)
         .classed("m-fadeIn", true);
     }
@@ -68,10 +69,10 @@ function handleStepEnter(response) {
 
   } else {
     if (response.index == 0 || response.index == 3) {
-      d3.selectAll(".anim" + response.index)
+       selectAll(".anim" + response.index)
         .style("visibility", "visible")
     } else {
-      d3.selectAll(".anim" + response.index)
+       selectAll(".anim" + response.index)
         .style("visibility", "hidden")
 
     }
@@ -82,14 +83,14 @@ function handleStepEnter(response) {
 function handleContainerExit(response) {
   console.log(response.index);
   if (response.direction == 'up') {
-    d3.selectAll(".Scrolly" + (response.index))
+     selectAll(".Scrolly" + (response.index))
       .style("opacity", "0");
 
-    d3.selectAll(".g-March" + dates[response.index])
+     selectAll(".g-March" + dates[response.index])
       .classed("m-fadeOut", true)
       .classed("m-fadeIn", false);
 
-    d3.selectAll(".mobil" + response.index)
+     selectAll(".mobil" + response.index)
       .classed("m-fadeOut", true)
       .classed("m-fadeIn", false);
   }
@@ -101,10 +102,10 @@ var notDone = true;
 function handleStepProgress(response) {
   if (response.index != 0 && notDone) {
     for (var i = 0; i <= response.index; i++) {
-      d3.selectAll(".Scrolly" + i)
+       selectAll(".Scrolly" + i)
         .style("opacity", "1");
 
-      d3.selectAll(".g-March" + dates[i])
+       selectAll(".g-March" + dates[i])
         .classed("m-fadeOut", false)
         .classed("m-fadeIn", true);
     }
