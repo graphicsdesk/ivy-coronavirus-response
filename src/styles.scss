@@ -275,21 +275,21 @@ body {
     padding: 9px !important;
   }
   .scroll__text {
-    top: -240%;
+    top: -160%;
     left: 40% !important;
 
     .steps {
       .mobil0 {
-        top: 200%;
-        right: 40.5%;
+        top: 30%;
+        right: 1.5%;
       }
       .mobil3 {
-        top: 340%;
-        right: 55.5%;
+        top: 52%;
+        right: 0%;
       }
       .mobil5 {
-        top: 390%;
-        left: 50%;
+        top: 60%;
+        left: 105%;
         width: 100%;
       }
     }
@@ -314,12 +314,8 @@ body {
   }
 
   #scroll {
-    height: 3500px !important;
-
-    .scroll__graphic > .chart {
-      margin-top: 7.5%;
-    }
     .scroll__text {
+      height:3200px !important;
       width: 10%;
       .steps {
         width: 300%;

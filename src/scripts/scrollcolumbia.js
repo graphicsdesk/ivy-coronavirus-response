@@ -41,8 +41,9 @@ function handleResize() {
   graphic
     .style("width", bodyWidth - 300 + "px")
     .style("height", window.innerHeight - 300 + "px");
+    console.log(window.screen.width);
   text
-    .style("height", window.innerHeight * 3.5 + "px");
+    .style("height", window.screen.width * 1.8 + "px");
 
   // 2. update width/height of graphic element
   chart
