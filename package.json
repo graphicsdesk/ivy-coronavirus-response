@@ -38,7 +38,7 @@
     "text-balancer": "^1.0.5"
   },
   "browserslist": [
-    "defaults"
+    "last 1 Chrome version"
   ],
   "prettier": {
     "trailingComma": "all",
