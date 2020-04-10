@@ -52,14 +52,14 @@ b {
     color: #fff;
     transform: translateY(-150%); // TODO: do better;
     align-items: center;
-    
+
     p, h1 {
        color: #fff;
     }
 
     .byline {
       text-align: center;
-      
+
       a {
         color: #fff;
       }
@@ -112,7 +112,7 @@ header {
   }
 
   .headline {
-    margin: 50px 0 25px;
+    margin: 50px 0 20px;
     font-size: 45px;
     line-height: 1.15;
     font-weight: bold;
@@ -143,8 +143,8 @@ header {
 
 @media (max-width: 500px) {
   header .headline {
-    font-size: 46px;
-    margin-bottom: 7px;
+    font-size: 43px;
+    margin-bottom: 15px;
   }
 }
 
@@ -154,8 +154,8 @@ header {
   span {
     font-weight: 600;
     font-family: $graphik;
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 27px;
     display: block;
   }
 
@@ -194,6 +194,7 @@ header {
   margin-top: 0;
   margin-left: auto;
   margin-right: auto;
+  box-sizing: content-box;
 }
 
 .credits {
@@ -377,7 +378,7 @@ header {
   margin: 40px auto 20px;
   font-family: $georgia;
   font-size: 21px;
-  line-height: 1.63;
+  line-height: 32px;
   font-weight: bold;
 }
 

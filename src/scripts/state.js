@@ -72,7 +72,7 @@ class State {
       countries = ['US'];
     return this.covidData.filter(d =>
       countries.includes(d.country) &&
-      isBetween(d.dayNumber, [ 0, 15 ])
+      isBetween(d.dayNumber, [ 0, 16 ])
     );
   }
 }
