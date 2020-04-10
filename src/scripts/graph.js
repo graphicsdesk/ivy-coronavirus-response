@@ -107,7 +107,7 @@ class Graph extends State {
     const linesEnter = linesUpdate.enter();
     if (!linesEnter.empty()) {
       const lines = linesEnter
-        .append('g.line-container')
+        .hackyInsert('g.line-container')
         .call(this.enterLineContainer)
         .call(this.updateLineContainer);
       const pointLabel = lines.select('g.point-label').style('opacity', 0);

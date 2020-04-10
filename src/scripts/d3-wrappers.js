@@ -11,6 +11,7 @@ selection.prototype.makeText = makeText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
+selection.prototype.hackyInsert = hackyInsert;
 
 transition.prototype.classed = selection.prototype.classed;
 
@@ -93,4 +94,18 @@ function drawIn() {
     .transition()
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0);
+}
+
+// Insert if Italy. Append otherwise
+function hackyInsert(selector) {
+  const that = this;
+  return that.append(selector);
+  return that.each(function(ary) {
+    if (ary[0].country === 'Italy') {
+      that.insert(selector, ':first-child');
+    } else {
+      that.append(selector);
+    }
+  })
+  return that.selectAll(selector);
 }

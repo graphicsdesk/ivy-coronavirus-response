@@ -4,6 +4,7 @@
 
 import scrollama from 'scrollama';
 import Graph from './graph';
+import { COUNTRY_COLORS } from './constants';
 import covidData from '../../data/covid.json';
 
 /**
@@ -87,4 +88,16 @@ scroller
 
 window.addEventListener('resize', () => {
   scroller.resize();
+});
+
+/**
+ * Highlights all country names <c></c>
+ */
+
+[].forEach.call(document.getElementsByTagName('c'), el => {
+  const color = COUNTRY_COLORS[el.innerText];
+  if (color) {
+    el.classList.add('country-name-highlight');
+    el.style.backgroundColor = color;
+  }
 });
