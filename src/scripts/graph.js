@@ -109,12 +109,15 @@ class Graph extends State {
       const linesEnter = linesUpdate.enter();
       if (!linesEnter.empty()) {
         const lines = linesEnter
-          .hackyInsert('g.line-container')
+          .append('g.line-container')
           .call(this.enterLineContainer)
-          .call(this.updateLineContainer);
+          .call(this.updateLineContainer, true);
         const pointLabel = lines.select('g.point-label').style('opacity', 0);
         await lines.drawIn().end();
         pointLabel.fadeIn(); // No await so point labels fade in with annotations
+
+        // After draw in, reset dash length so axes transitions don't mess up lines
+        lines.select('path').attr('stroke-dasharray', 0);
       }
 
       // Fade in the annotations enter selection
@@ -142,8 +145,7 @@ class Graph extends State {
   enterLineContainer(selection) {
     const PATH_LEN = 100;
     selection.attr('data-country', ary => ary[0].country);
-    selection.append('path')
-      .at({ stroke: getLineColor, pathLength: PATH_LEN, 'stroke-dasharray': PATH_LEN })
+    selection.append('path').at({ stroke: getLineColor });
 
     const endpoint = selection.append('g.point-label');
     endpoint.appendCircle(getLineColor);
@@ -152,13 +154,13 @@ class Graph extends State {
       .attr('fill', d => getLineColor(d.parent));
   }
 
-  updateLineContainer(selection) {
+  updateLineContainer(selection, justEntered) {
     const { xScale, yScale, makeLine } = this;
     const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
     // Set path description
-    selection.select('path').at({ d: makeLine })
+    selection.select('path').at({ d: makeLine });
 
     const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });

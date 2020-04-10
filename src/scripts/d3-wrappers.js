@@ -11,11 +11,8 @@ selection.prototype.makeText = makeText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
-selection.prototype.correctDashLength = correctDashLength;
-selection.prototype.hackyInsert = hackyInsert;
 
 transition.prototype.classed = selection.prototype.classed;
-transition.prototype.correctDashLength = correctDashLength;
 
 // Append circle and set radius.
 const RADIUS = 6;
@@ -90,16 +87,11 @@ function drawIn() {
   const path = this.select('path');
   const totalLength = getPathLength(path);
   return path
+    .attr('stroke-dasharray', totalLength)
     .attr('stroke-dashoffset', totalLength)
     .transition('lines-draw')
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0);
-}
-
-// Makes sure a path's dash length is its total length
-function correctDashLength() {
-  const totalLength = getPathLength(this);
-  this.attr('stroke-dasharray', totalLength);
 }
 
 // Gets path length of a path
@@ -114,21 +106,8 @@ function getPathLength(pathNode) {
   return pathNode.getTotalLength();
 }
 
-// Is @param element a DOM object? (https://stackoverflow.com/a/36894871)
+// Checks if an element is a DOM object
+// Source: https://stackoverflow.com/a/36894871
 function isElement(element) {
     return element instanceof Element || element instanceof HTMLDocument;
-}
-
-// Insert if Italy. Append otherwise
-function hackyInsert(selector) {
-  const that = this;
-  return that.append(selector);
-  return that.each(function(ary) {
-    if (ary[0].country === 'Italy') {
-      that.insert(selector, ':first-child');
-    } else {
-      that.append(selector);
-    }
-  })
-  return that.selectAll(selector);
 }

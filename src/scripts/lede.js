@@ -55,6 +55,7 @@ const allStates = [
   { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italy ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
 ];
+const initialState = { countries: [] }
 
 graph.update();
 
@@ -73,6 +74,7 @@ function onStepEnter({ index }) {
 }
 
 function onStepExit({ index, direction }) {
+  if (index === 0 && direction === 'up') graph.set(initialState);
 }
 
 // Instantiate the scrollama
