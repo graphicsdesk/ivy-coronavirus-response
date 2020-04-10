@@ -132,7 +132,7 @@ class Graph extends State {
       // all unnamed) starts on the same element.
       const { data, transition } = error;
       if (data && transition) {
-        console.error('Transition', transition._name, 'was interrupted. Data:', data)
+        console.error('Transition', transition._name, 'was interrupted. Data:', data);
       } else {
         console.error(error);
       }

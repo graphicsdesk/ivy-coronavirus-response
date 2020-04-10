@@ -64,8 +64,11 @@ function makeText(textFn, colorFn) {
 
 // Fades in a selection; returns the transition
 const FADE_TIME = 300;
+function getTransitionName(that) {
+  that.data()[0] ? that.data()[0].country + 'fade' : 'fade'
+}
+
 function fadeIn() {
-  const getKey = d => d.country + d.dayNumber;
   return this.style('opacity', 0).transition('fade')
     .duration(FADE_TIME)
     .style('opacity', 1);
@@ -73,7 +76,6 @@ function fadeIn() {
 
 // Fades out a selection; returns the transition
 function fadeOut() {
-  const getKey = d => d.country + d.dayNumber;
   return this.transition('fade')
     .duration(FADE_TIME)
     .style('opacity', 0)
@@ -86,7 +88,7 @@ function drawIn() {
   const path = this.select('path');
   return path
     .attr('stroke-dashoffset', path.attr('pathLength'))
-    .transition()
+    .transition('lines-draw')
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0);
 }
