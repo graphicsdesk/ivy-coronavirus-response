@@ -13,7 +13,7 @@ async function main() {
   const daysSince100 = {};
   const data = response.data
     .filter(d => COUNTRIES.includes(d.Country))
-    .map((d, i) => {
+    .map(d => {
       const { Confirmed: cases, Country: country, Date: date } = d;
       if (country in daysSince100)
         daysSince100[country]++;
