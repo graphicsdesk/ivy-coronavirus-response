@@ -5,15 +5,20 @@ import { annotationWithKey, isBetween } from './utils';
  * The State class provides an interface for changing and accessing the store
  */
 
+const defaultXBounds = [0, 15];
+
 class State {
   constructor(covidData) {
     this.covidData = covidData;
   }
 
+  xBounds = defaultXBounds
+
   visibleCountries = new Store(); // Stores country-level lines
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
 
-  set({ countries = [], annotations = [], scaleYAxis }) {
+  set({ countries = [], annotations = [], scaleYAxis, xBounds }) {
+    // this.xBounds = xBounds || defaultXBounds;
     this.updateComponent({
       shouldUpdateAnnotations: this.visibleAnnotations.set(annotations),
       shouldUpdateCountries: this.visibleCountries.set(countries),
@@ -66,7 +71,7 @@ class State {
       countries = ['US'];
     return this.covidData.filter(d =>
       countries.includes(d.country) &&
-      isBetween(d.dayNumber, [ 0, 16 ])
+      isBetween(d.dayNumber, this.xBounds)
     );
   }
 }
