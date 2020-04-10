@@ -39,7 +39,7 @@ function handleResize() {
   var bodyWidth =  select("body").node().offsetWidth;
 
   graphic
-    .style("width", bodyWidth + "px")
+    .style("width", bodyWidth - 300 + "px")
     .style("height", window.innerHeight - 300 + "px");
   // 2. update width/height of graphic element
   chart

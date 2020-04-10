@@ -1,5 +1,5 @@
-@import 'styles/spectate';
-@import 'styles/lede-chart';
+@import "styles/spectate";
+@import "styles/lede-chart";
 
 // Uncomment the next line if this project is an full-page Eye lead
 // @import 'styles/eye-lead-ellipsis';
@@ -9,9 +9,6 @@
 body {
   // Arc's overflow hidden on <body> messes up position sticky
   overflow-x: visible !important;
-}
-* {
-  box-sizing: border-box;
 }
 
 /* navbar */
@@ -23,7 +20,7 @@ body {
   width: 100%;
   height: $navbar-height;
   background-color: #ffffff;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.27);
 }
 
@@ -39,45 +36,43 @@ body {
 
 #scroll {
   position: relative;
-  left:0;
-  margin-bottom:20%;
-}
-
-.scroll__graphic {
-  position: sticky;
-  top:2vh;
   left: 0;
-  margin-bottom: 0%;
-}
+  margin-bottom: 20%;
 
-.scroll__graphic.is-fixed {
-  position: fixed;
-}
+  .scroll__graphic {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin-bottom: 0%;
+    height: 100%;
+    display: flex;
+    align-items: bottom;
 
-.scroll__graphic.is-bottom {
-  bottom: 0;
-}
+    .is-fixed {
+      position: fixed;
+    }
+    
+    .is-bottom {
+      bottom: 0;
+    }
+  }
 
-.chart {
-  position: absolute;
-  left:-5vw;
-}
+  .scroll__text {
+    position: relative;
+    padding: 0 1rem;
+    max-width: 25rem;
+    left: 60%;
 
-
-.scroll__text {
-  position: relative;
-  padding: 0 1rem;
-  max-width: 30rem;
-  width: 33%;
-  left:60%;
-}
-
-
-.steps p {
-  text-align: center;
-  padding: 1rem;
-  font-size: 1.5rem;
-  font-family:'Georgia',serif;
+    .steps > p {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-family: "Georgia", serif;
+      width: calc(100% - 40px);
+      max-width: 470px;
+      box-sizing: border-box;
+    }
+  }
 }
 
 .m-fadeOut {
@@ -106,192 +101,223 @@ body {
     stroke-opacity: 0;
   }
 }
-.anim0, .anim3 {
-  visibility:hidden;
-  fill: #D13838;
-  stroke: #D13838;
+.anim0,
+.anim3 {
+  visibility: hidden;
+  fill: #d13838;
+  stroke: #d13838;
   stroke-width: 0.33;
-  overflow:visible !important;
+  overflow: visible !important;
   animation: 1.8s infinite pulse;
-
 }
 
 .small {
-  height:300px !important;
+  height: 300px !important;
 }
 
-.Scrolly0, .Scrolly1, .Scrolly2, .Scrolly3, .Scrolly4, .Scrolly5 {
-  opacity:0;
+.Scrolly0,
+.Scrolly1,
+.Scrolly2,
+.Scrolly3,
+.Scrolly4,
+.Scrolly5 {
+  opacity: 0;
   transition: all 0.1s ease-in-out;
 }
 
-@media screen and (max-width: 600px) and (max-height: 700px) { //iPhone 6, 7, 8
+@media screen and (max-width: 600px) and (max-height: 700px) {
+  //iPhone 6, 7, 8
   .mobil0 {
-    top:315vh;
-    right:8.5%;
-    width:120%;
+    top: 315vh;
+    right: 8.5%;
+    width: 120%;
   }
   .mobil3 {
-    top:352vh;
-    left:-5%;
-    right:0%;
-    width:110%;
+    top: 352vh;
+    left: -5%;
+    right: 0%;
+    width: 110%;
   }
   .mobil5 {
-    top:370vh;
-    right:-5%;
-    width:110%;
+    top: 370vh;
+    right: -5%;
+    width: 110%;
   }
   .scroll__text {
-    top:-390% !important;
+    top: -390% !important;
   }
-
 }
-@media screen and (max-width:800px) {
-  .mobil0, .mobil3, .mobil5 {
-    position:absolute;
-    padding:4.5px !important;
-    font-size:9px !important;
-    background-color:rgba(191, 191, 191, 0.3)
+@media screen and (max-width: 800px) {
+  .mobil0,
+  .mobil3,
+  .mobil5 {
+    position: absolute;
+    padding: 4.5px !important;
+    font-size: 9px !important;
+    background-color: rgba(191, 191, 191, 0.3);
   }
   #g-columbia-mobile {
-    width:441.6px !important; 
-    height:828px !important;
-    margin-left:7.5% !important;
-    }
+    width: 384px !important;
+    height: 820.8px !important;
+    margin-left: 7.5% !important;
+  }
   #text {
-    height:10px;
+    height: 10px;
   }
   .steps {
-    height:25px !important;
-    font-size:inherit;
+    height: 25px !important;
+    font-size: inherit;
   }
   .desk {
-    font-size:1px !important;
-    opacity:0 !important;
-    height:20px !important;
+    font-size: 1px !important;
+    opacity: 0 !important;
+    height: 20px !important;
   }
-  .scroll__graphic {
-    height:700px !important;
-  }
+
   #scroll {
-    margin-bottom:0% !important;
-    height:700px !important;
-  }
-  .scroll__text {
-    top:-430%;
+    margin-bottom: 0% !important;
+    height: 700px !important;
+
+    .scroll__graphic {
+      height: 100%;
+    }
+    .scroll__steps {
+      top: -430%;
+    }
+    .scroll__text {
+      left: 0% !important;
+      .steps > p {
+        max-width: 200px;
+      }
+    }
   }
 }
 
-
-@media screen and (max-width: 600px) and (max-height: 800px) and (min-height:700px){ //iPhone 6, 7, 8 Plus
+@media screen and (max-width: 600px) and (max-height: 800px) and (min-height: 700px) {
+  //iPhone 6, 7, 8 Plus
   .mobil0 {
-    top:323vh;
-    right:8.5%;
-    width:120%;
+    top: 323vh;
+    right: 8.5%;
+    width: 120%;
   }
   .mobil3 {
-    top:357vh;
-    left:-5%;
-    right:0%;
-    width:110%;
+    top: 357vh;
+    left: -5%;
+    right: 0%;
+    width: 110%;
   }
   .mobil5 {
-    top:372vh;
-    right:-5%;
-    width:110%;
+    top: 372vh;
+    right: -5%;
+    width: 110%;
   }
-
 }
 
-@media screen and (max-width: 600px) and (max-height: 850px) and (min-height:800px){ //iPhone X
+@media screen and (max-width: 600px) and (max-height: 850px) and (min-height: 800px) {
+  //iPhone X
 
-    .mobil0 {
-      top:292vh;
-      right:8.5%;
-      width:120%;
-    }
-    .mobil3 {
-      top:324vh;
-      left:-5%;
-      right:0%;
-      width:110%;
-    }
-    .mobil5 {
-      top:339vh;
-      right:-5%;
-      width:110%;
-    }
+  .mobil0 {
+    top: 292vh;
+    right: 8.5%;
+    width: 120%;
+  }
+  .mobil3 {
+    top: 324vh;
+    left: -5%;
+    right: 0%;
+    width: 110%;
+  }
+  .mobil5 {
+    top: 339vh;
+    right: -5%;
+    width: 110%;
+  }
 }
 
-@media screen and (max-width: 800px) and (min-width: 600px) and (max-height: 1200px) and (min-height:800px){ //Tablet Vertical
+@media screen and (max-width: 800px) and (min-width: 600px) and (max-height: 1200px) and (min-height: 800px) {
+  //Tablet Vertical
   #g-columbia-mobile {
     display: none !important;
   }
- #g-columbia-desktop {
-    display:block !important;
-    width:758.1px !important; 
-    height:812.25px !important;
-    margin-left:5% !important;
-    margin-bottom:0%;
-  }
-  .scroll__graphic {
-    position: relative;
-  }
-  .mobil0, .mobil3, .mobil5 {
-      width:100%;
-      font-size:13px !important;
-      padding:9px !important;
-  }
-
-  .mobil0 {
-    top:67.5vh;
-    right:70.5%;
-  }
-  .mobil3 {
-    top:95vh;
-    right:40.5%;
-  }
-  .mobil5 {
-    top:110vh;
-    left:10%;
-    width:100%;
-  }
-  .scroll__text {
-    top:-150%;
-  }
-  #scroll {
-    height:850px !important;
+  #g-columbia-desktop {
+    display: block !important;
+    width: 739.1475px !important;
+    height: 791.94375px !important;
+    margin-left: 5% !important;
+    margin-bottom: 0%;
   }
   .graphic {
-    margin:0px;
-  }
-  .scroll__graphic {
-    margin-top:-2.5%;
+    margin-bottom: 100px;
+    .scroll__graphic {
+      position: relative;
+      top: 0;
+      margin-bottom: 20px;
+    }
   }
 
+  .mobil0,
+  .mobil3,
+  .mobil5 {
+    font-size: 13px !important;
+    padding: 9px !important;
+  }
+  .scroll__text {
+    top: -240%;
+    left: 40% !important;
+
+    .steps {
+      .mobil0 {
+        top: 200%;
+        right: 40.5%;
+      }
+      .mobil3 {
+        top: 340%;
+        right: 55.5%;
+      }
+      .mobil5 {
+        top: 390%;
+        left: 50%;
+        width: 100%;
+      }
+    }
+  }
 }
 
-
-@media screen and (max-width: 1200px) and (min-width:1000px) and (max-height: 800px) and (min-height:700px){ //Tablet Horizontal
+@media screen and (max-width: 1100px) and (min-width: 1000px) and (max-height: 800px) and (min-height: 700px) {
+  //Tablet Horizontal
   #g-columbia-mobile {
     display: none !important;
   }
- #g-columbia-desktop {
-   display:block !important;
-    width:631.75px !important; 
-    height:676.875 !important;
-    margin-left:5vw !important;
-    margin-top:3.5vw !important;
+  #g-columbia-desktop {
+    display: block !important;
+    width: 631.75px !important;
+    height: 676.875 !important;
+    align-items: center;
   }
-  #scroll {
-    position: relative;
-    left:0;
-    height:3200px;
-    margin-bottom:10%;
-  }
-  .steps p {
-    font-size:1.25em;
+  .mobil0,
+  .mobil3,
+  .mobil5 {
+    width: 0 !important;
   }
 
+  #scroll {
+    height: 3500px !important;
+
+    .scroll__graphic > .chart {
+      margin-top: 7.5%;
+    }
+    .scroll__text {
+      width: 10%;
+      .steps {
+        width: 300%;
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+      }
+      .steps > p {
+        padding: 0 !important;
+        font-size: 1rem !important;
+      }
+    }
+  }
 }
