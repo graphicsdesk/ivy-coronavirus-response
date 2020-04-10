@@ -30,9 +30,10 @@ export function hamburgerTrigger() {
   navbar.classList.toggle('show-nav-links');
 }
 
-// Text balance
+// Text balance headline on mobile
 
-// textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
+if (window.innerWidth < 460)
+  textBalancer.balanceText('.headline');
 
 // Highlights all country names <c></c>
 
