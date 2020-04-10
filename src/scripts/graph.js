@@ -23,41 +23,50 @@ const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
 
-const margin = { top: 70, right: 70, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
+const margin = { top: 70, right: 80, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
 
-  width = Math.min(960, document.body.clientWidth);
-  height = document.body.clientHeight;
-  gWidth = this.width - margin.left - margin.right;
-  gHeight = this.height - margin.top - margin.bottom;
+  width = null;
+  height = null;
+  gWidth = null;
+  gHeight = null;
 
   // Create scales; we only know range right now
-  xScale = scaleLinear().range([ 0, this.gWidth ]);
-  yScale = scaleLinear().range([ this.gHeight, 0 ]);
+  xScale = scaleLinear();
+  yScale = scaleLinear();
 
   // Create SVG and the main group for margins
   svg = select('#chart-container')
     .append('svg')
-    .at({ width: this.width, height: this.height })
     .append('g')
     .translate([ margin.left, margin.top ]);
 
   // Create axis container, other containers
-  xAxis = this.svg.append('g.axis.x-axis').translate([ 0, this.gHeight ]);
+  xAxis = this.svg.append('g.axis.x-axis');
   yAxis = this.svg.append('g.axis.y-axis');
   linesContainer = this.svg.append('g.lines-container');
   annotationsContainer = this.svg.append('g.annotations-container');
 
   // Axis generators
-  makeXAxis = axisBottom(this.xScale).tickSize(-this.gHeight).tickPadding(TICK_PADDING);
-  makeYAxis = axisLeft(this.yScale).tickSize(-this.gWidth).tickPadding(TICK_PADDING);
+  makeXAxis = axisBottom(this.xScale).tickPadding(TICK_PADDING);
+  makeYAxis = axisLeft(this.yScale).tickPadding(TICK_PADDING);
 
   // Line generator
   makeLine = d3Line();
 
-  async update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis) {
-    const domainsChanged = this.rescaleDataRange(scaleYAxis);
+  constructor(covidData) {
+    super(covidData);
+    this.resize();
+  }
+
+  async update({ shouldUpdateAnnotations, scaleYAxis, resized, firstResize }) {
+    let domainsChanged = this.rescaleDataRange(scaleYAxis);
+
+    // If update is being called from this.resize, interpolate existing elements
+    if (resized === true) {
+      domainsChanged = shouldUpdateAnnotations = resized;
+    }
 
     const {
       linesContainer, annotationsContainer,
@@ -217,7 +226,7 @@ class Graph extends State {
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
     const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
-    xAxis.transition()
+    xAxis.transition('x-axis')
       .duration(INTERPOLATION_TIME)
       .call(makeXAxis);
     return yAxis.transition('y-axis')
@@ -245,6 +254,33 @@ class Graph extends State {
       makeLine.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
 
     return didDomainsChange;
+  }
+
+  resize() {
+      this.width = Math.min(960, document.body.clientWidth);
+      this.height = document.body.clientHeight;
+      this.gWidth = this.width - margin.left - margin.right;
+      this.gHeight = this.height - margin.top - margin.bottom;
+
+      // Reset scale ranges
+      this.xScale.range([ 0, this.gWidth ]);
+      this.yScale.range([ this.gHeight, 0 ]);
+
+      // Reset svg dimensions and margins (not yet margins)
+      select('#chart-container')
+        .select('svg')
+        .at({ width: this.width, height: this.height })
+        // .select('g')
+        // .translate([ margin.left, margin.top ]);
+
+      // Re-translate x-axis container
+      this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
+
+      // Adjust grid sizes
+      this.makeXAxis.tickSize(-this.gHeight);
+      this.makeYAxis.tickSize(-this.gWidth);
+
+      this.update({ resized: true });
   }
 }
 

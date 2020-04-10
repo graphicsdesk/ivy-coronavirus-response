@@ -29,7 +29,9 @@ class State {
   // Updates component if it should update
   updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis }) {
     if (shouldUpdateAnnotations || shouldUpdateCountries)
-      this.update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis);
+      // Shouldn't pass should* variables in, but using
+      // it for one transition in this.update
+      this.update({ shouldUpdateAnnotations, scaleYAxis });
   }
 
   // Adds corresponding COVID data to an annotation array of annotations
