@@ -45,6 +45,7 @@ g.lines-container > g.line-container {
   }
 }
 
+#chart-container[data-index="0"] g.line-container[data-country="US"],
 #chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
 #chart-container[data-index="5"] g.line-container[data-country="Korea, South"] {

@@ -23,7 +23,7 @@ const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
 
-const margin = { top: 20, right: 20, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
+const margin = { top: 20, right: 100, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
 
@@ -90,15 +90,15 @@ class Graph extends State {
     // If domains changed, interpolate existing elements (axes, existing lines
     // and annotations) simultaneously to match new data range
     if (domainsChanged) {
-      linesUpdate.transition()
+      linesUpdate.transition(Math.random())
         .duration(INTERPOLATION_TIME)
         .call(this.updateLineContainer);
-      annotationsUpdate.transition()
+      annotationsUpdate.transition(Math.random())
         .duration(INTERPOLATION_TIME)
         .call(this.updateAnnotation);
       await this.updateAxes().end();
     } else if (shouldUpdateAnnotations) {
-      annotationsUpdate.transition()
+      annotationsUpdate.transition(Math.random())
         .duration(INTERPOLATION_TIME)
         .call(this.updateAnnotation);
     }
@@ -107,7 +107,7 @@ class Graph extends State {
     const linesEnter = linesUpdate.enter();
     if (!linesEnter.empty()) {
       const lines = linesEnter
-        .append('g.line-container')
+        .hackyInsert('g.line-container')
         .call(this.enterLineContainer)
         .call(this.updateLineContainer);
       const pointLabel = lines.select('g.point-label').style('opacity', 0);
@@ -194,11 +194,11 @@ class Graph extends State {
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
     const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
-
+    const testPoint = makeYAxis.scale()(100);
     xAxis.transition()
       .duration(INTERPOLATION_TIME)
       .call(makeXAxis);
-    return yAxis.transition()
+    return yAxis.transition(makeYAxis.scale()(testPoint))
       .duration(INTERPOLATION_TIME)
       .call(makeYAxis);
   }

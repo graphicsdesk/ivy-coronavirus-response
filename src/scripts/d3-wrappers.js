@@ -11,6 +11,7 @@ selection.prototype.makeText = makeText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
+selection.prototype.hackyInsert = hackyInsert;
 
 transition.prototype.classed = selection.prototype.classed;
 
@@ -64,15 +65,16 @@ function makeText(textFn, colorFn) {
 // Fades in a selection; returns the transition
 const FADE_TIME = 300;
 function fadeIn() {
-  return this.style('opacity', 0)
-    .transition()
-      .duration(FADE_TIME)
-      .style('opacity', 1);
+  const getKey = d => d.country + d.dayNumber;
+  return this.style('opacity', 0).transition(JSON.stringify(this.data().map(getKey)))
+    .duration(FADE_TIME)
+    .style('opacity', 1);
 }
 
 // Fades out a selection; returns the transition
 function fadeOut() {
-  return this.transition()
+  const getKey = d => d.country + d.dayNumber;
+  return this.transition(JSON.stringify(this.data().map(getKey)))
     .duration(FADE_TIME)
     .style('opacity', 0)
     .remove();
@@ -93,4 +95,18 @@ function drawIn() {
     .transition()
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0);
+}
+
+// Insert if Italy. Append otherwise
+function hackyInsert(selector) {
+  const that = this;
+  return that.append(selector);
+  return that.each(function(ary) {
+    if (ary[0].country === 'Italy') {
+      that.insert(selector, ':first-child');
+    } else {
+      that.append(selector);
+    }
+  })
+  return that.selectAll(selector);
 }

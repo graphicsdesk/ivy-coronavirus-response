@@ -14,6 +14,27 @@ body {
   box-sizing: border-box;
 }
 
+/* navbar */
+
+#news-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: $navbar-height;
+  background-color: #ffffff;
+  transition-duration: .2s;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.27);
+}
+
+#cds-logo {
+  height: 21px;
+}
+
+.story-top {
+  margin-top: 50px;
+}
+
 /* scrollama */
 
 #scroll {
