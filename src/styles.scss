@@ -28,7 +28,6 @@ body {
   position: sticky;
   top:2.5%;
   left: 0;
-  bottom: auto;
 }
 
 .scroll__graphic.is-fixed {
@@ -37,13 +36,11 @@ body {
 
 .scroll__graphic.is-bottom {
   bottom: 0;
-  top: auto;
 }
 
 .chart {
   position: absolute;
   left:-5vw;
-
 }
 
 
@@ -146,7 +143,7 @@ body {
   #text {
     height:10px;
   }
-  .step {
+  .steps {
     height:25px !important;
     font-size:inherit;
   }
@@ -234,7 +231,7 @@ body {
   }
   .mobil3 {
     position:absolute;
-    top:130.5%;
+    top:125.5%;
     right:40.5%;
     width:100%;
     font-size:13px !important;
@@ -254,7 +251,12 @@ body {
   #scroll {
     height:900px !important;
   }
-
+  .graphic {
+    margin:0px;
+  }
+  .scroll__graphic {
+    margin-top:-5%;
+  }
   .mobil0, .mobil3, .mobil5 {
     padding:9px !important;
   }
@@ -276,6 +278,9 @@ body {
     position: relative;
     left:0;
     margin-bottom:30%;
+  }
+  .steps p {
+    font-size:1.25em;
   }
 }
 

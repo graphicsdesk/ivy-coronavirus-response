@@ -5,7 +5,7 @@ import { selectAll } from 'd3-selection';
 
  select("#g-schools-desktop")
 .style("width", 750 * (window.screen.width/900))
-.style("height", 500 * (window.screen.width/900))
+.style("height", 370 * (window.screen.width/900))
 
 // animation dates for columbia
 var dates = ["8", "10", "12", "15", "18", "20"];
