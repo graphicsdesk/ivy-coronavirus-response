@@ -34,7 +34,6 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
   // 1. update height of step elements
-
   var stepHeight = Math.floor(window.innerHeight * 0.55);
   step.style("height", stepHeight + "px");
   var bodyWidth =  select("body").node().offsetWidth;
@@ -139,7 +138,7 @@ function init() {
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .steps",
-      debug: false
+      debug: true
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)
