@@ -1,7 +1,9 @@
-import './scripts/scrollcolumbia.js';
-import './scripts/page.js';
-import './scripts/scrolly';
+import enterView from 'enter-view';
+import textBalancer from 'text-balancer';
+import { USE_COVER_HED, USE_EYE_NAV } from '../config.json';
 import './scripts/page';
+import './scripts/scrolly';
+import './scripts/scrollcolumbia';
 import { COUNTRY_COLORS } from './scripts/constants';
 
 // Fade in navbar at scroll trigger
@@ -28,10 +30,7 @@ export function hamburgerTrigger() {
   navbar.classList.toggle('show-nav-links');
 }
 
-
-
-
-textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
+// Text balance
 
 // textBalancer.balanceText('.headline, .deck, .image-overlay .image-caption-text');
 
