@@ -25,41 +25,50 @@ const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
 
-const margin = { top: 20, right: 100, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
+const margin = { top: 70, right: 80, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
 
 class Graph extends State {
 
-  width = Math.min(800, document.body.clientWidth);
-  height = document.body.clientHeight;
-  gWidth = this.width - margin.left - margin.right;
-  gHeight = this.height - margin.top - margin.bottom;
+  width = null;
+  height = null;
+  gWidth = null;
+  gHeight = null;
 
   // Create scales; we only know range right now
-  xScale = scaleLinear().range([ 0, this.gWidth ]);
-  yScale = scaleLinear().range([ this.gHeight, 0 ]);
+  xScale = scaleLinear();
+  yScale = scaleLinear();
 
   // Create SVG and the main group for margins
   svg = select('#chart-container')
     .append('svg')
-    .at({ width: this.width, height: this.height })
     .append('g')
     .translate([ margin.left, margin.top ]);
 
   // Create axis container, other containers
-  xAxis = this.svg.append('g.axis.x-axis').translate([ 0, this.gHeight ]);
+  xAxis = this.svg.append('g.axis.x-axis');
   yAxis = this.svg.append('g.axis.y-axis');
   linesContainer = this.svg.append('g.lines-container');
   annotationsContainer = this.svg.append('g.annotations-container');
 
   // Axis generators
-  makeXAxis = axisBottom(this.xScale).tickSize(-this.gHeight).tickPadding(TICK_PADDING);
-  makeYAxis = axisLeft(this.yScale).tickSize(-this.gWidth).tickPadding(TICK_PADDING);
+  makeXAxis = axisBottom(this.xScale).tickPadding(TICK_PADDING);
+  makeYAxis = axisLeft(this.yScale).tickPadding(TICK_PADDING);
 
   // Line generator
   makeLine = d3Line();
 
-  async update(shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis) {
-    const domainsChanged = this.rescaleDataRange(scaleYAxis);
+  constructor(covidData) {
+    super(covidData);
+    this.resize();
+  }
+
+  async update({ shouldUpdateAnnotations, scaleYAxis, resized, firstResize }) {
+    let domainsChanged = this.rescaleDataRange(scaleYAxis);
+
+    // If update is being called from this.resize, interpolate existing elements
+    if (resized === true) {
+      domainsChanged = shouldUpdateAnnotations = resized;
+    }
 
     const {
       linesContainer, annotationsContainer,
@@ -83,80 +92,98 @@ class Graph extends State {
     this.updateAnnotation = this.updateAnnotation.bind(this);
     this.updateLineContainer = this.updateLineContainer.bind(this);
 
-    // If exiting selection is nonempty, fade those out first.
-    if (domainsChanged)
-      await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
-    else
-      bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+    try {
 
-    // If domains changed, interpolate existing elements (axes, existing lines
-    // and annotations) simultaneously to match new data range
-    if (domainsChanged) {
-      linesUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateLineContainer);
-      annotationsUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateAnnotation);
-      await this.updateAxes().end();
-    } else if (shouldUpdateAnnotations) {
-      annotationsUpdate.transition(Math.random())
-        .duration(INTERPOLATION_TIME)
-        .call(this.updateAnnotation);
+      // If exiting selection is nonempty, fade those out first.
+      if (domainsChanged)
+        await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+      else
+        bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+
+      // If domains changed, interpolate existing elements (axes, existing lines
+      // and annotations) simultaneously to match new data range
+      if (domainsChanged) {
+        linesUpdate.transition('lines')
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateLineContainer);
+        annotationsUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation);
+        await this.updateAxes().end();
+      } else if (shouldUpdateAnnotations) {
+        annotationsUpdate.transition()
+          .duration(INTERPOLATION_TIME)
+          .call(this.updateAnnotation);
+      }
+
+      // Draw in the path enter selection
+      const linesEnter = linesUpdate.enter();
+      if (!linesEnter.empty()) {
+        const lines = linesEnter
+          .append('g.line-container')
+          .call(this.enterLineContainer)
+          .call(this.updateLineContainer, true);
+        const pointLabel = lines.select('g.point-label').style('opacity', 0);
+        await lines.drawIn().end();
+        pointLabel.fadeIn(); // No await so point labels fade in with annotations
+
+        // After draw in, reset dash length so axes transitions don't mess up lines
+        lines.select('path').attr('stroke-dasharray', 0);
+      }
+
+      // Fade in the annotations enter selection
+      const annotationsEnter = annotationsUpdate.enter();
+      await annotationsEnter
+        .append('g.annotation')
+        .call(this.enterAnnotation)
+        .call(this.updateAnnotation, true)
+        .fadeIn()
+        .end();
+
+    } catch (error) {
+      // Usually a transition was cancelled or interrupted. This can happen
+      // when another transition of the same name (current transitions are
+      // all unnamed) starts on the same element.
+      const { data, transition } = error;
+      if (data && transition) {
+        console.error('Transition', transition._name, 'was interrupted. Data:', data);
+      } else {
+        console.error(error);
+      }
     }
-
-    // Draw in the path enter selection
-    const linesEnter = linesUpdate.enter();
-    if (!linesEnter.empty()) {
-      const lines = linesEnter
-        .hackyInsert('g.line-container')
-        .call(this.enterLineContainer)
-        .call(this.updateLineContainer);
-      const pointLabel = lines.select('g.point-label').style('opacity', 0);
-      await lines.drawIn().end();
-      pointLabel.fadeIn(); // No await so point labels fade in with annotations
-    }
-
-    // Fade in the annotations enter selection
-    const annotationsEnter = annotationsUpdate.enter();
-    await annotationsEnter
-      .append('g.annotation')
-      .call(this.enterAnnotation)
-      .call(this.updateAnnotation, true)
-      .fadeIn()
-      .end();
   }
 
   enterLineContainer(selection) {
+    const PATH_LEN = 100;
     selection.attr('data-country', ary => ary[0].country);
-    selection.append('path')
-      .at({ stroke: getLineColor })
+    selection.append('path').at({ stroke: getLineColor });
 
     const endpoint = selection.append('g.point-label');
     endpoint.appendCircle(getLineColor);
-    endpoint.makeText(getLineLabel, getLineColor)
+    endpoint.append('text')
+      .tspans(ary => wordwrap(getLineLabel(ary), 8), LINE_HEIGHT)
+      .attr('fill', d => getLineColor(d.parent));
   }
 
-  updateLineContainer(selection) {
+  updateLineContainer(selection, justEntered) {
     const { xScale, yScale, makeLine } = this;
     const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
     // Set path description
-    selection.select('path')
-      .at({ d: makeLine })
-      .correctDashLength();
+    selection.select('path').at({ d: makeLine });
 
     const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
-    endpoint.selectAll('tspan').at({ x: endpointX, y: endpointY });
+    endpoint.selectAll('tspan')
+      .at({ x: d => endpointX(d.parent) + 14, y: d => endpointY(d.parent) });
   }
 
   enterAnnotation(selection) {
     selection.append('line.connector')
 
     // Create case count markers
-    const caseCountContainer = selection.filter(d => !d.isSmall && d.showCases)
+    const caseCountContainer = selection
       .append('g.case-count-container');
     caseCountContainer.append('line');
     caseCountContainer.makeText(formatCaseCount);
@@ -167,6 +194,7 @@ class Graph extends State {
 
   updateAnnotation(selection) {
     selection.classed('small-annotation', d => d.isSmall);
+    selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
     selection.classed('orientation-top', d => d.orientation === 'top');
 
     const { xScale, yScale } = this;
@@ -189,7 +217,7 @@ class Graph extends State {
     selection.select('circle').at({ cx: getX, cy: getY });
 
     // Place label
-    const noteText = selection.select('text.note-text').at({ x: d => getX(d) });
+    const noteText = selection.select('text.note-text').at({ x: getX });
     (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
     noteText
       .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
@@ -200,11 +228,10 @@ class Graph extends State {
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
   updateAxes() {
     const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
-    const testPoint = makeYAxis.scale()(100);
-    xAxis.transition()
+    xAxis.transition('x-axis')
       .duration(INTERPOLATION_TIME)
       .call(makeXAxis);
-    return yAxis.transition(makeYAxis.scale()(testPoint))
+    return yAxis.transition('y-axis')
       .duration(INTERPOLATION_TIME)
       .call(makeYAxis);
   }
@@ -229,6 +256,33 @@ class Graph extends State {
       makeLine.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
 
     return didDomainsChange;
+  }
+
+  resize() {
+      this.width = Math.min(960, document.body.clientWidth);
+      this.height = document.body.clientHeight;
+      this.gWidth = this.width - margin.left - margin.right;
+      this.gHeight = this.height - margin.top - margin.bottom;
+
+      // Reset scale ranges
+      this.xScale.range([ 0, this.gWidth ]);
+      this.yScale.range([ this.gHeight, 0 ]);
+
+      // Reset svg dimensions and margins (not yet margins)
+      select('#chart-container')
+        .select('svg')
+        .at({ width: this.width, height: this.height })
+        // .select('g')
+        // .translate([ margin.left, margin.top ]);
+
+      // Re-translate x-axis container
+      this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
+
+      // Adjust grid sizes
+      this.makeXAxis.tickSize(-this.gHeight);
+      this.makeYAxis.tickSize(-this.gWidth);
+
+      this.update({ resized: true });
   }
 }
 

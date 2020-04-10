@@ -3,8 +3,10 @@
   </div>
   <div id="steps-container">
     <each loop="item in item.value.steps">
-      <div class="lede-step">
-        <p>{{{ item }}}</p>
+      <div class="lede-step-surrounding-padding">
+        <div class="lede-step">
+          <p>{{{ item }}}</p>
+        </div>
       </div>
     </each>
   </div>

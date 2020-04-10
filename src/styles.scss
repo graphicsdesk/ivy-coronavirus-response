@@ -11,25 +11,39 @@ body {
   overflow-x: visible !important;
 }
 
+* {
+  // box-sizing: border-box;
+}
+
 /* navbar */
 
 #news-navbar {
+  position: fixed;
+  top: 0;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: $navbar-height;
-  background-color: #ffffff;
-  transition-duration: 0.2s;
+  height: 46px;
+  background-color: #fff;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.27);
-}
 
-#cds-logo {
-  height: 21px;
+  a {
+    display: block;
+    padding: 10px 0;
+    #cds-logo {
+      height: 19px;
+    }
+  }
 }
 
 .story-top {
-  margin-top: 50px;
+  margin-top: 100px;
+
+  .graphic {
+    margin: 0;
+  }
 }
 
 /* scrollama */
@@ -51,7 +65,7 @@ body {
     .is-fixed {
       position: fixed;
     }
-    
+
     .is-bottom {
       bottom: 0;
     }

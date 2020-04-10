@@ -36,19 +36,16 @@ g.lines-container > g.line-container {
   g.point-label text {
     font-weight: 500;
     font-size: 18px;
-    text-anchor: end;
-    transform: translate(9px, -18px); // top-oriented text
-  }
-
-  &[data-country="Korea, South"] g.point-label text {
-    transform: translate(9px, 27px); // bottom-oriented text
+    text-anchor: start;
+    dominant-baseline: central;
   }
 }
 
 #chart-container[data-index="0"] g.line-container[data-country="US"],
 #chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
-#chart-container[data-index="5"] g.line-container[data-country="Korea, South"] {
+#chart-container[data-index="5"] g.line-container[data-country="Korea, South"],
+#chart-container[data-index="6"] g.line-container[data-country="Italy"] {
   circle {
     animation: $pulse-anim;
   }
@@ -100,8 +97,8 @@ g.annotations-container {
 
   g.small-annotation {
     circle {
-      fill: $gray;
-      stroke: $gray;
+      // fill: $gray;
+      // stroke: $gray;
     }
 
     text.note-text {
@@ -112,9 +109,18 @@ g.annotations-container {
       // stroke-opacity: 0;
     }
   }
+
+  g.hide-cases {
+    g.case-count-container {
+      opacity: 0;
+    }
+  }
 }
 
 g.case-count-container {
+  transition-duration: $trans-dur;
+  transition-property: opacity;
+
   line {
     stroke: $black;
     stroke-dasharray: 4;
