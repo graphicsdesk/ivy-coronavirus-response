@@ -183,12 +183,12 @@ class Graph extends State {
     selection.select('circle').at({ cx: getX, cy: getY });
 
     // Place label
-    const noteText = selection.select('text.note-text');
+    const noteText = selection.select('text.note-text').at({ x: d => getX(d) });
     (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
     noteText
       .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
       .selectAll('tspan')
-      .at({ x: d => getX(d.parent) })
+      .at({ x: d => getX(d.parent) });
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
