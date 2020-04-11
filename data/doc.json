@@ -35,18 +35,10 @@
       "value": "Trends from Ivy League schools revealed no uniform response, which public health experts said mirrored that of universities across the nation, attributing it to the lack of uniform national direction. In light of the pandemic, the Ivy League helped shape conversations among higher education institutions and their response rates highlighted the national trend."
     },
     {
-      "type": "subhed",
-      "value": "Columbia"
-    },
-    {
       "type": "graphic",
       "value": {
         "asset": "columbia-graphic.html"
       }
-    },
-    {
-      "type": "subhed",
-      "value": "Ivies react to suspected COVID-19 cases among peer institutions"
     },
     {
       "type": "text",

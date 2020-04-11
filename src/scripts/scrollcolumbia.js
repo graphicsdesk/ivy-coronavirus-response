@@ -56,6 +56,7 @@ function handleStepEnter(response) {
   if (response.direction == 'down') {
     // make animation appear
     selectAll('.Scrolly' + response.index).style('opacity', '1');
+    selectAll('.ScrollRec' + response.index).style('opacity', '0.4');
     // define appearance of pulsating circle
     if (response.index == 0 || response.index == 3) {
       selectAll('.anim' + response.index).style('visibility', 'visible');
@@ -85,7 +86,7 @@ function handleStepEnter(response) {
 function handleContainerExit(response) {
   if (response.direction == 'up') {
     selectAll('.Scrolly' + response.index).style('opacity', '0');
-
+    selectAll('.ScrollRec' + response.index).style('opacity', '0');
     selectAll('.g-March' + dates[response.index])
       .classed('m-fadeOut', true)
       .classed('m-fadeIn', false);
@@ -102,7 +103,7 @@ function handleStepProgress(response) {
   if (response.index != 0 && notDone) {
     for (var i = 0; i <= response.index; i++) {
       selectAll('.Scrolly' + i).style('opacity', '1');
-
+      selectAll('.ScrollRec' + i).style('opacity', '0.4');
       selectAll('.g-March' + dates[i])
         .classed('m-fadeOut', false)
         .classed('m-fadeIn', true);
