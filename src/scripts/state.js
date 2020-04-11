@@ -16,7 +16,7 @@ class State {
 
   visibleCountries = new Store(); // Stores country-level lines
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
-  showDates = null; // First value passed in will be undefined, which triggers a change for now
+  showDates = undefined;
 
   set({ countries = [], annotations = [], scaleYAxis, showDates, xBounds }) {
     // this.xBounds = xBounds || defaultXBounds;

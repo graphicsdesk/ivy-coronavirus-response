@@ -65,11 +65,13 @@ class Graph extends State {
     this.resize();
   }
 
-  async update({ shouldUpdateAnnotations, scaleYAxis, resized, showDates, willReplaceXAxis }) {
+  async update(options) {
+
+    let { shouldUpdateAnnotations, scaleYAxis, resized, showDates, willReplaceXAxis } = options;
 
     try {
 
-      let domainsChanged = this.rescaleDataRange({ showDates, scaleYAxis });
+      let domainsChanged = this.rescaleDataRange(options);
 
       // If update is being called from this.resize, interpolate existing elements
       if (resized === true) {
@@ -113,7 +115,7 @@ class Graph extends State {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
           .call(this.updateAnnotation);
-        await this.updateAxes({ willReplaceXAxis }).end();
+        await (await this.updateAxes(options)).end();
 
         const lastYTick = yAxis.select('.tick:last-child');
         casesTitle.transition().duration(600).attr('transform', lastYTick.attr('transform'));
@@ -236,24 +238,17 @@ class Graph extends State {
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
-  updateAxes({ willReplaceXAxis }) {
-    const { xAxis, yAxis, xScale, yScale, gHeight, gWidth } = this;
-
-    if (this.makeXAxis === null)
-      this.makeXAxis = axisBottom().tickSize(-gHeight);;
-    if (this.makeYAxis === null)
-      this.makeYAxis = axisLeft().tickSize(-gWidth);;
-    // this.makeXAxis = axisBottom(xScale).tickSize(-gHeight);
-    // this.makeYAxis = axisLeft(yScale).tickSize(-gWidth);
-    this.makeXAxis.scale(xScale).tickSize(-gHeight);
-    this.makeYAxis.scale(yScale).tickSize(-gWidth);
+  async updateAxes({ willReplaceXAxis }) {
+    const { xAxis, yAxis } = this;
 
     if (window.innerWidth < 460) {
       this.makeXAxis.ticks(4);
     }
 
     if (willReplaceXAxis) {
-      xAxis.call(this.makeXAxis)
+      await xAxis.fadeOut(false).end();
+      xAxis.call(this.makeXAxis);
+      return xAxis.fadeIn();
     } else {
       xAxis.transition('x-axis')
         .duration(INTERPOLATION_TIME)
@@ -265,11 +260,14 @@ class Graph extends State {
   }
 
   // Rescales mappings (scales, line generator) based on new data
-  rescaleDataRange({ showDates, scaleYAxis }) {
+  rescaleDataRange({ showDates, scaleYAxis, willReplaceXAxis }) {
     this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
     this.xField = showDates ? 'date' : 'dayNumber';
 
-    const { xScale, yScale, makeLine, xField, data } = this;
+    const { xScale, yScale, makeLine, xField, data, gHeight, gWidth } = this;
+
+    this.makeXAxis.scale(xScale).tickSize(-gHeight);
+    this.makeYAxis.scale(yScale).tickSize(-gWidth);
 
     const newXDomain = extent(data, d => d[xField]);
     const newYDomain = extent(data, d => d.cases);
