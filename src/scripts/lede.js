@@ -61,7 +61,7 @@ const allStates = [
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
   { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
-  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italySmall ],
+  { annotations: [ iviesSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates },
   { annotations: [ iviesSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates, dateBounds: true }

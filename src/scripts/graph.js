@@ -127,7 +127,7 @@ class Graph extends State {
         timeLabel
           .fadeOut(false).end()
           .then(() => {
-            timeLabel.selectAll('tspan').text(this.xField);
+            timeLabel.selectAll('tspan').text(this.xFieldLabel);
             timeLabel.fadeIn();
           });
       }
@@ -371,11 +371,16 @@ class Graph extends State {
     // "(Days since 100th case | Date) ➡️" label
     this.timeLabel
       .selectAll('tspan')
-      .text(this.xField)
+      .text(this.xFieldLabel)
       .at({ x: this.gWidth / 2})
 
 
     this.update({ resized: true });
+  }
+
+  get xFieldLabel() {
+    const label = { 'date': 'Date', 'dayNumber': 'Days since a country\'s 100th case' };
+    return label[this.xField] + ' ⟶';
   }
 }
 
