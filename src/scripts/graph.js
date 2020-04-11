@@ -3,6 +3,8 @@ import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
+import { timeFormat } from 'd3-time-format';
+import { timeDay } from 'd3-time';
 import { wordwrap } from 'd3-jetpack';
 import 'intersection-observer';
 
@@ -238,11 +240,14 @@ class Graph extends State {
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
-  async updateAxes({ willReplaceXAxis }) {
+  async updateAxes({ willReplaceXAxis, showDates }) {
     const { xAxis, yAxis } = this;
 
     if (window.innerWidth < 460) {
       this.makeXAxis.ticks(4);
+    }
+    if (willReplaceXAxis && showDates) {
+      this.makeXAxis.ticks(7);
     }
 
     if (willReplaceXAxis) {
@@ -261,13 +266,16 @@ class Graph extends State {
 
   // Rescales mappings (scales, line generator) based on new data
   rescaleDataRange({ showDates, scaleYAxis, willReplaceXAxis }) {
-    this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
     this.xField = showDates ? 'date' : 'dayNumber';
+    this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
 
     const { xScale, yScale, makeLine, xField, data, gHeight, gWidth } = this;
 
     this.makeXAxis.scale(xScale).tickSize(-gHeight);
     this.makeYAxis.scale(yScale).tickSize(-gWidth);
+    if (showDates) {
+      // console.log(this.makeXAxis.ticks(timeDay.every(7), timeFormat('%B %d')))
+    }
 
     const newXDomain = extent(data, d => d[xField]);
     const newYDomain = extent(data, d => d.cases);
