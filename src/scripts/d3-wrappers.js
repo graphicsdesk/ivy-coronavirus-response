@@ -64,9 +64,6 @@ function appendBackedText(textFn, colorFn) {
 
 // Fades in a selection; returns the transition
 const FADE_TIME = 300;
-function getTransitionName(that) {
-  that.data()[0] ? that.data()[0].country + 'fade' : 'fade'
-}
 
 function fadeIn() {
   return this.style('opacity', 0).transition('fade')

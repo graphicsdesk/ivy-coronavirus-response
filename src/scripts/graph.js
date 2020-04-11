@@ -65,13 +65,13 @@ class Graph extends State {
     this.resize();
   }
 
-  async update(options) {
+  async update(params) {
 
-    let { shouldUpdateAnnotations, scaleYAxis, resized, showDates, willReplaceXAxis } = options;
+    let { shouldUpdateAnnotations, resized } = params;
 
     try {
 
-      let domainsChanged = this.rescaleDataRange(options);
+      let domainsChanged = this.rescaleDataRange(params);
 
       // If update is being called from this.resize, interpolate existing elements
       if (resized === true) {
@@ -101,10 +101,12 @@ class Graph extends State {
       this.updateLineContainer = this.updateLineContainer.bind(this);
 
       // If exiting selection is nonempty, fade those out first.
-      if (domainsChanged)
-        await bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
-      else
-        bulkFadeOutExiting([ linesUpdate, annotationsUpdate ]);
+      if (domainsChanged) {
+        await bulkFadeOutExiting([linesUpdate, annotationsUpdate]);
+      } else {
+        // If axes aren't animating, fade out at the same time as others fade in
+        bulkFadeOutExiting([linesUpdate, annotationsUpdate]);
+      }
 
       // If domains changed, interpolate existing elements (axes, existing lines
       // and annotations) simultaneously to match new data range
@@ -115,10 +117,10 @@ class Graph extends State {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
           .call(this.updateAnnotation);
-        await (await this.updateAxes(options)).end();
+        await (await this.updateAxes(params)).end();
 
         const lastYTick = yAxis.select('.tick:last-child');
-        casesTitle.transition().duration(500).attr('transform', lastYTick.attr('transform'));
+        casesTitle.transition().attr('transform', lastYTick.attr('transform'));
       } else if (shouldUpdateAnnotations) {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
@@ -163,7 +165,6 @@ class Graph extends State {
   }
 
   enterLineContainer(selection) {
-    const PATH_LEN = 100;
     selection.attr('data-country', ary => ary[0].country);
     selection.append('path').at({ stroke: getLineColor });
 
@@ -174,7 +175,7 @@ class Graph extends State {
       .attr('fill', d => getLineColor(d.parent));
   }
 
-  updateLineContainer(selection, justEntered) {
+  updateLineContainer(selection) {
     const { xScale, yScale, makeLine } = this;
     const endpointX = ary => xScale(ary[ary.length - 1][this.xField]);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
@@ -182,9 +183,7 @@ class Graph extends State {
     // Set path description
     const path = selection.select('path');
     if (typeof path.attrTween === 'function') {
-      const that = this;
       path.attrTween('d', function(d) {
-        // console.log(d[d.length - 1][that.xField]);
         const previousD = select(this).attr('d');
         const nextD = makeLine(d);
         return interpolatePath(previousD, nextD);
@@ -335,10 +334,6 @@ class Graph extends State {
 
     // Re-translate x-axis container
     this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
-
-    // Axis stuff
-    this.makeXAxis.tickSize(-this.gHeight);
-    this.makeYAxis.tickSize(-this.gHWidth);
 
     // Axis labels
     this.casesTitle.selectAll('tspan').at({ x: 15 });

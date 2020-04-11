@@ -65,7 +65,7 @@ class State {
           return {
             country,
             dayNumber,
-            date: timeDay.offset(prevDate, 0.5), // close enough?
+            date: timeDay.offset(prevDate, 0.5), // close enough for now
             cases: prevCases + (nextCases - prevCases) * (dayNumber - prevNum) / (nextNum - prevNum),
             ...rest,
           };

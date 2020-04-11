@@ -57,6 +57,7 @@ $nav-height: 46px;
 
 #scroll {
   position: relative;
+  margin-top: -$nav-height; // To counteract the padding top in .scroll__graphic
 
   .scroll__graphic {
     position: sticky;
@@ -66,6 +67,8 @@ $nav-height: 46px;
     height: 100% !important;
     display: flex;
     align-items: center !important;
+    padding-top: $nav-height;
+    box-sizing: border-box;
 
     .is-fixed {
       position: fixed;
@@ -84,8 +87,6 @@ $nav-height: 46px;
 
     .steps > p {
       padding: 20px;
-      font-size: 19px;
-      font-family: $georgia;
       box-sizing: border-box;
     }
 
@@ -96,6 +97,8 @@ $nav-height: 46px;
 
     .steps > p.desk {
       line-height: 28px;
+      font-size: 19px;
+      font-family: $georgia;
     }
 
     .steps > p:not(.desk) {
