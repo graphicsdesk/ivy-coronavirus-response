@@ -7,7 +7,7 @@ import { transition } from 'd3-transition';
 
 selection.prototype.tspansBackgrounds = tspansBackgrounds;
 selection.prototype.appendCircle = appendCircle;
-selection.prototype.makeText = makeText;
+selection.prototype.appendBackedText = appendBackedText;
 selection.prototype.fadeIn = fadeIn;
 selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
@@ -51,7 +51,7 @@ function tspansBackgrounds(lines, lh) {
 }
 
 // Adds text with one backgrounded tspan
-function makeText(textFn, colorFn) {
+function appendBackedText(textFn, colorFn) {
   const text = this.append('text');
   text.append('tspan.background-text');
   const tspan = text.append('tspan');
@@ -59,6 +59,7 @@ function makeText(textFn, colorFn) {
     tspan.style('fill', colorFn);
   if (textFn)
     text.selectAll('tspan').text(textFn);
+  return text;
 }
 
 // Fades in a selection; returns the transition

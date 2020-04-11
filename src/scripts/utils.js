@@ -21,8 +21,8 @@ const firstQuintile = ([ a, b ]) => a + (b - a) * 0.2;
 
 // Formats the number of cases
 const formatCaseCount = ({ cases }) => {
-  let output = cases;
-  if (cases >= 1000)
+  let output = Math.floor(cases);
+  if (output >= 1000)
     output = Math.floor(cases / 1000) + ',' + cases % 1000;
   return output + ' cases';
 };

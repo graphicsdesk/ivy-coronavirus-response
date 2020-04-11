@@ -20,7 +20,7 @@ const INTERPOLATION_TIME = 800;
  */
 
 const TICK_PADDING = 12;
-const CONNECTOR_LENGTH = 100;
+const CONNECTOR_LENGTH = 120;
 const SMALL_LINE_WIDTH = 10;
 const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
@@ -50,6 +50,11 @@ class Graph extends State {
   linesContainer = this.svg.append('g.lines-container');
   annotationsContainer = this.svg.append('g.annotations-container');
 
+  // Labelling axes
+  casesTitle = this.svg
+    .appendBackedText('Confirmed cases')
+    .classed('confirmed-cases-title', true);
+
   // Axis generators
   makeXAxis = axisBottom(this.xScale).tickPadding(TICK_PADDING);
   makeYAxis = axisLeft(this.yScale).tickPadding(TICK_PADDING);
@@ -71,7 +76,7 @@ class Graph extends State {
     }
 
     const {
-      linesContainer, annotationsContainer,
+      linesContainer, annotationsContainer, yAxis, casesTitle,
       countries, annotations, data
     } = this;
 
@@ -110,6 +115,8 @@ class Graph extends State {
           .duration(INTERPOLATION_TIME)
           .call(this.updateAnnotation);
         await this.updateAxes().end();
+        const lastYTick = yAxis.select('.tick:last-child');
+        casesTitle.transition().duration(600).attr('transform', lastYTick.attr('transform'));
       } else if (shouldUpdateAnnotations) {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
@@ -186,16 +193,19 @@ class Graph extends State {
     const caseCountContainer = selection
       .append('g.case-count-container');
     caseCountContainer.append('line');
-    caseCountContainer.makeText(formatCaseCount);
+    caseCountContainer.appendBackedText(formatCaseCount);
 
     selection.appendCircle(getCountryColor);
     selection.append('text.note-text'); // Make the label
   }
 
   updateAnnotation(selection) {
+    // Things for CSS
     selection.classed('small-annotation', d => d.isSmall);
     selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
-    selection.classed('orientation-top', d => d.orientation === 'top');
+    selection.classed('orientation-top', d => d.orientTop);
+    selection.classed('hide-on-mobile', d => d.hideOnMobile);
+    selection.attr('data-label', d => d.label)
 
     const { xScale, yScale } = this;
     const getX = d => xScale(d.dayNumber);
@@ -281,6 +291,12 @@ class Graph extends State {
       // Adjust grid sizes
       this.makeXAxis.tickSize(-this.gHeight);
       this.makeYAxis.tickSize(-this.gWidth);
+      if (window.innerWidth < 460) {
+        this.makeXAxis.ticks(4);
+      }
+
+      // Axis labels
+      this.casesTitle.selectAll('tspan').at({ x: 15 })
 
       this.update({ resized: true });
   }
@@ -288,14 +304,14 @@ class Graph extends State {
 
 // Bottom aligns a selection by translating up by total line height.
 // Makes the assumption that large annotations are always top-oriented.
-function bottomAlignAdjust({ isSmall, orientation }) {
+function bottomAlignAdjust({ isSmall, orientTop }) {
   const text = select(this);
   const numLines = text.selectAll('tspan').nodes().length / 2;
   let transY = -(numLines - 1) * LINE_HEIGHT;
 
   // Making small spacing adjustements
   if (isSmall) {
-    if (orientation === 'top') transY -= 16; // Lift label above the point
+    if (orientTop) transY -= 16; // Lift label above the point
     else transY = 28; // Label already hangs baseline, just push a tad more
   } else {
     transY -= CONNECTOR_LENGTH + 7; // Pad label from connector

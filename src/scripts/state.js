@@ -5,7 +5,7 @@ import { annotationWithKey, isBetween } from './utils';
  * The State class provides an interface for changing and accessing the store
  */
 
-const defaultXBounds = [0, 15];
+const defaultXBounds = [0, 16];
 
 class State {
   constructor(covidData) {
