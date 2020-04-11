@@ -35,6 +35,7 @@ class Graph extends State {
   // Create scales; we only know range right now
   xScale = scaleLinear();
   yScale = scaleLinear();
+  xField = 'dayNumber';
 
   // Create SVG and the main group for margins
   svg = select('#chart-container')
@@ -70,7 +71,7 @@ class Graph extends State {
 
   async update(params) {
 
-    let { shouldUpdateAnnotations, resized, willReplaceXAxis } = params;
+    let { shouldUpdateAnnotations, resized, willReplaceXAxis, dateBounds } = params;
 
     try {
 
@@ -91,7 +92,18 @@ class Graph extends State {
         .selectAll('g.line-container')
         .data(
           // Each <path> should be joined to a country's time-series COVID data (an array)
-          countries.map(country => data.filter(d => d.country === country)),
+          countries.reduce((acc, country) => {
+            const countryData = data.filter(d => d.country === country)
+            const originalData = countryData.filter(d => d.dayNumber <= 16);
+            originalData[0].showPointLabel = !dateBounds;
+            acc.push(originalData);
+            if (dateBounds) {
+              const laterData = countryData.filter(d => d.dayNumber >= 16);
+              laterData[0].showPointLabel = dateBounds;
+              acc.push(laterData);
+            }
+            return acc;
+          }, []),
           ary => ary[0].country,
         );
 
@@ -111,14 +123,18 @@ class Graph extends State {
         bulkFadeOutExiting([linesUpdate, annotationsUpdate]);
       }
 
-      if (willReplaceXAxis) {
+      if (willReplaceXAxis) { // Change the x axis label
         timeLabel
           .fadeOut(false).end()
           .then(() => {
-            timeLabel.selectAll('tspan').text(this.xField)
+            timeLabel.selectAll('tspan').text(this.xField);
             timeLabel.fadeIn();
-          })
+          });
       }
+
+      // Right after old point labels inside line containers exited,
+      // fade in the new ones that are about to be animated/scaled
+      linesUpdate.filter(ary => ary[0].showPointLabel).select('g.point-label').fadeIn(false);
 
       // If domains changed, interpolate existing elements (axes, existing lines
       // and annotations) simultaneously to match new data range
@@ -139,6 +155,10 @@ class Graph extends State {
           .duration(INTERPOLATION_TIME)
           .call(this.updateAnnotation);
       }
+
+      // After axes scaled but before new lines enter,
+      // fade out existing unwanted point labels
+      linesUpdate.filter(ary => !ary[0].showPointLabel).select('g.point-label').fadeOut(false);
 
       // Draw in the path enter selection
       const linesEnter = linesUpdate.enter();

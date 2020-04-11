@@ -33,7 +33,7 @@ class State {
       shouldUpdateCountries: this.visibleCountries.set(countries),
       willReplaceXAxis,
       dateBoundsChanged,
-      scaleYAxis, showDates,
+      scaleYAxis, showDates, dateBounds,
     });
   }
 

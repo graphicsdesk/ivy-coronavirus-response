@@ -65,8 +65,10 @@ function appendBackedText(textFn, colorFn) {
 // Fades in a selection; returns the transition
 const FADE_TIME = 300;
 
-function fadeIn() {
-  return this.style('opacity', 0).transition('fade')
+function fadeIn(firstDisappear = true) {
+  if (firstDisappear)
+    this.style('opacity', 0);
+  return this.transition('fade')
     .duration(FADE_TIME)
     .style('opacity', 1);
 }
@@ -84,11 +86,10 @@ function fadeOut(removeAfter = true) {
 // Draws in the path of a line container. Prereq: correctDashLength
 const DRAW_TIME = 1200;
 function drawIn() {
-  const path = this.select('path');
-  const totalLength = getPathLength(path);
-  return path
-    .attr('stroke-dasharray', totalLength)
-    .attr('stroke-dashoffset', totalLength)
+  const paths = this.selectAll('path');
+  return paths
+    .attr('stroke-dasharray', function() { return getPathLength(this); })
+    .attr('stroke-dashoffset', function() { return getPathLength(this); })
     .transition('lines-draw')
       .duration(DRAW_TIME)
       .attr('stroke-dashoffset', 0);
