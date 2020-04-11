@@ -54,8 +54,8 @@ class Graph extends State {
     .classed('confirmed-cases-title', true);
 
   // Axis generators
-  makeXAxis = axisBottom(this.xScale).tickPadding(TICK_PADDING);
-  makeYAxis = axisLeft(this.yScale).tickPadding(TICK_PADDING);
+  makeXAxis = axisBottom().tickPadding(TICK_PADDING);
+  makeYAxis = axisLeft().tickPadding(TICK_PADDING);
 
   // Line generator
   makeLine = d3Line();
@@ -66,7 +66,9 @@ class Graph extends State {
   }
 
   async update({ shouldUpdateAnnotations, scaleYAxis, resized, showDates, willReplaceXAxis }) {
+
     try {
+
       let domainsChanged = this.rescaleDataRange({ showDates, scaleYAxis });
 
       // If update is being called from this.resize, interpolate existing elements
@@ -310,8 +312,12 @@ class Graph extends State {
     // Re-translate x-axis container
     this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
 
+    // Axis stuff
+    this.makeXAxis.tickSize(-this.gHeight);
+    this.makeYAxis.tickSize(-this.gHWidth);
+
     // Axis labels
-    this.casesTitle.selectAll('tspan').at({ x: 15 })
+    this.casesTitle.selectAll('tspan').at({ x: 15 });
 
     this.update({ resized: true });
   }
