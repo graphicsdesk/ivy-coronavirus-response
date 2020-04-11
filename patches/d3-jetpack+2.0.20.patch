@@ -1,0 +1,17 @@
+diff --git a/node_modules/d3-jetpack/src/tspans.js b/node_modules/d3-jetpack/src/tspans.js
+index 5433cc6..9db9298 100644
+--- a/node_modules/d3-jetpack/src/tspans.js
++++ b/node_modules/d3-jetpack/src/tspans.js
+@@ -6,9 +6,9 @@ export default function(lines, lh) {
+             return { line: l, parent: d };
+           });
+       })
+-      .enter()
+-    .append('tspan')
++      .join(
++        enter => enter.append('tspan'),
++      )
+       .text(function(d) { return d.line; })
+-      .attr('x', 0)
+       .attr('dy', function(d, i) { return i ? (typeof(lh) == 'function' ? lh(d.parent, d.line, i) : lh) || 15 : 0; });
+ }
