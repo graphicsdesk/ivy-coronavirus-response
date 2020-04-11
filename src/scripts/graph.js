@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, scaleTime } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
@@ -65,37 +65,36 @@ class Graph extends State {
     this.resize();
   }
 
-  async update({ shouldUpdateAnnotations, scaleYAxis, resized, firstResize }) {
-    let domainsChanged = this.rescaleDataRange(scaleYAxis);
-
-    // If update is being called from this.resize, interpolate existing elements
-    if (resized === true) {
-      domainsChanged = shouldUpdateAnnotations = resized;
-    }
-
-    const {
-      linesContainer, annotationsContainer, yAxis, casesTitle,
-      countries, annotations, data
-    } = this;
-
-    // Join countries data, store selections
-    const linesUpdate = linesContainer
-      .selectAll('g.line-container')
-      .data(
-        // Each <path> should be joined to a country's time-series COVID data (an array)
-        countries.map(country => data.filter(d => d.country === country)),
-        ary => ary[0].country,
-      );
-
-    // Join annotations data, store selections
-    const annotationsUpdate = annotationsContainer
-      .selectAll('g.annotation')
-      .data(this.withCovidData(annotations), a => a.key);
-
-    this.updateAnnotation = this.updateAnnotation.bind(this);
-    this.updateLineContainer = this.updateLineContainer.bind(this);
-
+  async update({ shouldUpdateAnnotations, scaleYAxis, resized, showDates, willReplaceXAxis }) {
     try {
+      let domainsChanged = this.rescaleDataRange({ showDates, scaleYAxis });
+
+      // If update is being called from this.resize, interpolate existing elements
+      if (resized === true) {
+        domainsChanged = shouldUpdateAnnotations = resized;
+      }
+
+      const {
+        linesContainer, annotationsContainer, yAxis, casesTitle,
+        countries, annotations, data
+      } = this;
+
+      // Join countries data, store selections
+      const linesUpdate = linesContainer
+        .selectAll('g.line-container')
+        .data(
+          // Each <path> should be joined to a country's time-series COVID data (an array)
+          countries.map(country => data.filter(d => d.country === country)),
+          ary => ary[0].country,
+        );
+
+      // Join annotations data, store selections
+      const annotationsUpdate = annotationsContainer
+        .selectAll('g.annotation')
+        .data(this.withCovidData(annotations), a => a.key);
+
+      this.updateAnnotation = this.updateAnnotation.bind(this);
+      this.updateLineContainer = this.updateLineContainer.bind(this);
 
       // If exiting selection is nonempty, fade those out first.
       if (domainsChanged)
@@ -112,7 +111,8 @@ class Graph extends State {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
           .call(this.updateAnnotation);
-        await this.updateAxes().end();
+        await this.updateAxes({ willReplaceXAxis }).end();
+
         const lastYTick = yAxis.select('.tick:last-child');
         casesTitle.transition().duration(600).attr('transform', lastYTick.attr('transform'));
       } else if (shouldUpdateAnnotations) {
@@ -172,7 +172,7 @@ class Graph extends State {
 
   updateLineContainer(selection, justEntered) {
     const { xScale, yScale, makeLine } = this;
-    const endpointX = ary => xScale(ary[ary.length - 1].dayNumber);
+    const endpointX = ary => xScale(ary[ary.length - 1][this.xField]);
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
     // Set path description
@@ -206,7 +206,7 @@ class Graph extends State {
     selection.attr('data-label', d => d.label)
 
     const { xScale, yScale } = this;
-    const getX = d => xScale(d.dayNumber);
+    const getX = d => xScale(d[this.xField]);
     const getY = d => yScale(d.cases);
 
     selection.select('line.connector')
@@ -234,25 +234,48 @@ class Graph extends State {
   }
 
   // TODO: make axes prettier. https://observablehq.com/@d3/styled-axes
-  updateAxes() {
-    const { xAxis, yAxis, makeXAxis, makeYAxis } = this;
-    xAxis.transition('x-axis')
-      .duration(INTERPOLATION_TIME)
-      .call(makeXAxis);
+  updateAxes({ willReplaceXAxis }) {
+    const { xAxis, yAxis, xScale, yScale, gHeight, gWidth } = this;
+
+    if (this.makeXAxis === null)
+      this.makeXAxis = axisBottom().tickSize(-gHeight);;
+    if (this.makeYAxis === null)
+      this.makeYAxis = axisLeft().tickSize(-gWidth);;
+    // this.makeXAxis = axisBottom(xScale).tickSize(-gHeight);
+    // this.makeYAxis = axisLeft(yScale).tickSize(-gWidth);
+    this.makeXAxis.scale(xScale).tickSize(-gHeight);
+    this.makeYAxis.scale(yScale).tickSize(-gWidth);
+
+    if (window.innerWidth < 460) {
+      this.makeXAxis.ticks(4);
+    }
+
+    if (willReplaceXAxis) {
+      xAxis.call(this.makeXAxis.tickPadding(TICK_PADDING))
+    } else {
+      xAxis.transition('x-axis')
+        .duration(INTERPOLATION_TIME)
+        .call(this.makeXAxis.tickPadding(TICK_PADDING));
+    }
     return yAxis.transition('y-axis')
       .duration(INTERPOLATION_TIME)
-      .call(makeYAxis);
+      .call(this.makeYAxis.tickPadding(TICK_PADDING));
   }
 
   // Rescales mappings (scales, line generator) based on new data
-  rescaleDataRange(scaleYAxis) {
-    const { xScale, yScale, makeLine } = this;
+  rescaleDataRange({ showDates, scaleYAxis }) {
+    this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
+    this.xField = showDates ? 'date' : 'dayNumber';
 
-    const newXDomain = extent(this.data, d => d.dayNumber);
-    const newYDomain = extent(this.data, d => d.cases);
-    if (scaleYAxis)
+    const { xScale, yScale, makeLine, xField, data } = this;
+
+    const newXDomain = extent(data, d => d[xField]);
+    const newYDomain = extent(data, d => d.cases);
+
+    if (scaleYAxis) {
       newYDomain[1] *= scaleYAxis;
-    newYDomain[1] *= 1.1; // Leave some space at the top for labels
+    }
+    newYDomain[1] *= 1.07; // Leave some space at the top for labels
 
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
@@ -260,43 +283,37 @@ class Graph extends State {
       !areDomainsEqual(yScale.domain(), yScale.domain(newYDomain).domain());
 
     // Updates line generator based on new scales
-    if (didDomainsChange)
-      makeLine.x(d => xScale(d.dayNumber)).y(d => yScale(d.cases));
+    if (didDomainsChange) {
+      makeLine.x(d => xScale(d[xField])).y(d => yScale(d.cases));
+    }
 
     return didDomainsChange;
   }
 
   resize() {
-      this.width = Math.min(960, document.body.clientWidth);
-      this.height = document.body.clientHeight;
-      this.gWidth = this.width - margin.left - margin.right;
-      this.gHeight = this.height - margin.top - margin.bottom;
+    this.width = Math.min(960, document.body.clientWidth);
+    this.height = document.body.clientHeight;
+    this.gWidth = this.width - margin.left - margin.right;
+    this.gHeight = this.height - margin.top - margin.bottom;
 
-      // Reset scale ranges
-      this.xScale.range([ 0, this.gWidth ]);
-      this.yScale.range([ this.gHeight, 0 ]);
+    // Reset scale ranges
+    this.xScale.range([ 0, this.gWidth ]);
+    this.yScale.range([ this.gHeight, 0 ]);
 
-      // Reset svg dimensions and margins (not yet margins)
-      select('#chart-container')
-        .select('svg')
-        .at({ width: this.width, height: this.height })
-        // .select('g')
-        // .translate([ margin.left, margin.top ]);
+    // Reset svg dimensions and margins (not yet margins)
+    select('#chart-container')
+      .select('svg')
+      .at({ width: this.width, height: this.height })
+      // .select('g')
+      // .translate([ margin.left, margin.top ]);
 
-      // Re-translate x-axis container
-      this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
+    // Re-translate x-axis container
+    this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
 
-      // Adjust grid sizes
-      this.makeXAxis.tickSize(-this.gHeight);
-      this.makeYAxis.tickSize(-this.gWidth);
-      if (window.innerWidth < 460) {
-        this.makeXAxis.ticks(4);
-      }
+    // Axis labels
+    this.casesTitle.selectAll('tspan').at({ x: 15 })
 
-      // Axis labels
-      this.casesTitle.selectAll('tspan').at({ x: 15 })
-
-      this.update({ resized: true });
+    this.update({ resized: true });
   }
 }
 

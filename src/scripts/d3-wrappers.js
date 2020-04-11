@@ -75,11 +75,13 @@ function fadeIn() {
 }
 
 // Fades out a selection; returns the transition
-function fadeOut() {
-  return this.transition('fade')
+function fadeOut(removeAfter = true) {
+  let trans = this.transition('fade')
     .duration(FADE_TIME)
-    .style('opacity', 0)
-    .remove();
+    .style('opacity', 0);
+  if (removeAfter)
+    trans = trans.remove();
+  return trans;
 }
 
 // Draws in the path of a line container. Prereq: correctDashLength

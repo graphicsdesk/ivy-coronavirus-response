@@ -16,22 +16,28 @@ class State {
 
   visibleCountries = new Store(); // Stores country-level lines
   visibleAnnotations = new Store(annotationWithKey); // Stores annotations, adds a key
+  showDates = null; // First value passed in will be undefined, which triggers a change for now
 
-  set({ countries = [], annotations = [], scaleYAxis, xBounds }) {
+  set({ countries = [], annotations = [], scaleYAxis, showDates, xBounds }) {
     // this.xBounds = xBounds || defaultXBounds;
+    const willReplaceXAxis = this.showDates !== showDates;
+    this.showDates = showDates;
     this.updateComponent({
       shouldUpdateAnnotations: this.visibleAnnotations.set(annotations),
       shouldUpdateCountries: this.visibleCountries.set(countries),
-      scaleYAxis,
+      willReplaceXAxis,
+
+      // Other config stuff to send down
+      scaleYAxis, showDates,
     });
   }
 
   // Updates component if it should update
-  updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis }) {
-    if (shouldUpdateAnnotations || shouldUpdateCountries)
+  updateComponent({ shouldUpdateAnnotations, shouldUpdateCountries, scaleYAxis, willReplaceXAxis, showDates }) {
+    if (shouldUpdateAnnotations || shouldUpdateCountries || willReplaceXAxis)
       // Shouldn't pass should* variables in, but using
       // it for one transition in this.update
-      this.update({ shouldUpdateAnnotations, scaleYAxis });
+      this.update({ shouldUpdateAnnotations, scaleYAxis, showDates, willReplaceXAxis });
   }
 
   // Adds corresponding COVID data to an annotation array of annotations

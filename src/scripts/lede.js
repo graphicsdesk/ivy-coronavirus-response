@@ -20,12 +20,14 @@ for (let i = 0; i < covidData.length; i++)
 
 const graph = new Graph(covidData);
 
+// Annotation options
 const isSmall = true;
 const showCases = true;
 const hideOnMobile = true;
 const orientTop = true;
+const showDates = true;
 
-// Storing annotations for convenience
+// Annotations
 const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases };
 const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall, orientTop, hideOnMobile };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall, hideOnMobile };
@@ -67,12 +69,17 @@ const initialState = { countries: [] }
 
 const chartContainer = document.getElementById('chart-container');
 
+const allStates2 = [
+  { countries: [ 'US', 'Italy' ] },
+  { countries: [ 'US', 'Italy' ], showDates },
+]
+
 chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
   // console.log(index)
   chartContainer.setAttribute('data-index', index);
-  if (allStates[index] !== undefined) {
-    const state = allStates[index];
+  const state = allStates2[index];
+  if (state !== undefined) {
     graph.set(state);
   }
 }
