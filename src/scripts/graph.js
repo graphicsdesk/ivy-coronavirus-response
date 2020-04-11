@@ -52,6 +52,9 @@ class Graph extends State {
   casesTitle = this.svg
     .appendBackedText('Confirmed cases')
     .classed('confirmed-cases-title', true);
+  timeLabel = this.svg
+    .appendBackedText()
+    .classed('time-label', true);
 
   // Axis generators
   makeXAxis = axisBottom().tickPadding(TICK_PADDING);
@@ -67,7 +70,7 @@ class Graph extends State {
 
   async update(params) {
 
-    let { shouldUpdateAnnotations, resized } = params;
+    let { shouldUpdateAnnotations, resized, willReplaceXAxis } = params;
 
     try {
 
@@ -79,7 +82,7 @@ class Graph extends State {
       }
 
       const {
-        linesContainer, annotationsContainer, yAxis, casesTitle,
+        linesContainer, annotationsContainer, yAxis, casesTitle, timeLabel,
         countries, annotations, data
       } = this;
 
@@ -108,6 +111,15 @@ class Graph extends State {
         bulkFadeOutExiting([linesUpdate, annotationsUpdate]);
       }
 
+      if (willReplaceXAxis) {
+        timeLabel
+          .fadeOut(false).end()
+          .then(() => {
+            timeLabel.selectAll('tspan').text(this.xField)
+            timeLabel.fadeIn();
+          })
+      }
+
       // If domains changed, interpolate existing elements (axes, existing lines
       // and annotations) simultaneously to match new data range
       if (domainsChanged) {
@@ -121,6 +133,7 @@ class Graph extends State {
 
         const lastYTick = yAxis.select('.tick:last-child');
         casesTitle.transition().attr('transform', lastYTick.attr('transform'));
+        timeLabel.transition().attr('transform', lastYTick.attr('transform'));
       } else if (shouldUpdateAnnotations) {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
@@ -301,8 +314,8 @@ class Graph extends State {
     }
     newYDomain[1] *= 1.07; // Leave some space at the top for labels
 
-    // Update scale domains. Returns whether domains had changed.
-    // Plus sign is an eager (non-short-circuiting) OR
+    // Update scale domains while returning whether any had changed.
+    // Plus sign is an eager OR
     const didDomainsChange = willReplaceXAxis +
       !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
       !areDomainsEqual(yScale.domain(), yScale.domain(newYDomain).domain());
@@ -329,14 +342,18 @@ class Graph extends State {
     select('#chart-container')
       .select('svg')
       .at({ width: this.width, height: this.height })
-      // .select('g')
-      // .translate([ margin.left, margin.top ]);
 
     // Re-translate x-axis container
     this.svg.select('g.axis.x-axis').translate([ 0, this.gHeight ]);
 
-    // Axis labels
+    // "Confirmed cases" label
     this.casesTitle.selectAll('tspan').at({ x: 15 });
+    // "(Days since 100th case | Date) ➡️" label
+    this.timeLabel
+      .selectAll('tspan')
+      .text(this.xField)
+      .at({ x: this.gWidth / 2})
+
 
     this.update({ resized: true });
   }

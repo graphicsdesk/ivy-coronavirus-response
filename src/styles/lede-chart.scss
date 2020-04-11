@@ -71,7 +71,7 @@ g.axis .domain {
   display: none;
 }
 
-text.confirmed-cases-title {
+text.confirmed-cases-title, text.time-label {
   font-weight: 600;
   font-size: 17px;
   dominant-baseline: central;
@@ -80,6 +80,10 @@ text.confirmed-cases-title {
     stroke-width: 14px;
     opacity: 1;
   }
+}
+
+text.time-label {
+  // text-anchor: middle;
 }
 
 g.annotations-container {
