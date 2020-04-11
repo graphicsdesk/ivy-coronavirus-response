@@ -7,6 +7,8 @@ import { timeFormat } from 'd3-time-format';
 import { timeDay } from 'd3-time';
 import { wordwrap } from 'd3-jetpack';
 import 'intersection-observer';
+const regeneratorRuntime = require("regenerator-runtime");
+
 
 import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';

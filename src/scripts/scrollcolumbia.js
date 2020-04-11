@@ -3,12 +3,22 @@ import scrollama from "scrollama";
 import { select } from 'd3-selection';
 import { selectAll } from 'd3-selection';
 
- select("#g-schools-desktop")
-.style("width", 750 * (window.screen.width/900))
-.style("height", 500 * (window.screen.width/900))
+select("#g-columbia-desktop")
+        .style("width", 700 * (window.innerHeight/800)+"px")
+        .style("height", 750 * (window.innerHeight/800)+"px")
+        
+
+
+window.addEventListener('resize', function() {
+    select("#g-columbia-desktop")
+        .style("width", 700 * (window.innerHeight/800)+"px")
+        .style("height", 750 * (window.innerHeight/800)+"px")
+}, true);
+
+
 
 // animation dates for columbia
-var dates = ["8", "10", "12", "15", "18", "20"];
+var dates = ["8", "10", "12", "15", "20"];
 
 
 // using d3 for convenience
@@ -24,14 +34,17 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
   // 1. update height of step elements
-
   var stepHeight = Math.floor(window.innerHeight * 0.55);
   step.style("height", stepHeight + "px");
   var bodyWidth =  select("body").node().offsetWidth;
-
+  
   graphic
-    .style("width", bodyWidth + "px")
+    .style("width", bodyWidth - 300 + "px")
     .style("height", window.innerHeight - 300 + "px");
+    console.log(window.screen.width);
+  text
+    .style("height", window.screen.width * 1.8 + "px");
+
   // 2. update width/height of graphic element
   chart
     .style("width", 65 + "%")
@@ -81,7 +94,6 @@ function handleStepEnter(response) {
 
 // make text disappear when scrolling up
 function handleContainerExit(response) {
-  console.log(response.index);
   if (response.direction == 'up') {
      selectAll(".Scrolly" + (response.index))
       .style("opacity", "0");
@@ -130,7 +142,7 @@ function init() {
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .steps",
-      debug: false
+      debug: true
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)
