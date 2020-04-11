@@ -20,27 +20,31 @@ for (let i = 0; i < covidData.length; i++)
 
 const graph = new Graph(covidData);
 
-// Storing annotations for convenience
-const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases: true };
-const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall: true, orientation: 'top' };
-const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall: true };
-const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall: true, orientation: 'top' };
-const columbia = { dayNumber: 12, label: 'Columbia', showCases: true };
-const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall: true, orientation: 'top' };
-const columbiaSmallBtm = { dayNumber: 12, label: 'Columbia', isSmall: true, orientation: 'bottom' };
-const ivies = { dayNumber: 8.375, label: 'Ivy average' };
-const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall: true, orientation: 'top' };
-const iviesSmallBtm = { dayNumber: 8.375, label: 'Ivy average', isSmall: true, orientation: 'bottom' };
-const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases: true, };
-const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', showCases: false, isSmall: true, orientation: 'top' };
-const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: true };
-const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases: false, isSmall: true, orientation: 'top' };
-const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases: true};
+const isSmall = true;
+const showCases = true;
+const hideOnMobile = true;
+const orientTop = true;
 
-const ZOOM_FACTOR = 0.35;
+// Storing annotations for convenience
+const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases };
+const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall, orientTop };
+const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall, hideOnMobile };
+const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall, hideOnMobile, orientTop };
+const columbia = { dayNumber: 12, label: 'Columbia', showCases };
+const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall, orientTop };
+const columbiaSmallBtm = { dayNumber: 12, label: 'Columbia', isSmall };
+const ivies = { dayNumber: 8.375, label: 'Ivy average' };
+const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall, orientTop };
+const iviesSmallBtm = { dayNumber: 8.375, label: 'Ivy average', isSmall };
+const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases, };
+const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', isSmall, orientTop };
+const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases };
+const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', isSmall, orientTop };
+const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases };
+
+const ZOOM_FACTOR = 0.4;
 const allStates = [
   // { countries: [ 'US', 'China', 'Korea, South', 'Italy' ], xBounds: [0, 30] },
-  // { countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
   { countries: [ 'US' ] },
   { annotations: [ us7 ],
     countries: [ 'US' ] },
@@ -67,8 +71,10 @@ chartContainer.setAttribute('data-index', 0);
 function onStepEnter({ index }) {
   // console.log(index)
   chartContainer.setAttribute('data-index', index);
-  if (allStates[index] !== undefined)
-    graph.set(allStates[index]);
+  if (allStates[index] !== undefined) {
+    const state = allStates[index];
+    graph.set(state);
+  }
 }
 
 function onStepExit({ index, direction }) {
@@ -82,7 +88,7 @@ const scroller = scrollama();
 scroller
   .setup({
     step: '.lede-step-surrounding-padding',
-    offset: 0.65,
+    offset: window.innerWidth < 460 ? 0.85 : 0.65,
   })
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);

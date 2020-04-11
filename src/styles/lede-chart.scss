@@ -51,16 +51,18 @@ g.lines-container > g.line-container {
   }
 }
 
-
 g.axis {
+  .domain {
+    stroke: $grid-color;
+  }
   .tick {
     line {
       stroke: $grid-color;
     }
 
     text {
-      color: #666;
-      font-size: 13px;
+      color: $gray;
+      font-size: 14px;
     }
   }
 }
@@ -69,16 +71,28 @@ g.axis .domain {
   display: none;
 }
 
+text.confirmed-cases-title {
+  font-weight: 600;
+  font-size: 17px;
+  dominant-baseline: central;
+
+  tspan.background-text {
+    stroke-width: 14px;
+    opacity: 1;
+  }
+}
+
 g.annotations-container {
   g.annotation {
     circle {
-      transition-property: fill, stroke;
+      transition-property: fill, stroke, stroke-width;
       transition-duration: $trans-dur;
+      stroke-width: 1px;
     }
 
     line.connector {
       stroke: $black;
-      stroke-width: 1px;
+      stroke-width: 1.5px;
     }
 
     line.cases-line {
@@ -93,6 +107,11 @@ g.annotations-container {
       font-size: 17px;
       fill: $black;
     }
+  }
+
+  g.annotation:not(.small-annotation) circle {
+    stroke: black;
+    stroke-width: 2px;
   }
 
   g.small-annotation {
@@ -113,6 +132,15 @@ g.annotations-container {
   g.hide-cases {
     g.case-count-container {
       opacity: 0;
+    }
+  }
+}
+
+g.small-annotation {
+  &[data-label="Dartmouth and Brown"] {
+    text {
+      text-anchor: start !important;
+      transform: translate(-10px, 0);
     }
   }
 }
@@ -150,6 +178,9 @@ tspan.background-text {
   transform: translate3d(0, 0, 0);
 }
 
+$step-margin-left: 120px;
+$step-max-width: 470px;
+
 .lede-step {
   padding-top: 0;
   padding-bottom: 70vh;
@@ -157,14 +188,25 @@ tspan.background-text {
   p {
     padding: 20px;
     margin: 0;
-    margin-left: 120px;
+    margin-left: $step-margin-left;
     font-family: $georgia;
     font-size: 20px;
     line-height: 30px;
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 2px 5px 0 #e4e4e4;
     width: calc(100% - 40px);
-    max-width: 470px;
+    max-width: $step-max-width;
+  }
+}
+
+@media (max-width: $step-max-width + 2 * $step-margin-left) {
+  .lede-step p {
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  g.small-annotation.hide-on-mobile {
+    opacity: 0;
   }
 }
 
