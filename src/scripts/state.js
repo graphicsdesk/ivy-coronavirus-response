@@ -1,3 +1,4 @@
+import { timeDay } from 'd3-time';
 import Store from './store';
 import { annotationWithKey, isBetween } from './utils';
 
@@ -64,7 +65,7 @@ class State {
           return {
             country,
             dayNumber,
-            date: timeDay.offset(prevDate, 0.5),
+            date: timeDay.offset(prevDate, 0.5), // close enough?
             cases: prevCases + (nextCases - prevCases) * (dayNumber - prevNum) / (nextNum - prevNum),
             ...rest,
           };

@@ -28,7 +28,7 @@ a:hover {
 }
 
 b {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .cover {
@@ -498,11 +498,15 @@ header {
     color: rgba(0, 0, 0, 0.7);
     font-size: 15px;
     line-height: 22px;
-  }  
+
+    b {
+      color: rgba(0, 0, 0, 0.9);
+    }
+  }
 
   .article-credits {
     letter-spacing: 0.45px;
-  }  
+  }
 
   .article-credits::before {
     display: block;

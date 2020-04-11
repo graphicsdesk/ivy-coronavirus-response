@@ -1,31 +1,30 @@
-import scrollama from "scrollama";
+import scrollama from 'scrollama';
 import { select } from 'd3-selection';
 import { selectAll } from 'd3-selection';
 
-select("#g-columbia-desktop")
-        .style("width", 700 * (window.innerHeight/800)+"px")
-        .style("height", 750 * (window.innerHeight/800)+"px")
-        
+select('#g-columbia-desktop')
+  .style('width', 700 * (window.innerHeight / 800) + 'px')
+  .style('height', 750 * (window.innerHeight / 800) + 'px');
 
-
-window.addEventListener('resize', function() {
-    select("#g-columbia-desktop")
-        .style("width", 700 * (window.innerHeight/800)+"px")
-        .style("height", 750 * (window.innerHeight/800)+"px")
-}, true);
-
-
+window.addEventListener(
+  'resize',
+  function () {
+    select('#g-columbia-desktop')
+      .style('width', 700 * (window.innerHeight / 800) + 'px')
+      .style('height', 750 * (window.innerHeight / 800) + 'px');
+  },
+  true,
+);
 
 // animation dates for columbia
-var dates = ["8", "10", "12", "15", "20"];
-
+var dates = ['8', '10', '12', '15', '20'];
 
 // using d3 for convenience
-var container =  select("#scroll");
-var graphic = container.select(".scroll__graphic");
-var chart = graphic.select(".chart");
-var text = container.select(".scroll__text");
-var step = text.selectAll(".step");
+var container = select('#scroll');
+var graphic = container.select('.scroll__graphic');
+var chart = graphic.select('.chart');
+var text = container.select('.scroll__text');
+var step = text.selectAll('.step');
 
 // initialize the scrollama
 var scroller = scrollama();
@@ -34,19 +33,17 @@ var scroller = scrollama();
 function handleResize() {
   // 1. update height of step elements
   var stepHeight = Math.floor(window.innerHeight * 0.55);
-  step.style("height", stepHeight + "px");
-  var bodyWidth =  select("body").node().offsetWidth;
-  
+  step.style('height', stepHeight + 'px');
+  var bodyWidth = select('body').node().offsetWidth;
+
   graphic
-    .style("width", bodyWidth - 300 + "px")
-    .style("height", window.innerHeight - 300 + "px");
-    console.log(window.screen.width);
-  text
-    .style("height", window.screen.width * 1.8 + "px");
+    .style('width', bodyWidth - 300 + 'px')
+    .style('height', window.innerHeight - 300 + 'px');
+
+  text.style('height', window.screen.width * 1.8 + 'px');
 
   // 2. update width/height of graphic element
-  chart
-    .style("width", 65 + "%")
+  chart.style('width', 65 + '%');
 
   // 3. tell scrollama to update new element dimensions
 
@@ -58,35 +55,28 @@ function handleStepEnter(response) {
   // response = { element, direction, index }
   if (response.direction == 'down') {
     // make animation appear
-     selectAll(".Scrolly" + (response.index))
-      .style("opacity", "1");
+    selectAll('.Scrolly' + response.index).style('opacity', '1');
     // define appearance of pulsating circle
     if (response.index == 0 || response.index == 3) {
-       selectAll(".anim" + response.index)
-        .style("visibility", "visible")
+      selectAll('.anim' + response.index).style('visibility', 'visible');
     } else {
-       selectAll(".anim" + (response.index - 1))
-        .style("visibility", "hidden")
+      selectAll('.anim' + (response.index - 1)).style('visibility', 'hidden');
     }
-     selectAll(".g-March" + dates[response.index])
-      .classed("m-fadeIn", true)
-      .classed("m-fadeOut", false);
+    selectAll('.g-March' + dates[response.index])
+      .classed('m-fadeIn', true)
+      .classed('m-fadeOut', false);
 
     if (window.screen.width < 800) {
-       selectAll(".mobil" + response.index)
-        .classed("m-fadeOut", false)
-        .classed("m-fadeIn", true);
+      selectAll('.mobil' + response.index)
+        .classed('m-fadeOut', false)
+        .classed('m-fadeIn', true);
     }
     // make text appear
-
   } else {
     if (response.index == 0 || response.index == 3) {
-       selectAll(".anim" + response.index)
-        .style("visibility", "visible")
+      selectAll('.anim' + response.index).style('visibility', 'visible');
     } else {
-       selectAll(".anim" + response.index)
-        .style("visibility", "hidden")
-
+      selectAll('.anim' + response.index).style('visibility', 'hidden');
     }
   }
 }
@@ -94,18 +84,16 @@ function handleStepEnter(response) {
 // make text disappear when scrolling up
 function handleContainerExit(response) {
   if (response.direction == 'up') {
-     selectAll(".Scrolly" + (response.index))
-      .style("opacity", "0");
+    selectAll('.Scrolly' + response.index).style('opacity', '0');
 
-     selectAll(".g-March" + dates[response.index])
-      .classed("m-fadeOut", true)
-      .classed("m-fadeIn", false);
+    selectAll('.g-March' + dates[response.index])
+      .classed('m-fadeOut', true)
+      .classed('m-fadeIn', false);
 
-     selectAll(".mobil" + response.index)
-      .classed("m-fadeOut", true)
-      .classed("m-fadeIn", false);
+    selectAll('.mobil' + response.index)
+      .classed('m-fadeOut', true)
+      .classed('m-fadeIn', false);
   }
-
 }
 
 // handle the appearance of surpassed animations on refresh
@@ -113,16 +101,14 @@ var notDone = true;
 function handleStepProgress(response) {
   if (response.index != 0 && notDone) {
     for (var i = 0; i <= response.index; i++) {
-       selectAll(".Scrolly" + i)
-        .style("opacity", "1");
+      selectAll('.Scrolly' + i).style('opacity', '1');
 
-       selectAll(".g-March" + dates[i])
-        .classed("m-fadeOut", false)
-        .classed("m-fadeIn", true);
+      selectAll('.g-March' + dates[i])
+        .classed('m-fadeOut', false)
+        .classed('m-fadeIn', true);
     }
     notDone = false;
   }
-
 }
 
 function init() {
@@ -135,12 +121,12 @@ function init() {
 
   scroller
     .setup({
-      offset: (window.screen.height / 1.8 + "px"),
-      container: "#scroll",
-      progress:true,
-      graphic: ".scroll__graphic",
-      text: ".scroll__text",
-      step: ".scroll__text .steps",
+      offset: window.screen.height / 1.8 + 'px',
+      container: '#scroll',
+      progress: true,
+      graphic: '.scroll__graphic',
+      text: '.scroll__text',
+      step: '.scroll__text .steps',
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)

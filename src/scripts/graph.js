@@ -4,7 +4,6 @@ import { extent } from 'd3-array';
 import { line as d3Line } from 'd3-shape';
 import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
-import { timeDay } from 'd3-time';
 import { wordwrap } from 'd3-jetpack';
 import { interpolatePath } from 'd3-interpolate-path';
 
@@ -12,7 +11,7 @@ import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
 import { getLineLabel, getLineColor, getCountryColor } from './constants';
 
-const INTERPOLATION_TIME = 800;
+const INTERPOLATION_TIME = 1000;
 
 /**
  * The Graph class draws and updates the visualization's DOM elements
