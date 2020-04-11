@@ -63,7 +63,7 @@ const allStates = [
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
   { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates },
-  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italySmall ],
+  { annotations: [ iviesSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates, dateBounds: true }
 ];
 const initialState = { countries: ['US'] };
@@ -74,18 +74,12 @@ const initialState = { countries: ['US'] };
 
  graph.set(initialState);
 
-const allStates2 = [
-  // { countries: [ 'US', 'China' ] },
-  { countries: [ 'US', 'China' ], showDates },
-  { countries: [ 'US', 'China' ], showDates, dateBounds: true }
-]
-
 const chartContainer = document.getElementById('chart-container');
 chartContainer.setAttribute('data-index', 0);
 
 function onStepEnter({ index }) {
   chartContainer.setAttribute('data-index', index);
-  const state = allStates2[index];
+  const state = allStates[index];
   if (state !== undefined) {
     graph.set(state);
   }
