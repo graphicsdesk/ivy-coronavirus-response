@@ -6,14 +6,11 @@ import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
 import { timeDay } from 'd3-time';
 import { wordwrap } from 'd3-jetpack';
-import 'intersection-observer';
-const regeneratorRuntime = require("regenerator-runtime");
-
+import { interpolatePath } from 'd3-interpolate-path';
 
 import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
 import { getLineLabel, getLineColor, getCountryColor } from './constants';
-import './d3-wrappers';
 
 const INTERPOLATION_TIME = 800;
 
@@ -184,11 +181,26 @@ class Graph extends State {
     const endpointY = ary => yScale(ary[ary.length - 1].cases);
 
     // Set path description
-    selection.select('path').at({ d: makeLine });
+    const path = selection.select('path');
+    if (typeof path.attrTween === 'function') {
+      const that = this;
+      path.attrTween('d', function(d) {
+        // console.log(d[d.length - 1][that.xField]);
+        const previousD = select(this).attr('d');
+        const nextD = makeLine(d);
+        return interpolatePath(previousD, nextD);
+      });
+    } else {
+      path.at({ d: makeLine });
+    }
 
     const endpoint = selection.select('g.point-label'); // Position endpoint group
     endpoint.select('circle').at({ cx: endpointX, cy: endpointY });
-    endpoint.selectAll('tspan')
+
+    const text = endpoint.select('text');
+    (typeof text.selection === 'function' ? text.selection() : text)
+      .tspans(ary => wordwrap(getLineLabel(ary), 8), LINE_HEIGHT);
+    text.selectAll('tspan')
       .at({ x: d => endpointX(d.parent) + 14, y: d => endpointY(d.parent) });
   }
 
@@ -267,16 +279,20 @@ class Graph extends State {
   }
 
   // Rescales mappings (scales, line generator) based on new data
-  rescaleDataRange({ showDates, scaleYAxis, willReplaceXAxis }) {
+  rescaleDataRange({ showDates, scaleYAxis, willReplaceXAxis = false }) {
+    if (willReplaceXAxis) {
+      this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
+    }
     this.xField = showDates ? 'date' : 'dayNumber';
-    this.xScale = (showDates ? scaleTime() : scaleLinear()).range([ 0, this.gWidth ]);
 
     const { xScale, yScale, makeLine, xField, data, gHeight, gWidth } = this;
 
     this.makeXAxis.scale(xScale).tickSize(-gHeight);
     this.makeYAxis.scale(yScale).tickSize(-gWidth);
     if (showDates) {
-      // console.log(this.makeXAxis.ticks(timeDay.every(7), timeFormat('%B %d')))
+      this.makeXAxis.tickFormat(timeFormat('%b %_d'));
+    } else {
+      this.makeXAxis.tickFormat(x => x);
     }
 
     const newXDomain = extent(data, d => d[xField]);
@@ -289,7 +305,8 @@ class Graph extends State {
 
     // Update scale domains. Returns whether domains had changed.
     // Plus sign is an eager (non-short-circuiting) OR
-    const didDomainsChange = !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
+    const didDomainsChange = willReplaceXAxis +
+      !areDomainsEqual(xScale.domain(), xScale.domain(newXDomain).domain()) +
       !areDomainsEqual(yScale.domain(), yScale.domain(newYDomain).domain());
 
     // Updates line generator based on new scales

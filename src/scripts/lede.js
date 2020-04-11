@@ -43,10 +43,10 @@ const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', isSmall,
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases };
 const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', isSmall, orientTop };
 const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases };
+const italySmall = { dayNumber: 11, label: 'Italy tk', country: 'Italy', isSmall };
 
 const ZOOM_FACTOR = 0.4;
 const allStates = [
-  // { countries: [ 'US', 'China', 'Korea, South', 'Italy' ], xBounds: [0, 30] },
   { countries: [ 'US' ] },
   { annotations: [ us7 ],
     countries: [ 'US' ] },
@@ -60,6 +60,12 @@ const allStates = [
     countries: [ 'US', 'China', 'Korea, South' ], scaleYAxis: ZOOM_FACTOR },
   { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italy ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+    countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+    countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates },
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+    countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates, dateBounds: true }
 ];
 const initialState = { countries: [] }
 
@@ -68,17 +74,11 @@ const initialState = { countries: [] }
  */
 
 const chartContainer = document.getElementById('chart-container');
-
-const allStates2 = [
-  { countries: [ 'US', 'Italy' ] },
-  { countries: [ 'US', 'Italy' ], showDates },
-]
-
 chartContainer.setAttribute('data-index', 0);
+
 function onStepEnter({ index }) {
-  // console.log(index)
   chartContainer.setAttribute('data-index', index);
-  const state = allStates2[index];
+  const state = allStates[index];
   if (state !== undefined) {
     graph.set(state);
   }

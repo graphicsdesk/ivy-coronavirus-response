@@ -1,4 +1,3 @@
-import 'intersection-observer';
 import scrollama from "scrollama";
 import { select } from 'd3-selection';
 import { selectAll } from 'd3-selection';
@@ -142,7 +141,6 @@ function init() {
       graphic: ".scroll__graphic",
       text: ".scroll__text",
       step: ".scroll__text .steps",
-      debug: true
     })
     .onStepEnter(handleStepEnter)
     .onStepExit(handleContainerExit)

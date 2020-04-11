@@ -1,4 +1,6 @@
 import textBalancer from 'text-balancer';
+import 'intersection-observer';
+import './scripts/d3-wrappers';
 
 import { handleResize as ledeResize } from './scripts/lede';
 import { handleResize as columbiaResize } from './scripts/scrollcolumbia';
