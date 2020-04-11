@@ -253,15 +253,15 @@ class Graph extends State {
     }
 
     if (willReplaceXAxis) {
-      xAxis.call(this.makeXAxis.tickPadding(TICK_PADDING))
+      xAxis.call(this.makeXAxis)
     } else {
       xAxis.transition('x-axis')
         .duration(INTERPOLATION_TIME)
-        .call(this.makeXAxis.tickPadding(TICK_PADDING));
+        .call(this.makeXAxis);
     }
     return yAxis.transition('y-axis')
       .duration(INTERPOLATION_TIME)
-      .call(this.makeYAxis.tickPadding(TICK_PADDING));
+      .call(this.makeYAxis);
   }
 
   // Rescales mappings (scales, line generator) based on new data
