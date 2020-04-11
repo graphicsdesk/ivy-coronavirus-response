@@ -43,11 +43,10 @@ const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', isSmall,
 const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases };
 const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', isSmall, orientTop };
 const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases };
-const italySmall = { dayNumber: 11, label: 'Italy tk', country: 'Italy', isSmall };
+const italySmall = { dayNumber: 11, label: 'Italy tk', country: 'Italy', isSmall, orientTop };
 
 const ZOOM_FACTOR = 0.4;
 const allStates = [
-  { countries: [ 'US' ] },
   { annotations: [ us7 ],
     countries: [ 'US' ] },
   { annotations: [ us7, us8, us9, columbia ],
@@ -62,16 +61,18 @@ const allStates = [
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
   { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
-  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates },
-  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+  { annotations: [ iviesSmall, columbiaSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates, dateBounds: true }
 ];
-const initialState = { countries: [] }
+const initialState = { countries: ['US'] }
 
 /**
  * Scroll step triggers
  */
+
+ graph.set(initialState);
 
 const chartContainer = document.getElementById('chart-container');
 chartContainer.setAttribute('data-index', 0);

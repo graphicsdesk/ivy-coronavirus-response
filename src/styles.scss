@@ -12,7 +12,7 @@ body {
 }
 
 .columbia * {
-  // box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* navbar */
@@ -85,7 +85,6 @@ $nav-height: 46px;
     .steps > p {
       padding: 20px;
       font-size: 19px;
-      line-height: 28px;
       font-family: $georgia;
       box-sizing: border-box;
     }
@@ -93,6 +92,17 @@ $nav-height: 46px;
     .steps:not(.small) > p {
       background: rgba(255, 255, 255, 0.9);
       box-shadow: 0 2px 5px 0 #e4e4e4;
+    }
+
+    .steps > p.desk {
+      line-height: 28px;
+    }
+
+    .steps > p:not(.desk) {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-family: "Georgia", serif;
     }
   }
 }

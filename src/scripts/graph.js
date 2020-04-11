@@ -118,7 +118,7 @@ class Graph extends State {
         await (await this.updateAxes(options)).end();
 
         const lastYTick = yAxis.select('.tick:last-child');
-        casesTitle.transition().duration(600).attr('transform', lastYTick.attr('transform'));
+        casesTitle.transition().duration(500).attr('transform', lastYTick.attr('transform'));
       } else if (shouldUpdateAnnotations) {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
@@ -257,7 +257,7 @@ class Graph extends State {
     const { xAxis, yAxis } = this;
 
     if (window.innerWidth < 460) {
-      this.makeXAxis.ticks(4);
+      this.makeXAxis.ticks(3);
     }
     if (willReplaceXAxis && showDates) {
       this.makeXAxis.ticks(7);
