@@ -27,7 +27,7 @@ const orientTop = true;
 
 // Storing annotations for convenience
 const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases };
-const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall, orientTop };
+const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall, orientTop, hideOnMobile };
 const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall, hideOnMobile };
 const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall, hideOnMobile, orientTop };
 const columbia = { dayNumber: 12, label: 'Columbia', showCases };

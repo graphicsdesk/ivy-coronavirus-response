@@ -206,7 +206,7 @@ $step-max-width: 470px;
   }
 
   g.small-annotation.hide-on-mobile {
-    opacity: 0;
+    visibility: hidden;
   }
 }
 

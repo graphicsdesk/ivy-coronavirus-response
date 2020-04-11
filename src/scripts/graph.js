@@ -202,7 +202,7 @@ class Graph extends State {
     selection.classed('small-annotation', d => d.isSmall);
     selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
     selection.classed('orientation-top', d => d.orientTop);
-    // selection.classed('hide-on-mobile', d => d.hideOnMobile);
+    selection.classed('hide-on-mobile', d => d.hideOnMobile);
     selection.attr('data-label', d => d.label)
 
     const { xScale, yScale } = this;
