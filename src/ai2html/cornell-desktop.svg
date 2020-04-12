@@ -68,7 +68,7 @@
 		<line fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="93.841" y1="695.82" x2="102.655" y2="695.82"/>
 	
 		<line fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="93.841" y1="717.847" x2="102.655" y2="717.847"/>
-	<rect x="211" y="215" fill="#FFFFFF" width="46.706" height="73.561"/>
+	<rect x="211" y="215" fill="#FFFFFF" width="46.706" height="71"/>
 	<path fill="none" stroke="#79C0F7" stroke-width="0.75" stroke-miterlimit="10" d="M91.403,600.464
 		c-12.402,0-20.06,11.617-20.06,22.189"/>
 	<g>
@@ -142,9 +142,10 @@
 		</g>
 	</g>
 	<path fill="none" stroke="#2F7099" stroke-width="0.75" stroke-miterlimit="10" d="M91.634,705.089
-		c-12.402,0-20.06,7.283-20.06,13.911"/>
+		C80.732,705.089,74,712.372,74,719"/>
 	<rect x="343.495" y="234.197" fill="#FFFFFF" width="46.706" height="51.803"/>
 	<rect x="488" y="536" fill="#FFFFFF" width="17" height="30"/>
+	<rect x="232" y="49" fill="#FFFFFF" width="10" height="14"/>
 </g>
 <style>
 #g-cornell-desktop-img rect, #g-cornell-desktop-img circle, #g-cornell-desktop-img path, #g-cornell-desktop-img line, #g-cornell-desktop-img polyline { vector-effect: non-scaling-stroke; }

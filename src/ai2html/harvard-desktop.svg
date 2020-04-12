@@ -116,7 +116,6 @@
 				c0.1-1.93-1.384-3.577-3.314-3.677S92.018,716.086,91.918,718.017z"/>
 		</g>
 	</g>
-	<rect style="opacity:0.4;" x="75.423" y="346.527" fill="#BDE1FF" width="13.397" height="198.281"/>
 	<g>
 		
 			<line fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" x1="95.325" y1="477.497" x2="158.898" y2="477.496"/>
@@ -128,6 +127,7 @@
 	<rect x="343.682" y="271.234" fill="#FFFFFF" width="14.108" height="33.651"/>
 	<rect x="341.779" y="336.731" fill="#FFFFFF" width="16.413" height="32.992"/>
 	<rect x="214.878" y="316.087" fill="#FFFFFF" width="16.413" height="52.636"/>
+	<rect style="opacity:0.4;" x="75.423" y="346.527" fill="#BDE1FF" width="13.397" height="198.281"/>
 </g>
 <style>
 #g-harvard-desktop-img rect, #g-harvard-desktop-img circle, #g-harvard-desktop-img path, #g-harvard-desktop-img line, #g-harvard-desktop-img polyline { vector-effect: non-scaling-stroke; }
