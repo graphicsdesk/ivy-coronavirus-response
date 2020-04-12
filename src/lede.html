@@ -2,10 +2,11 @@
   <div id="chart-container">
   </div>
   <div id="steps-container">
-    <each loop="item in item.value.steps">
+    <each loop="text in item.value.steps">
       <div class="lede-step-surrounding-padding">
         <div class="lede-step">
-          <p>{{{ item }}}</p>
+          <!-- <p>{{{ text.replace(/\d{1,2} days after/, `<span class="days-after-keyword">$$`) }}}</p> -->
+          <p>{{{ text }}}</p>
         </div>
       </div>
     </each>
