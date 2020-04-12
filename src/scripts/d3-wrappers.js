@@ -13,6 +13,7 @@ selection.prototype.fadeOut = fadeOut;
 selection.prototype.drawIn = drawIn;
 
 transition.prototype.classed = selection.prototype.classed;
+transition.prototype.tspansBackgrounds = tspansBackgrounds;
 
 // Append circle and set radius.
 const RADIUS = 6;
@@ -23,8 +24,8 @@ function appendCircle(color) {
 }
 
 // Same as d3-jetpack/src/tspans, but adds background tspans
-function tspansBackgrounds(lines, lh) {
-  const that = this;
+function tspansBackgrounds(lines, lh, getX) {
+  const that = typeof this.selection === 'function' ? this.selection() : this;
   that.selectAll('tspan')
     .data(function(d) {
       const linesAry = typeof lines === 'function' ? lines(d) : lines;
@@ -36,18 +37,20 @@ function tspansBackgrounds(lines, lh) {
       }, []);
     })
     .join(
-      enter => enter.append('tspan'),
+      enter => enter.append('tspan').at({ x: d => getX(d.parent) }),
       update => update,
       exit => exit.remove(),
     )
     .text(function(d) { return d.line; })
-    .attr('dy', ({ parent, line, isBackground }, i) => {
-      if (i < 2 || !isBackground)
-        return 0;
-      return typeof lh === 'function' ? lh(parent, line) : lh;
+    .at({
+      dy: ({ parent, line, isBackground }, i) => {
+        if (i < 2 || !isBackground)
+          return 0;
+        return typeof lh === 'function' ? lh(parent, line) : lh;
+      },
     })
     .classed('background-text', d => d.isBackground);
-  return this;
+  return that;
 }
 
 // Adds text with one backgrounded tspan
