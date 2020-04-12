@@ -4,6 +4,7 @@
 
 import scrollama from 'scrollama/src/init.js';
 import Graph from './graph';
+import Note from './note';
 import { COUNTRY_COLORS } from './constants';
 import covidData from '../../data/covid.json';
 
@@ -18,34 +19,30 @@ for (let i = 0; i < covidData.length; i++)
  * Instantiate graph, write states
  */
 
-const graph = new Graph(covidData);
-
-// Annotation options
-const isSmall = true;
-const showCases = true;
-const hideOnMobile = true;
-const orientTop = true;
 const showDates = true;
 
+const graph = new Graph(covidData);
+
 // Annotations
-const us7 = { dayNumber: 7, label: 'Harvard, Cornell, Yale announces stuff', showCases };
-const us7Small = { dayNumber: 7, label: 'Harvard, Cornell, Yale', isSmall, orientTop, hideOnMobile };
-const us8 = { dayNumber: 8, label: 'Princeton and Penn', isSmall, hideOnMobile };
-const us9 = { dayNumber: 9, label: 'Dartmouth and Brown', isSmall, hideOnMobile, orientTop };
-const columbia = { dayNumber: 12, label: 'Columbia', showCases };
-const columbiaSmall = { dayNumber: 12, label: 'Columbia', isSmall, orientTop };
-const columbiaSmallBtm = { dayNumber: 12, label: 'Columbia', isSmall };
-const ivies = { dayNumber: 8.375, label: 'Ivy average' };
-const iviesSmall = { dayNumber: 8.375, label: 'Ivy average', isSmall, orientTop };
-const iviesSmallBtm = { dayNumber: 8.375, label: 'Ivy average', isSmall };
-const china = { dayNumber: 8, label: 'China tk', country: 'China', showCases, };
-const chinaSmall = { dayNumber: 8, label: 'China tk', country: 'China', isSmall, orientTop };
-const korea = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', showCases };
-const koreaSmall = { dayNumber: 2, label: 'South Korea tk', country: 'Korea, South', isSmall, orientTop };
-const italy = { dayNumber: 11, label: 'Italy tk', country: 'Italy', showCases };
-const italySmall = { dayNumber: 11, label: 'Italy tk', country: 'Italy', isSmall, orientTop };
+const us7 = new Note(7, 'Harvard, Cornell, Yale announce student move-out');
+const us7Small = us7.small.top.hideMobile.write('Harvard, Cornell, Yale');
+const us8 = new Note(8, 'Princeton and Penn').small.hideMobile;
+const us9 = new Note(9, 'Dartmouth and Brown').small.hideMobile.top;
+const columbia = new Note(12, 'Columbia');
+const columbiaSmall = columbia.small.top;
+const columbiaSmallBtm = columbia.small.bottom;
+const ivies = new Note(8.375, 'Ivies');
+const iviesSmall = ivies.small.top;
+const iviesSmallBtm = ivies.small;
+const china = new Note(8, 'China tk', 'China');
+const chinaSmall = china.small.top;
+const korea = new Note(2, 'South Korea tk', 'Korea, South');
+const koreaSmall = korea.small.top;
+const italy = new Note(11, 'Italy tk', 'Italy');
+const italySmall = italy.small.top;
 
 const ZOOM_FACTOR = 0.4;
+
 const allStates = [
   { annotations: [ us7 ],
     countries: [ 'US' ] },
