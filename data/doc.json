@@ -1,7 +1,4 @@
 {
-  "headline": "The U.S. and Ivy League schools were late to respond to COVID-19. Data shows international universities did better.",
-  "date": "April 10, 2020",
-  "byline": "By <a href=\"https://www.columbiaspectator.com/contributors/Kelly-Pu/\">Kelly Pu</a>, <a href=\"https://www.columbiaspectator.com/contributors/Jun-Yi-Zhang/\">Jun Yi Zhang</a>, <a href=\"https://www.columbiaspectator.com/contributors/Stephanie-Lai/\">Stephanie Lai</a>, <a href=\"https://www.columbiaspectator.com/contributors/Raeedah-Wahid/\">Raeedah Wahid</a>\nInteractives by <a href=\"https://www.columbiaspectator.com/contributors/Hong-Sen-Du/\">Hong Sen Du</a> and <a href=\"https://www.columbiaspectator.com/contributors/Jason-Kao/\">Jason Kao</a>\nEdited by <a href=\"https://www.columbiaspectator.com/contributors/Karen-Xia\">Karen Xia</a>",
   "top": [
     {
       "type": "text",
@@ -13,18 +10,21 @@
         "asset": "lede.html",
         "steps": [
           "Harvard, Cornell, and Yale were the first Ivies to respond to the coronavirus outbreak by announcing mandatory move-out for students when there were 959 cases nationally.",
-          "Columbia University was the last Ivy to announce mandatory move-out, five days after the first Ivies. [ Quadruple TK ]",
+          "Columbia University was the last Ivy to announce mandatory move-out, five days after the first Ivies, when there were 3,499 cases nationally. In that five day time span, the number of national cases had quadrupled.",
           "On average, the Ivy League universities took 8.375 days to respond after the first hundred reported cases in the nation.",
           "This response rate equaled that of <c>China</c>, the first country to begin experiencing an outbreak in late January. 8 days after the first hundred reported cases, when the national number of cases had reached 2,863, the government mandated the closure of all schools.",
           "The Ivies’ responses were far slower than that of <c>South Korea</c>, which began experiencing an outbreak in late February. The South Korean government closed schools across the country when there were 602 cases, 2 days after the first hundred reported cases.",
           "The number of national cases at the time of Columbia’s response matches that of Italy, which has faced significant criticism for its delays. Italy began experiencing an outbreak in early March. They responded by closing schools when there were 3,858 cases, 11 days after the first hundred reported cases.",
           "slide",
           "The United States began experiencing an outbreak in mid-March, long after effects had been seen in China, South Korea, and Italy. The lack of coordinated national response led to delays in school closures, discrepancies in state recommendations, and lack of proactive efforts to inform university students of social distancing practices, according to experts.",
-          "slide"
+          "The United States, now with XXX cases at the time of publication, has surpassed the rest of the world."
         ]
       }
     }
   ],
+  "headline": "The U.S. and Ivy League schools were late to respond to COVID-19. Data shows international universities did better.",
+  "date": "April 10, 2020",
+  "byline": "By <a href=\"https://www.columbiaspectator.com/contributors/Kelly-Pu/\">Kelly Pu</a>, <a href=\"https://www.columbiaspectator.com/contributors/Jun-Yi-Zhang/\">Jun Yi Zhang</a>, <a href=\"https://www.columbiaspectator.com/contributors/Stephanie-Lai/\">Stephanie Lai</a>, <a href=\"https://www.columbiaspectator.com/contributors/Raeedah-Wahid/\">Raeedah Wahid</a>\nInteractives Produced by <a href=\"https://www.columbiaspectator.com/contributors/Hong-Sen-Du/\">Hong Sen Du</a> and <a href=\"https://www.columbiaspectator.com/contributors/Jason-Kao/\">Jason Kao</a>\nEdited by <a href=\"https://www.columbiaspectator.com/contributors/Karen-Xia\">Karen Xia</a>",
   "body": [
     {
       "type": "text",
@@ -39,6 +39,18 @@
       "value": {
         "asset": "columbia-graphic.html"
       }
+    },
+    {
+      "type": "text",
+      "value": "On March 8, President Lee Bollinger announced the University would shift to <a href=\"https://www.columbiaspectator.com/news/2020/03/09/columbia-temporarily-cancels-class-quarantines-affiliate-after-exposure-to-covid-19/\">remote learning</a> and temporarily canceled classes prior to spring break after a Columbia affiliate came in contact with someone with COVID-19,"
+    },
+    {
+      "type": "text",
+      "value": "Students were encouraged to leave campus but were able to stay on campus if needed. Days later, in light of the growing epidemic and the <a href=\"https://www.columbiaspectator.com/news/2020/03/15/first-columbia-affiliate-tests-positive-for-coronavirus-amid-mounting-pressures-for-new-york-shutdown/\">first known case</a> in the Columbia community, the University announced a <a href=\"https://www.columbiaspectator.com/news/2020/03/18/so-little-communication-so-few-answers-students-scramble-to-leave-columbia-with-two-day-notice/\">mandatory move out</a> on March 15."
+    },
+    {
+      "type": "text",
+      "value": "Despite Columbia being the first Ivy League university to respond to the coronavirus pandemic by shifting to partial online instruction, it was the last to mandate students to leave campus, when there were 3,499 cases nationally and 732 cases in New York. The University followed the guidance of public health experts and state officials."
     },
     {
       "type": "text",
@@ -190,12 +202,8 @@
     },
     {
       "type": "text",
-      "value": "<i>Raeedah Wahid is the Graphics editor at Spectator. She can be contacted at </i><a href=\"mailto:raeedah.wahid@columbiaspectator.com\"><i>raeedah.wahid@columbiaspectator.com</i></a><i>. Follow her on Twitter </i><a href=\"https://twitter.com/raeedahwahid\"><i>@raeedahwahid</i></a>.<i>"
-    },
-    {
-      "type": "text",
-      "value": "</i>"
+      "value": "<i>Raeedah Wahid is the Graphics editor at Spectator. She can be contacted at </i><a href=\"mailto:raeedah.wahid@columbiaspectator.com\"><i>raeedah.wahid@columbiaspectator.com</i></a><i>. Follow her on Twitter </i><a href=\"https://twitter.com/raeedahwahid\"><i>@raeedahwahid</i></a>."
     }
   ],
-  "footer": "<a href=\"https://www.columbiaspectator.com/contributors/Griffin-Jones\">Griffin Jones</a> contributed reporting. Produced with <a href=\"https://github.com/spec-journalism/spectate/\">Spectate</a>.\n\n<b>Notes on data</b> \n\nData regarding the global number of coronavirus cases was compiled by the <a href=\"https://github.com/datasets/covid-19/tree/master/data\">Center for Systems Science and Engineering</a> at Johns Hopkins. National coronavirus data by state was compiled by the <a href=\"https://github.com/nytimes/covid-19-data/blob/master/us-counties.csv\">New York Times</a>.\n\nJohns Hopkins CSSE data begins on January 22 and was used as a starting point to measure the number of positive cases in each country. Spectator was not able to accurately retrieve daily case numbers in China between the <a href=\"https://www.nejm.org/doi/full/10.1056/NEJMoa2001316\">first four known cases of coronavirus</a> in Wuhan, on Dec. 29 and January 22, 2020. \n\nGovernmental and university administrative actions and announcements were analyzed from official press releases, university websites, and news sources. There may be some discrepancies in dates due to time differences. All data was last updated March 31, 2020."
+  "footer": "<a href=\"https://www.columbiaspectator.com/contributors/Griffin-Jones\">Griffin Jones</a> contributed reporting. Produced with <a href=\"https://github.com/spec-journalism/spectate/\">Spectate</a>.\n\n<b>Notes on data \n</b>\nData regarding the global number of coronavirus cases was compiled by the <a href=\"https://github.com/datasets/covid-19/tree/master/data\">Center for Systems Science and Engineering</a> at Johns Hopkins. National coronavirus data by state was compiled by the <a href=\"https://github.com/nytimes/covid-19-data/blob/master/us-counties.csv\">New York Times</a>.\n\nJohns Hopkins CSSE data begins on January 22 and was used as a starting point to measure the number of positive cases in each country. Spectator was not able to accurately retrieve daily case numbers in China between the <a href=\"https://www.nejm.org/doi/full/10.1056/NEJMoa2001316\">first four known cases of coronavirus</a> in Wuhan, on Dec. 29 and January 22, 2020. \n\nGovernmental and university administrative actions and announcements were analyzed from official press releases, university websites, and news sources. There may be some discrepancies in dates due to time differences. All data was last updated March 31, 2020."
 }

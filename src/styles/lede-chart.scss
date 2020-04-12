@@ -41,6 +41,7 @@ g.lines-container > g.line-container {
   }
 }
 
+/*
 #chart-container[data-index="0"] g.line-container[data-country="US"],
 #chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
@@ -50,6 +51,7 @@ g.lines-container > g.line-container {
     animation: $pulse-anim;
   }
 }
+*/
 
 g.axis {
   .domain {
@@ -78,12 +80,12 @@ text.confirmed-cases-title, text.time-label {
 
   tspan.background-text {
     stroke-width: 14px;
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
 text.time-label {
-  // text-anchor: middle;
+  text-anchor: middle;
 }
 
 g.annotations-container {
