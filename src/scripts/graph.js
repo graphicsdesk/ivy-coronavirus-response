@@ -179,7 +179,9 @@ class Graph extends State {
       const annotationsEnter = annotationsUpdate.enter();
       await annotationsEnter
         .filter(function() {
-          return annotationsContainer.select(`[data-label="${deriveNoteKey(this.__data__)}"]`).empty();
+          return annotationsContainer
+            .select(`[data-note-key="${deriveNoteKey(this.__data__)}"]`)
+            .empty();
         })
         .append('g.annotation')
         .call(this.enterAnnotation)
@@ -254,7 +256,7 @@ class Graph extends State {
   updateAnnotation(selection) {
     // Things for CSS
     selection.classed('small-annotation', d => d.isSmall);
-    selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
+    selection.classed('hide-cases', d => (!d.showCases && d.hideCases) || (d.isSmall && d.showCases !== true));
     selection.classed('orientation-top', d => d.orientTop);
     selection.classed('hide-on-mobile', d => d.hideOnMobile);
     selection.attr('data-note-key', deriveNoteKey);

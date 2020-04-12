@@ -24,14 +24,14 @@ const showDates = true;
 const graph = new Graph(covidData);
 
 // Annotations
-const us7 = new Note(7, 'Harvard, Cornell, Yale announce student move-out');
+const us7 = new Note(7, 'Harvard, Cornell, Yale announce student move-out').noCases;
 const us7Small = us7.small.top.hideMobile.write('Harvard, Cornell, Yale');
 const us8 = new Note(8, 'Princeton and Penn').small.hideMobile;
 const us9 = new Note(9, 'Dartmouth and Brown').small.hideMobile.top;
-const columbia = new Note(12, 'Columbia');
+const columbia = new Note(12, 'Columbia').noCases;
 const columbiaSmall = columbia.small.top;
 const columbiaSmallBtm = columbia.small.bottom;
-const ivies = new Note(8.375, 'Ivies');
+const ivies = new Note(8.375, 'Ivies').noCases;
 const iviesSmall = ivies.small.top;
 const iviesSmallBtm = ivies.small;
 const china = new Note(8, 'China tk', 'China');
@@ -48,15 +48,17 @@ const allStates = [
     countries: [ 'US' ] },
   { annotations: [ us7, us8, us9, columbia ],
     countries: [ 'US' ] },
+  { annotations: [ us7.cases, us8, us9, columbia.cases ],
+    countries: [ 'US' ] },
   { annotations: [ ivies, us7Small, us8, us9, columbiaSmall ],
     countries: [ 'US' ] },
   { annotations: [ iviesSmall, columbiaSmall, china ],
     countries: [ 'US', 'China' ] },
   { annotations: [ iviesSmall, columbiaSmall, chinaSmall, korea ],
     countries: [ 'US', 'China', 'Korea, South' ], scaleYAxis: ZOOM_FACTOR },
-  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italy ],
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italy.noCases ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], scaleYAxis: ZOOM_FACTOR },
-  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall ],
+  { annotations: [ iviesSmallBtm, columbiaSmallBtm, chinaSmall, koreaSmall, italySmall.cases ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ] },
   { annotations: [ iviesSmall, chinaSmall, koreaSmall, italySmall ],
     countries: [ 'US', 'China', 'Korea, South', 'Italy' ], showDates },
