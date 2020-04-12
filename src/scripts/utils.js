@@ -3,13 +3,14 @@
 const areDomainsEqual = (d1, d2) =>
   Math.abs(1 - (d1[1] - d1[0]) / (d2[1] - d2[0])) < 0.001;
 
-// Adds a key to an annotation object
+// Generates key for annotation/Note object
 // TODO: Here a second country = US assumption is made. Lift it up/make it more obvious?
-const annotationWithKey = ({ country = 'US', dayNumber, ...rest }) => ({
-  key: country + '-' + dayNumber,
-  country,
-  dayNumber,
-  ...rest,
+const deriveNoteKey = ({ country = 'US', dayNumber }) => country + '-' + dayNumber;
+
+// Adds a key to an annotation object
+const annotationWithKey = note => ({
+  key: deriveNoteKey(note),
+  ...note,
 });
 
 // Returns true if a <= x <= b
@@ -30,6 +31,7 @@ const formatCaseCount = ({ cases }) => {
 module.exports = {
   areDomainsEqual,
   annotationWithKey,
+  deriveNoteKey,
   isBetween,
   firstQuintile,
   formatCaseCount,

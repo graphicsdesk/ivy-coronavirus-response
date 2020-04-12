@@ -6,7 +6,7 @@
  */
 
 $black: #121212;
-$gray: #888;
+$gray: #999;
 $grid-color: #d4d4d4;
 
 $trans-dur: .3s;
@@ -117,7 +117,7 @@ g.annotations-container {
 
   g.annotation:not(.small-annotation) circle {
     stroke: black;
-    stroke-width: 2px;
+    stroke-width: 1.2px;
   }
 
   g.small-annotation {

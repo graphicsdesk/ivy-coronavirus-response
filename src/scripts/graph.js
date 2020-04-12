@@ -8,7 +8,7 @@ import { wordwrap } from 'd3-jetpack';
 import { interpolatePath } from 'd3-interpolate-path';
 
 import State from './state';
-import { areDomainsEqual, firstQuintile, formatCaseCount } from './utils';
+import { areDomainsEqual, firstQuintile, formatCaseCount, deriveNoteKey } from './utils';
 import { getLineLabel, getLineColor, getCountryColor } from './constants';
 
 const INTERPOLATION_TIME = 1000;
@@ -178,6 +178,9 @@ class Graph extends State {
       // Fade in the annotations enter selection
       const annotationsEnter = annotationsUpdate.enter();
       await annotationsEnter
+        .filter(function() {
+          return annotationsContainer.select(`[data-label="${deriveNoteKey(this.__data__)}"]`).empty();
+        })
         .append('g.annotation')
         .call(this.enterAnnotation)
         .call(this.updateAnnotation, true)
@@ -254,7 +257,7 @@ class Graph extends State {
     selection.classed('hide-cases', d => d.isSmall && d.showCases !== true);
     selection.classed('orientation-top', d => d.orientTop);
     selection.classed('hide-on-mobile', d => d.hideOnMobile);
-    selection.attr('data-label', d => d.label)
+    selection.attr('data-note-key', deriveNoteKey);
 
     const { xScale, yScale } = this;
     const getX = d => xScale(d[this.xField]);
@@ -277,7 +280,7 @@ class Graph extends State {
 
     // Place label
     const noteText = selection.select('text.note-text').at({ x: getX });
-    (noteText.selection ? noteText.selection() : noteText).tspansBackgrounds(wrapAnnotation, LINE_HEIGHT);
+    noteText.tspansBackgrounds(wrapAnnotation, LINE_HEIGHT, getX);
     noteText
       .at({ y: function(d) { return getY(d) + bottomAlignAdjust.call(this, d); } })
       .selectAll('tspan')
@@ -380,7 +383,7 @@ class Graph extends State {
 
   get xFieldLabel() {
     const label = { 'date': 'Date', 'dayNumber': `First ${this.dayRange} days since a country's 100th case` };
-    return label[this.xField] + ' ⟶';
+    return '⟵ ' + label[this.xField] + ' ⟶';
   }
 }
 
