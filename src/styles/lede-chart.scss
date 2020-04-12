@@ -205,6 +205,10 @@ $step-max-width: 470px;
   }
 }
 
+.lede-step-surrounding-padding:nth-last-child(-n+2) .lede-step p {
+  margin: 0 auto;
+}
+
 @media (max-width: $step-max-width + 2 * $step-margin-left) {
   .lede-step p {
     margin: 0 auto;

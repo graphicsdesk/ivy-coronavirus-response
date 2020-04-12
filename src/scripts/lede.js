@@ -41,7 +41,7 @@ const koreaSmall = korea.small.top;
 const italy = new Note(11, 'Italy tk', 'Italy');
 const italySmall = italy.small.top;
 
-const ZOOM_FACTOR = 0.4;
+const ZOOM_FACTOR = 1;
 
 const allStates = [
   { annotations: [ us7 ],
