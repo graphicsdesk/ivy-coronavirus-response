@@ -379,7 +379,7 @@ class Graph extends State {
   }
 
   get xFieldLabel() {
-    const label = { 'date': 'Date', 'dayNumber': 'Days since a country\'s 100th case' };
+    const label = { 'date': 'Date', 'dayNumber': `First ${this.dayRange} days since a country's 100th case` };
     return label[this.xField] + ' ⟶';
   }
 }

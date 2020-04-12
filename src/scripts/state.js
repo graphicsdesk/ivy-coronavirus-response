@@ -94,6 +94,8 @@ class State {
         return isBetween(d['dayNumber'], this.xBounds);
       });
   }
+
+  get dayRange() { return this.xBounds[1] - this.xBounds[0]; }
 }
 
 export default State;

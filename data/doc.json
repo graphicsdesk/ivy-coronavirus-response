@@ -15,7 +15,7 @@
           "This response rate equaled that of <c>China</c>, the first country to begin experiencing an outbreak in late January. 8 days after the first hundred reported cases, when the national number of cases had reached 2,863, the government mandated the closure of all schools.",
           "The Ivies’ responses were far slower than that of <c>South Korea</c>, which began experiencing an outbreak in late February. The South Korean government closed schools across the country when there were 602 cases, 2 days after the first hundred reported cases.",
           "The number of national cases at the time of Columbia’s response matches that of Italy, which has faced significant criticism for its delays. Italy began experiencing an outbreak in early March. They responded by closing schools when there were 3,858 cases, 11 days after the first hundred reported cases.",
-          "slide",
+          "PLACEHOLDER SLIDE: READJUSTS Y AXIS",
           "The United States began experiencing an outbreak in mid-March, long after effects had been seen in China, South Korea, and Italy. The lack of coordinated national response led to delays in school closures, discrepancies in state recommendations, and lack of proactive efforts to inform university students of social distancing practices, according to experts.",
           "The United States, now with XXX cases at the time of publication, has surpassed the rest of the world."
         ]
@@ -24,7 +24,7 @@
   ],
   "headline": "The U.S. and Ivy League schools were late to respond to COVID-19. Data shows international universities did better.",
   "date": "April 10, 2020",
-  "byline": "By <a href=\"https://www.columbiaspectator.com/contributors/Kelly-Pu/\">Kelly Pu</a>, <a href=\"https://www.columbiaspectator.com/contributors/Jun-Yi-Zhang/\">Jun Yi Zhang</a>, <a href=\"https://www.columbiaspectator.com/contributors/Stephanie-Lai/\">Stephanie Lai</a>, <a href=\"https://www.columbiaspectator.com/contributors/Raeedah-Wahid/\">Raeedah Wahid</a>\nInteractives Produced by <a href=\"https://www.columbiaspectator.com/contributors/Hong-Sen-Du/\">Hong Sen Du</a> and <a href=\"https://www.columbiaspectator.com/contributors/Jason-Kao/\">Jason Kao</a>\nEdited by <a href=\"https://www.columbiaspectator.com/contributors/Karen-Xia\">Karen Xia</a>",
+  "byline": "By <a href=\"https://www.columbiaspectator.com/contributors/Kelly-Pu/\">Kelly Pu</a>, <a href=\"https://www.columbiaspectator.com/contributors/Jun-Yi-Zhang/\">Jun Yi Zhang</a>, <a href=\"https://www.columbiaspectator.com/contributors/Stephanie-Lai/\">Stephanie Lai</a>, <a href=\"https://www.columbiaspectator.com/contributors/Raeedah-Wahid/\">Raeedah Wahid</a>\nInteractives by <a href=\"https://www.columbiaspectator.com/contributors/Hong-Sen-Du/\">Hong Sen Du</a> and <a href=\"https://www.columbiaspectator.com/contributors/Jason-Kao/\">Jason Kao</a>\nEdited by <a href=\"https://www.columbiaspectator.com/contributors/Karen-Xia\">Karen Xia</a>",
   "body": [
     {
       "type": "text",
@@ -39,18 +39,6 @@
       "value": {
         "asset": "columbia-graphic.html"
       }
-    },
-    {
-      "type": "text",
-      "value": "On March 8, President Lee Bollinger announced the University would shift to <a href=\"https://www.columbiaspectator.com/news/2020/03/09/columbia-temporarily-cancels-class-quarantines-affiliate-after-exposure-to-covid-19/\">remote learning</a> and temporarily canceled classes prior to spring break after a Columbia affiliate came in contact with someone with COVID-19,"
-    },
-    {
-      "type": "text",
-      "value": "Students were encouraged to leave campus but were able to stay on campus if needed. Days later, in light of the growing epidemic and the <a href=\"https://www.columbiaspectator.com/news/2020/03/15/first-columbia-affiliate-tests-positive-for-coronavirus-amid-mounting-pressures-for-new-york-shutdown/\">first known case</a> in the Columbia community, the University announced a <a href=\"https://www.columbiaspectator.com/news/2020/03/18/so-little-communication-so-few-answers-students-scramble-to-leave-columbia-with-two-day-notice/\">mandatory move out</a> on March 15."
-    },
-    {
-      "type": "text",
-      "value": "Despite Columbia being the first Ivy League university to respond to the coronavirus pandemic by shifting to partial online instruction, it was the last to mandate students to leave campus, when there were 3,499 cases nationally and 732 cases in New York. The University followed the guidance of public health experts and state officials."
     },
     {
       "type": "text",
@@ -123,22 +111,14 @@
       "value": "Similar actions were taken at Columbia, Yale, Princeton, and Dartmouth. These universities originally only announced remote classes for a few weeks and later extended them to the entire semester in order to respond to the rapidly changing nature of the virus as recommended by government officials. At the time of the initial announcement, students may not have understood the severity of the situation until weeks later when they were forced to evacuate."
     },
     {
-      "type": "subhed",
-      "value": "Harvard"
-    },
-    {
       "type": "text",
-      "value": "Harvard and Cornell, were the first Ivy League schools to announce a move to online instruction for the rest of the semester on March 10. On the same day, Harvard, Cornell, and Yale also announced mandatory move-out."
+      "value": "<b>Harvard</b><b> and Cornell</b> were the first Ivy League schools to announce a move to online instruction for the rest of the semester on March 10. On the same day, Harvard, Cornell, and Yale also announced mandatory move-out."
     },
     {
       "type": "graphic",
       "value": {
         "asset": "harvard.html"
       }
-    },
-    {
-      "type": "subhed",
-      "value": "Cornell"
     },
     {
       "type": "text",
