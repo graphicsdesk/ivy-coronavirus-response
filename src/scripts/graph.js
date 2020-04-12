@@ -51,7 +51,7 @@ class Graph extends State {
 
   // Labelling axes
   casesTitle = this.svg
-    .appendBackedText('Confirmed cases')
+    .appendBackedText('Total cases')
     .classed('confirmed-cases-title', true);
   timeLabel = this.svg
     .appendBackedText()
