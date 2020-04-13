@@ -36,6 +36,18 @@
   display: none;
 }
 
+// Later things just for style
+
 .pb-f-global-footer .footer {
-  margin: 0; // Just for style
+  margin: 0;
+}
+
+.bottom-footer {
+  margin: 0;
+  width: 100%;
+  padding: 0;
+}
+
+html {
+  overflow-x: visible;
 }
