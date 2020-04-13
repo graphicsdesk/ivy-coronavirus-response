@@ -1284,7 +1284,7 @@
     "dayNumber": 28
   },
   {
-    "cases": 13677,
+    "cases": 13747,
     "country": "US",
     "date": "2020-03-19",
     "dayNumber": 16
@@ -1308,7 +1308,7 @@
     "dayNumber": 29
   },
   {
-    "cases": 19100,
+    "cases": 19273,
     "country": "US",
     "date": "2020-03-20",
     "dayNumber": 17
@@ -1332,7 +1332,7 @@
     "dayNumber": 30
   },
   {
-    "cases": 25489,
+    "cases": 25600,
     "country": "US",
     "date": "2020-03-21",
     "dayNumber": 18
@@ -1500,7 +1500,7 @@
     "dayNumber": 37
   },
   {
-    "cases": 121478,
+    "cases": 121465,
     "country": "US",
     "date": "2020-03-28",
     "dayNumber": 25
@@ -1524,7 +1524,7 @@
     "dayNumber": 38
   },
   {
-    "cases": 140886,
+    "cases": 140909,
     "country": "US",
     "date": "2020-03-29",
     "dayNumber": 26
@@ -1548,7 +1548,7 @@
     "dayNumber": 39
   },
   {
-    "cases": 161807,
+    "cases": 161831,
     "country": "US",
     "date": "2020-03-30",
     "dayNumber": 27
@@ -1620,7 +1620,7 @@
     "dayNumber": 42
   },
   {
-    "cases": 243453,
+    "cases": 243762,
     "country": "US",
     "date": "2020-04-02",
     "dayNumber": 30
@@ -1648,5 +1648,197 @@
     "country": "US",
     "date": "2020-04-03",
     "dayNumber": 31
+  },
+  {
+    "cases": 82543,
+    "country": "China",
+    "date": "2020-04-04",
+    "dayNumber": 73
+  },
+  {
+    "cases": 124632,
+    "country": "Italy",
+    "date": "2020-04-04",
+    "dayNumber": 41
+  },
+  {
+    "cases": 10156,
+    "country": "Korea, South",
+    "date": "2020-04-04",
+    "dayNumber": 44
+  },
+  {
+    "cases": 308853,
+    "country": "US",
+    "date": "2020-04-04",
+    "dayNumber": 32
+  },
+  {
+    "cases": 82602,
+    "country": "China",
+    "date": "2020-04-05",
+    "dayNumber": 74
+  },
+  {
+    "cases": 128948,
+    "country": "Italy",
+    "date": "2020-04-05",
+    "dayNumber": 42
+  },
+  {
+    "cases": 10237,
+    "country": "Korea, South",
+    "date": "2020-04-05",
+    "dayNumber": 45
+  },
+  {
+    "cases": 337072,
+    "country": "US",
+    "date": "2020-04-05",
+    "dayNumber": 33
+  },
+  {
+    "cases": 82665,
+    "country": "China",
+    "date": "2020-04-06",
+    "dayNumber": 75
+  },
+  {
+    "cases": 132547,
+    "country": "Italy",
+    "date": "2020-04-06",
+    "dayNumber": 43
+  },
+  {
+    "cases": 10284,
+    "country": "Korea, South",
+    "date": "2020-04-06",
+    "dayNumber": 46
+  },
+  {
+    "cases": 366667,
+    "country": "US",
+    "date": "2020-04-06",
+    "dayNumber": 34
+  },
+  {
+    "cases": 82718,
+    "country": "China",
+    "date": "2020-04-07",
+    "dayNumber": 76
+  },
+  {
+    "cases": 135586,
+    "country": "Italy",
+    "date": "2020-04-07",
+    "dayNumber": 44
+  },
+  {
+    "cases": 10331,
+    "country": "Korea, South",
+    "date": "2020-04-07",
+    "dayNumber": 47
+  },
+  {
+    "cases": 396223,
+    "country": "US",
+    "date": "2020-04-07",
+    "dayNumber": 35
+  },
+  {
+    "cases": 82809,
+    "country": "China",
+    "date": "2020-04-08",
+    "dayNumber": 77
+  },
+  {
+    "cases": 139422,
+    "country": "Italy",
+    "date": "2020-04-08",
+    "dayNumber": 45
+  },
+  {
+    "cases": 10384,
+    "country": "Korea, South",
+    "date": "2020-04-08",
+    "dayNumber": 48
+  },
+  {
+    "cases": 429052,
+    "country": "US",
+    "date": "2020-04-08",
+    "dayNumber": 36
+  },
+  {
+    "cases": 82883,
+    "country": "China",
+    "date": "2020-04-09",
+    "dayNumber": 78
+  },
+  {
+    "cases": 143626,
+    "country": "Italy",
+    "date": "2020-04-09",
+    "dayNumber": 46
+  },
+  {
+    "cases": 10423,
+    "country": "Korea, South",
+    "date": "2020-04-09",
+    "dayNumber": 49
+  },
+  {
+    "cases": 461437,
+    "country": "US",
+    "date": "2020-04-09",
+    "dayNumber": 37
+  },
+  {
+    "cases": 82941,
+    "country": "China",
+    "date": "2020-04-10",
+    "dayNumber": 79
+  },
+  {
+    "cases": 147577,
+    "country": "Italy",
+    "date": "2020-04-10",
+    "dayNumber": 47
+  },
+  {
+    "cases": 10450,
+    "country": "Korea, South",
+    "date": "2020-04-10",
+    "dayNumber": 50
+  },
+  {
+    "cases": 496535,
+    "country": "US",
+    "date": "2020-04-10",
+    "dayNumber": 38
+  },
+  {
+    "cases": 83014,
+    "country": "China",
+    "date": "2020-04-11",
+    "dayNumber": 80
+  },
+  {
+    "cases": 152271,
+    "country": "Italy",
+    "date": "2020-04-11",
+    "dayNumber": 48
+  },
+  {
+    "cases": 10480,
+    "country": "Korea, South",
+    "date": "2020-04-11",
+    "dayNumber": 51
+  },
+  {
+    "cases": 526396,
+    "country": "US",
+    "date": "2020-04-11",
+    "dayNumber": 39
   }
 ]

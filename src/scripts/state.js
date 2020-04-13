@@ -7,7 +7,7 @@ import { annotationWithKey, isBetween } from './utils';
  */
 
 const defaultXBounds = [0, 16];
-const defaultDateBounds = [new Date("2020-01-22"), new Date("2020-04-01")];
+const defaultDateBounds = [new Date("2020-01-22"), new Date("2020-04-11")];
 
 class State {
   constructor(covidData) {
@@ -94,6 +94,8 @@ class State {
         return isBetween(d['dayNumber'], this.xBounds);
       });
   }
+
+  get dayRange() { return this.xBounds[1] - this.xBounds[0]; }
 }
 
 export default State;

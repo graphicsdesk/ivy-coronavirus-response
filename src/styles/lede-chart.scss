@@ -6,7 +6,7 @@
  */
 
 $black: #121212;
-$gray: #888;
+$gray: #999;
 $grid-color: #d4d4d4;
 
 $trans-dur: .3s;
@@ -80,7 +80,7 @@ text.confirmed-cases-title, text.time-label {
 
   tspan.background-text {
     stroke-width: 14px;
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 
@@ -117,7 +117,7 @@ g.annotations-container {
 
   g.annotation:not(.small-annotation) circle {
     stroke: black;
-    stroke-width: 2px;
+    stroke-width: 1.2px;
   }
 
   g.small-annotation {
@@ -146,7 +146,7 @@ g.small-annotation {
   &[data-label="Dartmouth and Brown"] {
     text {
       text-anchor: start !important;
-      transform: translate(-10px, 0);
+      transform: translate(-12px, 0);
     }
   }
 }
@@ -203,6 +203,10 @@ $step-max-width: 470px;
     width: calc(100% - 40px);
     max-width: $step-max-width;
   }
+}
+
+.lede-step-surrounding-padding:nth-last-child(-n+2) .lede-step p {
+  margin: 0 auto;
 }
 
 @media (max-width: $step-max-width + 2 * $step-margin-left) {
