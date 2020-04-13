@@ -72,8 +72,11 @@ class Graph extends State {
     this.resize();
   }
 
+  oldParams = null;
+
   async update(params) {
 
+    this.oldParams = params;
     let { shouldUpdateAnnotations, resized, willReplaceXAxis, dateBounds } = params;
 
     try {
@@ -327,14 +330,6 @@ class Graph extends State {
 
     const { xScale, yScale, makeLine, xField, data, gHeight, gWidth } = this;
 
-    this.makeXAxis.scale(xScale).tickSize(-gHeight);
-    this.makeYAxis.scale(yScale).tickSize(-gWidth);
-    if (showDates) {
-      this.makeXAxis.tickFormat(timeFormat('%b %_d'));
-    } else {
-      this.makeXAxis.tickFormat(x => x);
-    }
-
     const newXDomain = extent(data, d => d[xField]);
     const newYDomain = extent(data, d => d.cases);
 
@@ -352,6 +347,14 @@ class Graph extends State {
     // Updates line generator based on new scales
     if (didDomainsChange) {
       makeLine.x(d => xScale(d[xField])).y(d => yScale(d.cases));
+    }
+
+    this.makeXAxis.scale(xScale).tickSize(-gHeight);
+    this.makeYAxis.scale(yScale).tickSize(-gWidth);
+    if (this.xField === 'date') {
+      this.makeXAxis.tickFormat(timeFormat('%b %_d'));
+    } else {
+      this.makeXAxis.tickFormat(x => x);
     }
 
     return didDomainsChange;
@@ -383,8 +386,7 @@ class Graph extends State {
       .text(this.xFieldLabel)
       .at({ x: this.gWidth / 2 + 10 })
 
-
-    this.update({ resized: true });
+    this.update({ ...this.oldParams, resized: true });
   }
 
   get xFieldLabel() {
