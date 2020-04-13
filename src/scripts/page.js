@@ -26,6 +26,22 @@ if (window.location.pathname.indexOf('/contributors') === 0) {
 const SECTION_MAIN_SELECTOR = 'section#main';
 const ARTICLE_SELECTOR = '.pb-f-article-article-body > .row > .col-xs-12 > .ab-article-body > .ab-article-content > article';
 
+import lede from './lede';
+import columbia from './scrollcolumbia';
+import debounce from './underscore-debounce';
+
+function init() {
+  lede.init();
+  columbia.init();
+  window.addEventListener(
+    'resize',
+    debounce(() => {
+      lede.handleResize();
+      columbia.handleResize();
+    }, 200),
+  );
+}
+
 // Replaces section#main with article
 function hoistArticle() {
   // Hoist article
@@ -40,6 +56,8 @@ function hoistArticle() {
     // If the paragraph includes <meta> or <link> tags, it's probably our SSR'd <head>
     suspectParagraph.style.margin = 0;
   }
+
+  init();
 }
 
 // Runs hoistArticle() and stops RAF when necessary elements exist.
@@ -69,4 +87,6 @@ function ready(timestamp) {
 // Initialize our ready() function.
 if (isOnSpectatorPage) {
   window.requestAnimationFrame(ready);
+} else {
+  init();
 }

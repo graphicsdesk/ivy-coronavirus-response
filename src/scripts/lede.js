@@ -69,7 +69,21 @@ const initialState = { countries: ['US'] };
  * Scroll step triggers
  */
 
-const graph = new Graph(covidData);
+let graph, scroller;
+
+function init() {
+  graph = new Graph(covidData);
+  graph.set(initialState);
+
+  scroller = scrollama(); // Instantiate the scrollama
+  scroller // Setup the instance, pass callback functions
+    .setup({
+      step: '.lede-step-surrounding-padding',
+      offset: window.innerWidth < 460 ? 0.95 : 0.65,
+    })
+    .onStepEnter(onStepEnter)
+    .onStepExit(onStepExit);
+}
 
 const chartContainer = document.getElementById('chart-container');
 chartContainer.setAttribute('data-index', 0);
@@ -84,20 +98,6 @@ function onStepEnter({ index }) {
 
 function onStepExit({ index, direction }) {
   if (index === 0 && direction === 'up') graph.set(initialState);
-}
-
-const scroller = scrollama(); // Instantiate the scrollama
-
-scroller // Setup the instance, pass callback functions
-  .setup({
-    step: '.lede-step-surrounding-padding',
-    offset: window.innerWidth < 460 ? 0.95 : 0.65,
-  })
-  .onStepEnter(onStepEnter)
-  .onStepExit(onStepExit);
-
-function init() {
-  graph.set(initialState);
 }
 
 /**
