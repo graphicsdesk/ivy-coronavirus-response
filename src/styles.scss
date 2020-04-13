@@ -356,4 +356,10 @@ $nav-height: 46px;
   .scroll__text {
     height:2700px !important;
   }
+  .mobil0,
+  .mobil3,
+  .mobil5 {
+    visibility: 0 !important;
+    opacity:0 !important;
+  }
 }
