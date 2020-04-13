@@ -359,7 +359,7 @@ class Graph extends State {
 
   resize() {
     this.width = Math.min(960, document.body.clientWidth);
-    this.height = document.body.clientHeight;
+    this.height = window.innerHeight;
     this.gWidth = this.width - margin.left - margin.right;
     this.gHeight = this.height - margin.top - margin.bottom;
 

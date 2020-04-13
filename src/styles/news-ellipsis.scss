@@ -2,7 +2,7 @@
 
 #top {
   // UNCOMMENT to hide navbar
-  // display: none;
+  display: none;
   padding: 0;
 }
 
@@ -34,4 +34,8 @@
 // Hide section#main before it is replaced
 #main {
   display: none;
+}
+
+.pb-f-global-footer .footer {
+  margin: 0; // Just for style
 }
