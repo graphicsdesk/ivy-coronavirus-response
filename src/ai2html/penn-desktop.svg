@@ -4,6 +4,8 @@
 	 x="0px" y="0px" viewBox="0 0 700 750" xml:space="preserve">
 <g>
 	
+		<line style="opacity:0.2;" fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="489.863" y1="725.326" x2="489.863" y2="53.053"/>
+	
 		<rect style="opacity:0.4;" x="-6.444" y="286.155" transform="matrix(4.966469e-07 1 -1 4.966469e-07 387.8377 202.0942)" fill="#BDE1FF" width="198.632" height="17.622"/>
 	
 		<line style="opacity:0.2;" fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="618.239" y1="725.326" x2="618.239" y2="53.053"/>
@@ -11,8 +13,6 @@
 		<line style="opacity:0.2;" fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="233.11" y1="725.326" x2="233.11" y2="53.053"/>
 	
 		<line style="opacity:0.2;" fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="361.487" y1="725.326" x2="361.487" y2="53.053"/>
-	
-		<line style="opacity:0.2;" fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="489.863" y1="725.326" x2="489.863" y2="53.053"/>
 	<polyline fill="#E6E6E6" points="104.746,63.345 104.746,85.413 104.746,107.482 104.746,129.551 104.746,151.62 104.907,173.689 
 		104.988,195.739 105.069,217.808 105.31,239.877 105.391,261.945 105.632,284.014 105.874,306.083 106.84,328.152 107.162,350.221 
 		108.29,372.289 108.934,394.358 109.981,416.427 111.914,438.496 114.33,460.565 118.598,482.633 124.719,504.702 130.598,526.771 
@@ -59,9 +59,9 @@
 		<line fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="87.061" y1="681.095" x2="98.253" y2="681.095"/>
 	<g>
 		
-			<line fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" x1="106.226" y1="394.282" x2="176" y2="394.282"/>
+			<line fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" x1="106.226" y1="394.282" x2="176" y2="394.282"/>
 		<g>
-			<path fill="#F89E99" d="M106.401,397.782c-1.933,0-3.5-1.567-3.5-3.5s1.567-3.5,3.5-3.5c1.933,0,3.5,1.567,3.5,3.5
+			<path fill="#D13838" d="M106.401,397.782c-1.933,0-3.5-1.567-3.5-3.5s1.567-3.5,3.5-3.5c1.933,0,3.5,1.567,3.5,3.5
 				S108.334,397.782,106.401,397.782z"/>
 		</g>
 	</g>
@@ -71,9 +71,9 @@
 		<line fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="87.061" y1="725.22" x2="98.253" y2="725.219"/>
 	<g>
 		
-			<line fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" x1="105.769" y1="305.554" x2="176" y2="305.552"/>
+			<line fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" x1="105.769" y1="305.554" x2="176" y2="305.552"/>
 		<g>
-			<path fill="#F89E99" d="M105.944,309.054c-1.933,0-3.5-1.567-3.5-3.5c0-1.933,1.567-3.5,3.5-3.5c1.933,0,3.5,1.567,3.5,3.5
+			<path fill="#D13838" d="M105.944,309.054c-1.933,0-3.5-1.567-3.5-3.5c0-1.933,1.567-3.5,3.5-3.5c1.933,0,3.5,1.567,3.5,3.5
 				C109.444,307.487,107.877,309.054,105.944,309.054z"/>
 		</g>
 	</g>
@@ -83,10 +83,10 @@
 		/>
 	<rect x="358.114" y="709.857" fill="#FFFFFF" width="56.457" height="19.869"/>
 	<g>
-		<path fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" d="M172.634,237.925
+		<path fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" d="M172.634,237.925
 			c-39.98-1.181-65.771,22.209-68.399,45.316"/>
 		<g>
-			<circle fill="#F89E99" cx="104.274" cy="283.068" r="3.5"/>
+			<circle fill="#D13838" cx="104.274" cy="283.068" r="3.5"/>
 		</g>
 	</g>
 	<rect x="222.253" y="57.857" fill="#FFFFFF" width="20" height="15"/>
@@ -98,9 +98,9 @@
 	</g>
 	<g>
 	</g>
-	<rect x="205" y="231" fill="#FFFFFF" width="272" height="36"/>
-	<rect x="208" y="296" fill="#FFFFFF" width="274" height="61"/>
-	<rect x="210" y="384" fill="#FFFFFF" width="265" height="40"/>
+	<rect x="205" y="230" fill="#FFFFFF" width="290" height="42"/>
+	<rect x="208" y="296" fill="#FFFFFF" width="289" height="70"/>
+	<rect x="210" y="386" fill="#FFFFFF" width="287" height="40"/>
 </g>
 <style>
 #g-penn-desktop-img rect, #g-penn-desktop-img circle, #g-penn-desktop-img path, #g-penn-desktop-img line, #g-penn-desktop-img polyline { vector-effect: non-scaling-stroke; }

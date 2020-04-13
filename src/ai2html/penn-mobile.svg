@@ -72,35 +72,34 @@
 	
 		<line fill="none" stroke="#999999" stroke-width="0.75" stroke-miterlimit="10" x1="37.931" y1="398.038" x2="42.069" y2="398.038"/>
 	<g>
-		<path fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" d="M62,179
+		<path fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" d="M62,179
 			c-8.983,7.829-15.643,24.937-15.51,45.096"/>
 		<g>
-			<path fill="#F89E99" d="M42.999,223.995c0.041,1.932,1.641,3.466,3.574,3.425c1.932-0.041,3.466-1.641,3.425-3.574
+			<path fill="#D13838" d="M42.999,223.995c0.041,1.932,1.641,3.466,3.574,3.425c1.932-0.041,3.466-1.641,3.425-3.574
 				c-0.041-1.932-1.641-3.466-3.574-3.425C44.492,220.462,42.958,222.062,42.999,223.995z"/>
 		</g>
 	</g>
 	<g>
-		
-			<line fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" x1="46.906" y1="242.18" x2="76" y2="242.179"/>
+		<line fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" x1="46.906" y1="242.18" x2="72" y2="242.179"/>
 		<g>
-			<path fill="#F89E99" d="M47.081,245.68c-1.933,0-3.5-1.567-3.5-3.5c0-1.933,1.567-3.5,3.5-3.5s3.5,1.567,3.5,3.5
-				S49.014,245.68,47.081,245.68z"/>
-		</g>
-	</g>
-	<g>
-		
-			<line fill="none" stroke="#F89E99" stroke-width="1.33" stroke-miterlimit="10" stroke-dasharray="8,8" x1="46.768" y1="310.879" x2="92.863" y2="310.878"/>
-		<g>
-			<path fill="#F89E99" d="M46.944,314.379c-1.933,0-3.5-1.567-3.5-3.5c0-1.933,1.567-3.5,3.5-3.5s3.5,1.567,3.5,3.5
-				C50.444,312.812,48.876,314.379,46.944,314.379z"/>
+			<path fill="#D13838" d="M47.081,245.68c-1.933,0-3.5-1.567-3.5-3.5s1.567-3.5,3.5-3.5s3.5,1.567,3.5,3.5
+				C50.581,244.112,49.014,245.68,47.081,245.68z"/>
 		</g>
 	</g>
 	<rect x="102" y="149" fill="#FFFFFF" width="7" height="51"/>
-	<rect x="162" y="151" fill="#FFFFFF" width="70" height="30"/>
-	<rect x="102" y="209" fill="#FFFFFF" width="67" height="82"/>
-	<rect x="223" y="209" fill="#FFFFFF" width="7" height="66"/>
-	<rect x="102" y="303" fill="#FFFFFF" width="68" height="65"/>
-	<rect x="223" y="303" fill="#FFFFFF" width="7" height="49"/>
+	<rect x="162" y="152" fill="#FFFFFF" width="70" height="30"/>
+	<rect x="102" y="218" fill="#FFFFFF" width="67" height="82"/>
+	<rect x="223" y="217" fill="#FFFFFF" width="7" height="66"/>
+	<rect x="102" y="312" fill="#FFFFFF" width="68" height="68"/>
+	<rect x="223" y="315" fill="#FFFFFF" width="7" height="49"/>
+	<g>
+		<path fill="none" stroke="#D13838" stroke-width="1.33" stroke-miterlimit="10" d="M92,338.998
+			c-25.65,0.18-42.111-14.22-44.271-28.55"/>
+		<g>
+			<path fill="#D13838" d="M51.275,310.32c-0.166-1.926-1.862-3.353-3.788-3.187c-1.926,0.166-3.353,1.862-3.187,3.788
+				c0.166,1.926,1.862,3.353,3.788,3.186S51.441,312.246,51.275,310.32z"/>
+		</g>
+	</g>
 </g>
 <style>
 #g-penn-mobile-img rect, #g-penn-mobile-img circle, #g-penn-mobile-img path, #g-penn-mobile-img line, #g-penn-mobile-img polyline { vector-effect: non-scaling-stroke; }
