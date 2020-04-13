@@ -174,9 +174,10 @@ $nav-height: 46px;
 @media screen and (max-width: 600px) and (max-height: 700px) {
   //iPhone 6, 7, 8
   .mobil0 {
-    top: 312.5%;
-    right: 10%;
-    max-width: 160px !important;
+    top: 311%;
+    left: -15%;
+    right:10%;
+    max-width: 300px !important;
   }
   .mobil3 {
     top: 352.5%;
@@ -185,7 +186,7 @@ $nav-height: 46px;
     max-width: 190px !important;
   }
   .mobil5 {
-    top: 368.5%;
+    top: 372%;
     right: 2.5%;
     width: 100% !important;
   }
@@ -242,7 +243,7 @@ $nav-height: 46px;
 @media screen and (max-width: 600px) and (max-height: 800px) and (min-height: 700px) {
   //iPhone 6, 7, 8 Plus
   .mobil0 {
-    top: 285%;
+    top: 283%;
     right: 15%;
     width: 110%;
   }
@@ -252,7 +253,7 @@ $nav-height: 46px;
     width: 100% !important;
   }
   .mobil5 {
-    top: 336%;
+    top: 338%;
     right: 10%;
     width: 100% !important;
   }
@@ -279,7 +280,7 @@ $nav-height: 46px;
     width: 120% !important;
   }
   .mobil5 {
-    top: 395%;
+    top: 397%;
     right: 2.5%;
     width: 100% !important;
   }
