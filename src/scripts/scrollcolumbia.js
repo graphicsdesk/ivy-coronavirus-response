@@ -134,7 +134,4 @@ function init() {
     .onStepProgress(handleStepProgress);
 }
 
-// kick things off
-init();
-
-module.exports = { handleResize };
+module.exports = { init, handleResize };

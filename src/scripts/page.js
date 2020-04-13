@@ -67,5 +67,6 @@ function ready(timestamp) {
 }
 
 // Initialize our ready() function.
-if (isOnSpectatorPage)
+if (isOnSpectatorPage) {
   window.requestAnimationFrame(ready);
+}

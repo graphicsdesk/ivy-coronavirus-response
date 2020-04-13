@@ -21,8 +21,6 @@ for (let i = 0; i < covidData.length; i++)
 
 const showDates = true;
 
-const graph = new Graph(covidData);
-
 // Annotations
 const us7 = new Note(7, 'Harvard, Cornell, Yale announce student move-out').noCases;
 const us7Small = us7.small.top.hideMobile.write('Harvard, Cornell, Yale');
@@ -71,7 +69,7 @@ const initialState = { countries: ['US'] };
  * Scroll step triggers
  */
 
- graph.set(initialState);
+const graph = new Graph(covidData);
 
 const chartContainer = document.getElementById('chart-container');
 chartContainer.setAttribute('data-index', 0);
@@ -88,17 +86,19 @@ function onStepExit({ index, direction }) {
   if (index === 0 && direction === 'up') graph.set(initialState);
 }
 
-// Instantiate the scrollama
-const scroller = scrollama();
+const scroller = scrollama(); // Instantiate the scrollama
 
-// Setup the instance, pass callback functions
-scroller
+scroller // Setup the instance, pass callback functions
   .setup({
     step: '.lede-step-surrounding-padding',
     offset: window.innerWidth < 460 ? 0.95 : 0.65,
   })
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);
+
+function init() {
+  graph.set(initialState);
+}
 
 /**
  * Window event listeners
@@ -109,7 +109,7 @@ function handleResize() {
   scroller.resize();
 }
 
-module.exports = { handleResize };
+module.exports = { handleResize, init };
 
 /**
  * Highlights all country names <c></c>
