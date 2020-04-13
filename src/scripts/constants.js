@@ -2,7 +2,7 @@ const COUNTRY_COLORS = {
   'US': '#D13838',
   'China': '#40bf80',
   'Korea, South': '#44A6E0',
-  'Italy': '#F89E99',
+  'Italy': '#822FAD',
 };
 COUNTRY_COLORS['South Korea'] = COUNTRY_COLORS['Korea, South'];
 

@@ -35,11 +35,11 @@ const ivies = new Note(8.375, 'Ivies').noCases;
 const iviesSmall = ivies.small.top;
 const iviesSmallBtm = ivies.small;
 const china = new Note(5, 'China closes schools', 'China');
-const chinaSmall = china.small.top;
+const chinaSmall = china.small.top.write('National closure');
 const korea = new Note(2, 'South Korea mandates school closure', 'Korea, South');
-const koreaSmall = korea.small.top.write('South Korea');
+const koreaSmall = korea.small.top.write('National closure');
 const italy = new Note(11, 'Italy closes schools', 'Italy');
-const italySmall = italy.small.top;
+const italySmall = italy.small.top.write('National closure');
 
 const ZOOM_FACTOR = 0.4;
 

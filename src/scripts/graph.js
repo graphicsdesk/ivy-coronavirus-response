@@ -11,7 +11,7 @@ import State from './state';
 import { areDomainsEqual, firstQuintile, formatCaseCount, deriveNoteKey } from './utils';
 import { getLineLabel, getLineColor, getCountryColor } from './constants';
 
-const INTERPOLATION_TIME = 1000;
+const INTERPOLATION_TIME = 1100;
 
 /**
  * The Graph class draws and updates the visualization's DOM elements
