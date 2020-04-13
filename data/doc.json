@@ -9,16 +9,16 @@
       "value": {
         "asset": "lede.html",
         "steps": [
-          "On March 10, seven days after the United States reported its first hundred cases, Harvard, Cornell, and Yale became the first Ivies to respond to the coronavirus outbreak by announcing mandatory move-out for students.",
+          "On March 10, seven days after the United States reported its first hundred cases, Harvard, Cornell, and Yale became the first Ivies to respond to the coronavirus outbreak by announcing a mandatory move-out for students.",
           "Columbia was the last Ivy to announce mandatory move-out, five days after the first Ivies.",
-          "In that five day time span, the number of national cases had almost quadrupled.",
+          "In that five- day time span, the number of national cases had almost quadrupled.",
           "On average, the Ivy League universities took 8.375 days to respond after the first hundred reported cases in the nation.",
-          "This response rate equaled that of <c>China</c>, the first country to begin experiencing an outbreak in late January. 5 days after the first hundred reported cases, when the national number of cases had reached 2,863, the government mandated the closure of all schools.",
+          "This response rate was a few days slower than that of <c>China</c>, whose government mandated the closure of all schools five5 days after the first 100 cases. As the first country to grapple with the effects of the virus in late January, China had a significantly higher number of cases at the time of the government's response, withe 2,863 reported cases in the nation.",
           "The Ivies’ responses were far slower than that of <c>South Korea</c>, which began experiencing an outbreak in late February. The South Korean government closed schools across the country 2 days after the first hundred reported cases.",
-          "The number of national cases at the time of Columbia’s response matches that of Italy, which has faced significant criticism for its delays. Italy began experiencing an outbreak in early March.",
-          "They responded by closing schools when there were 3,858 cases, <t>11 days after</t> the first hundred reported cases.",
+          "The number of national cases at the time of Columbia’s response matches that of <c>Italy</c>, which has faced significant criticism for its delays. <c>Italy</c> began experiencing an outbreak in early March.",
+          "<c>Italy</c> closed its schools when there were 3,858 cases, <t>11 days after</t> the first hundred reported cases.",
           "The United States began experiencing an outbreak in mid-March, long after effects had been seen in China, South Korea, and Italy. The lack of coordinated national response led to delays in school closures, discrepancies in state recommendations, and lack of proactive efforts to inform university students of social distancing practices, according to experts.",
-          "The United States, now with XXX cases at the time of publication, has surpassed the rest of the world."
+          "The United States, with 559,409XXX cases at the time of publication, has surpassed the rest of the world."
         ]
       }
     }
@@ -43,7 +43,7 @@
     },
     {
       "type": "text",
-      "value": "Most universities reported a positive case among a college affiliate around the second week of March and thus reacted at a similar rate. Many Ivy League schools seemed to follow suit after Columbia’s initial response, yet Columbia was the last to force students to vacate campus."
+      "value": "Most Ivy League universities reported a positive case among a college affiliate around the second week of March and thus reacted at a similar rate. Many Ivy League schools seemed to follow suit after Columbia’s initial response."
     },
     {
       "type": "graphic",
@@ -57,7 +57,7 @@
     },
     {
       "type": "text",
-      "value": "Across the Ivies, Spectator found universities also responded to the first case in their state at differing rates, which experts said resulted from lack of federal guidance on handling the virus. Countries like China and Italy, on the other hand, had a unified response."
+      "value": "Across the Ivies, Spectator found universities also responded to the first case in their state at differing rates, which experts said resulted from lack of federal guidance on handling the virus. Meanwhile, China’s government ordered a complete shutdown of universities and schools, while South Korea’s government advised universities to postpone the start of the academic year at the beginning of February, weeks before K-12 schools were forced to postpone start dates."
     },
     {
       "type": "text",
@@ -77,11 +77,15 @@
     },
     {
       "type": "text",
-      "value": "While other countries took after China as a model of combatting the virus, the United States <a href=\"https://www.nytimes.com/2020/04/11/us/politics/coronavirus-trump-response.html\">mostly waited</a> for the virus to escalate before taking reactionary measures due to the general misunderstanding of the scope of the virus, Boden-Albaba said. She noted that much of the U.S. public had seen China’s tactics as extreme."
+      "value": "While other countries such as South Korea took after China as a model of combatting the virus through prevention, the United States <a href=\"https://www.nytimes.com/2020/04/11/us/politics/coronavirus-trump-response.html\">mostly waited</a> for the virus to escalate before taking reactionary measures due to the general misunderstanding of the scope of the virus, Boden-Albaba said. She noted that much of the U.S. public had seen China’s tactics as extreme."
     },
     {
       "type": "text",
       "value": "“We were all surprised when China decided to lock down an entire province, it seemed almost inconceivable,” Jervis added."
+    },
+    {
+      "type": "text",
+      "value": "New York in particular, did not see a stay-at-home order until March 22 and Mayor Bill de Blasio did not order the city’s schools to close until March 23. Without clear instruction from the state or city, the University responded earlier on May 15 to move its students off campus, in accordance with separate public health expertise rather than government directives. According to the New York Times, in comparison to other states, New York faced delays due to confused guidance and political infighting."
     },
     {
       "type": "text",
@@ -101,15 +105,21 @@
     },
     {
       "type": "text",
-      "value": "For University students—who believed the virus had no effect on them—the messaging from administrators and the public left <a href=\"https://www.columbiaspectator.com/news/2020/03/30/inconsistent-messaging-around-young-peoples-covid-19-risk-contributes-to-spread-of-infection/\">students misinformed</a> over the risks of the virus and preventative measures."
+      "value": "For University students, the messaging from administrators and the national statistics regarding the virus’ infection rate for young populations left <a href=\"https://www.columbiaspectator.com/news/2020/03/30/inconsistent-messaging-around-young-peoples-covid-19-risk-contributes-to-spread-of-infection/\">students misinformed</a> over the risks of the virus and preventative measures. Students saw self-quarantine and protective masks as subjects of racial bias, not necessary steps to lower the infection rate of the virus."
     },
     {
       "type": "text",
-      "value": "At the University of Pennsylvania, administrators sent out two different move-out dates, March 15 and 17 and moved commencement online but later changed their mind to postpone it. These actions may have contributed to the spread of misinformation on the impact of the virus to students."
+      "value": "By the time the virus escalated, students at schools like the <b>University of Pennsylvania</b> still did not receive consistent messaging, leading many to disregard recommended practices and proceeded to travel to <a href=\"https://www.nytimes.com/2020/04/11/us/florida-spring-break-coronavirus.html?smtyp=cur&smid=fb-nytimes&fbclid=IwAR0wm4P8behZvh1_Fre0rQR8D39Z4Nvan-Z9Z5Sp3M2qK782_2LJaZTg3KY\">spring break destinations</a>, which added to the COVID-19 transmission and death toll."
+    },
+    {
+      "type": "graphic",
+      "value": {
+        "asset": "penn.html"
+      }
     },
     {
       "type": "text",
-      "value": "Similar actions were taken at Columbia, Yale, Princeton, and Dartmouth. These universities originally only announced remote classes for a few weeks and later extended them to the entire semester in order to respond to the rapidly changing nature of the virus as recommended by government officials. At the time of the initial announcement, students may not have understood the severity of the situation until weeks later when they were forced to evacuate."
+      "value": "Similar actions were taken at Columbia, Yale, Princeton, and Dartmouth. These universities originally only announced remote classes for a few weeks and later extended them to the entire semester in order to respond to the rapidly changing nature of the virus as recommended by government officials. At the time of the initial announcement, students may not have understood the severity of the situation until days later when they were forced to evacuate. Meanwhile, according to experts, international data had already shown the significance of the virus’ infection rate."
     },
     {
       "type": "text",
@@ -133,7 +143,7 @@
     },
     {
       "type": "text",
-      "value": "However, Dustin Duncan, a social and spatial epidemiologist at the Columbia Mailman School of Public Health, said he believes the University responded to the crisis in a clear and timely manner. Universities, he said, likely reacted based on recommendations from public health officials and epidemiologists to make administrative decisions."
+      "value": "Dustin Duncan, a social and spatial epidemiologist at the Columbia Mailman School of Public Health, said he believes the University responded to the crisis in a clear and timely manner given recommendations from public health officials and epidemiologists."
     },
     {
       "type": "text",
@@ -141,7 +151,7 @@
     },
     {
       "type": "text",
-      "value": "Arthur Reingold, an epidemiology professor at the University of California, Berkeley, said university administrators reacted based on the mixed messaging they received from federal agencies."
+      "value": "However, Arthur Reingold, an epidemiology professor at the University of California, Berkeley, noted that the messaging received from federal versus state agencies resulted in inconsistent conclusions."
     },
     {
       "type": "text",
@@ -149,11 +159,11 @@
     },
     {
       "type": "text",
-      "value": "Despite these concerns, Bolden-Albala added that Columbia, as well as University of Washington and UCI ultimately responded in a timely manner, citing the presence of well-established public health schools, which led to conversations between high-level administrators and experts on how to prepare and address the crisis."
+      "value": "Bolden-Albala noted that Columbia, as well as University of Washington and UCI ultimately responded in a timely manner in accordance to federal mandates, citing the presence of well-established public health schools, which led to conversations between high-level administrators and experts on how to prepare and address the crisis."
     },
     {
       "type": "text",
-      "value": "Still, she said she found the response rate and conflicting information alarming, citing those among the reasons for the rapid spread across the United States."
+      "value": "Still, she said she found the federal response rate and conflicting information alarming, citing those among the reasons for the rapid spread across the United States."
     },
     {
       "type": "text",
