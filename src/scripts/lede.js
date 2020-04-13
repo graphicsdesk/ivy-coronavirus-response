@@ -95,7 +95,7 @@ const scroller = scrollama();
 scroller
   .setup({
     step: '.lede-step-surrounding-padding',
-    offset: window.innerWidth < 460 ? 0.85 : 0.65,
+    offset: window.innerWidth < 460 ? 0.95 : 0.65,
   })
   .onStepEnter(onStepEnter)
   .onStepExit(onStepExit);

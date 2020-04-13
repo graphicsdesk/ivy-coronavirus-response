@@ -24,6 +24,9 @@ const LINE_WIDTH = 15;
 const LINE_HEIGHT = 23;
 
 const margin = { top: 70, right: 80, bottom: 30 + TICK_PADDING, left: 50 + TICK_PADDING };
+if (window.innerWidth < 460) {
+  margin.top = 90;
+}
 
 class Graph extends State {
 
@@ -147,9 +150,11 @@ class Graph extends State {
           .call(this.updateAnnotation);
         await (await this.updateAxes(params)).end();
 
-        const lastYTick = yAxis.select('.tick:last-child');
-        casesTitle.transition().attr('transform', lastYTick.attr('transform'));
-        timeLabel.transition().attr('transform', lastYTick.attr('transform'));
+        if (window.innerWidth >= 460) {
+          const lastYTick = yAxis.select('.tick:last-child');
+          casesTitle.transition().attr('transform', lastYTick.attr('transform'));
+          timeLabel.transition().attr('transform', lastYTick.attr('transform'));
+        }
       } else if (shouldUpdateAnnotations) {
         annotationsUpdate.transition()
           .duration(INTERPOLATION_TIME)
@@ -295,8 +300,7 @@ class Graph extends State {
 
     if (window.innerWidth < 460) {
       this.makeXAxis.ticks(3);
-    }
-    if (willReplaceXAxis && showDates) {
+    } else if (willReplaceXAxis && showDates) {
       this.makeXAxis.ticks(7);
     }
 
@@ -377,7 +381,7 @@ class Graph extends State {
     this.timeLabel
       .selectAll('tspan')
       .text(this.xFieldLabel)
-      .at({ x: this.gWidth / 2})
+      .at({ x: this.gWidth / 2 + 10 })
 
 
     this.update({ resized: true });

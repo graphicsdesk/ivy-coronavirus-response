@@ -1,5 +1,9 @@
-@import 'spectate';
+// @import 'spectate';
 @import 'animations';
+
+#lede * {
+  box-sizing: unset;
+}
 
 /**
  * Interactive lede chart
@@ -41,17 +45,17 @@ g.lines-container > g.line-container {
   }
 }
 
-/*
+
 #chart-container[data-index="0"] g.line-container[data-country="US"],
-#chart-container[data-index="1"] g.line-container[data-country="US"],
 #chart-container[data-index="4"] g.line-container[data-country="China"],
 #chart-container[data-index="5"] g.line-container[data-country="Korea, South"],
-#chart-container[data-index="6"] g.line-container[data-country="Italy"] {
+#chart-container[data-index="6"] g.line-container[data-country="Italy"],
+{
   circle {
     animation: $pulse-anim;
   }
 }
-*/
+
 
 g.axis {
   .domain {
@@ -86,6 +90,12 @@ text.confirmed-cases-title, text.time-label {
 
 text.time-label {
   text-anchor: middle;
+}
+
+@media (max-width: 460px) {
+  text.time-label {
+    font-size: 16px;
+  }
 }
 
 g.annotations-container {
