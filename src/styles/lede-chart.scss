@@ -179,7 +179,7 @@ tspan.background-text {
  */
 
 #steps-container {
-  pointer-events: none;
+  // pointer-events: none;
   z-index: 2;
   transform: translate3d(0, 0, 0);
 }
@@ -189,7 +189,7 @@ $step-max-width: 470px;
 
 .lede-step {
   padding-top: 0;
-  padding-bottom: 70vh;
+  padding-bottom: 80vh;
 
   p {
     padding: 20px;

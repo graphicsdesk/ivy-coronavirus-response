@@ -34,14 +34,14 @@ const columbiaSmallBtm = columbia.small.bottom;
 const ivies = new Note(8.375, 'Ivies').noCases;
 const iviesSmall = ivies.small.top;
 const iviesSmallBtm = ivies.small;
-const china = new Note(8, 'China tk', 'China');
+const china = new Note(5, 'China closes schools', 'China');
 const chinaSmall = china.small.top;
-const korea = new Note(2, 'South Korea tk', 'Korea, South');
-const koreaSmall = korea.small.top;
-const italy = new Note(11, 'Italy tk', 'Italy');
+const korea = new Note(2, 'South Korea mandates school closure', 'Korea, South');
+const koreaSmall = korea.small.top.write('South Korea');
+const italy = new Note(11, 'Italy closes schools', 'Italy');
 const italySmall = italy.small.top;
 
-const ZOOM_FACTOR = 1;
+const ZOOM_FACTOR = 0.4;
 
 const allStates = [
   { annotations: [ us7 ],
