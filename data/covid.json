@@ -1840,5 +1840,29 @@
     "country": "US",
     "date": "2020-04-11",
     "dayNumber": 39
+  },
+  {
+    "cases": 83134,
+    "country": "China",
+    "date": "2020-04-12",
+    "dayNumber": 81
+  },
+  {
+    "cases": 156363,
+    "country": "Italy",
+    "date": "2020-04-12",
+    "dayNumber": 49
+  },
+  {
+    "cases": 10512,
+    "country": "Korea, South",
+    "date": "2020-04-12",
+    "dayNumber": 52
+  },
+  {
+    "cases": 555313,
+    "country": "US",
+    "date": "2020-04-12",
+    "dayNumber": 40
   }
 ]
