@@ -3,9 +3,21 @@
  */
 
 import initResizer from './ai2html-resizer';
+import lede from './lede';
+import columbia from './scrollcolumbia';
+import debounce from './underscore-debounce';
 
 function init() {
   initResizer();
+  lede.init();
+  columbia.init();
+  window.addEventListener(
+    'resize',
+    debounce(() => {
+      lede.handleResize();
+      columbia.handleResize();
+    }, 200),
+  );
 }
 
 /**
