@@ -8,9 +8,10 @@ import columbia from './scrollcolumbia';
 import debounce from './underscore-debounce';
 
 function init() {
-  initResizer();
   lede.init();
   columbia.init();
+  initResizer();
+
   window.addEventListener(
     'resize',
     debounce(() => {
